@@ -1,0 +1,67 @@
+body {
+    background-image: url('bg.png'); /* Replace with your image file path */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-attachment: fixed; /* Fixes the background position */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    }
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.logo-container{
+    background-image:url('logo.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.login-form {
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 190px;
+    display: inline-block;
+    text-align: left;
+    font-family:Helvetica, Arial, sans-serif;
+}   
+.form-group {
+    margin-bottom: 15px;
+}
+.signup-heading {
+    margin-bottom: 20px;
+}
+.logo-containersignup{
+    background-image:url('logo.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 0.5px;
+    left: 0.5px;
+}
+
+.signup-form{
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 10px;
+    left: 150px;
+    text-align: left;
+    
+}
+.signup-form input[type="submit"] {
+    display: block;
+    margin: 0 auto; 
+}
