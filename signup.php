@@ -11,7 +11,8 @@
         <div class="signup-form">
             <h2 class="signup-heading"> Patient Sign Up </h2>
 
-            <form action="signup.php" method="post">
+            <form action="dentalIndex.php" method="post">
+                    <input type = "hidden" name="formType" value="signup"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <input type="text" id="first-name" name="first-name" required>
@@ -47,7 +48,7 @@
                         <label for="conpasswd">Confirm Password:</label>
                         <input type="text" id="conpasswd" name="conpasswd" required>
                     </div>
-                    <input type="submit" value="Sign Up">
+                    <input type="submit" name="signupbutton" value="Sign Up">
             </form>
         </div>
     </div>
