@@ -6,10 +6,20 @@
 </head>
 <body>
     <div class="container">
+        
         <div class="logo-containersignup">
+        <div class="form-groupmyprof1">
+
+        <div class="form-groupmyprof">
+                <button type="submit" name="dentalrecords" >Dental Records</button>
+                </div>
+                <div class="form-groupmyprof">
+                <button type="submit" name="Billing History" >Billing History</button>
+</div>
+</div>
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Patient Sign Up </h2>
+            <h2 class="signup-heading"> My profile</h2>
 
             <form action="dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="signup"/>
@@ -44,19 +54,13 @@
                         <label for="address">Address:</label>
                         <textarea id="address" name="address" required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="Username">Username:</label>
-                        <input type="text" id="username" name="username" required>
+                    
+                    <div class="form-groupmy">
+                        <button type="submit" name="edit" >Edit</button>
+                        <button type="submit" name="exit" >Exit</button>
                     </div>
-                    <div class="form-group">
-                        <label for="passrord">Password:</label>
-                        <input type="text" id="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="conpasswd">Confirm Password:</label>
-                        <input type="text" id="conpasswd" name="conpasswd" required>
-                    </div>
-                    <input type="submit" name="signupbutton" value="Sign Up">
+                </div>
+               
             </form>
         </div>
     </div>
