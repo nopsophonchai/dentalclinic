@@ -44,6 +44,7 @@
                     
                     
                     <input type="submit" value="Submit" style="color: #FFFFFF;">
+                <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
             </form>
         </div>
     </div>
