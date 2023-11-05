@@ -1,4 +1,4 @@
-<!doctype html > 
+<!DOCTYPE html > 
 <?php require_once('connect.php')?>
 <html> 
     <head> 
@@ -27,28 +27,65 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-           
+
             $stmt = $mysqli->prepare("SELECT * FROM userAccounts WHERE Username = ?");
+            
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
+
+            $stmt2 = $mysqli->prepare("SELECT * FROM staffAccounts WHERE Username = ?");
+            $stmt2->bind_param("s",$username);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+            $stmt->execute();
+                if ($stmt2->errno) {
+                    // handle error here
+                    echo "Execute failed: (" . $stmt2->errno . ") " . $stmt2->error;
+                }
+
+
+
             
-            if ($result->num_rows === 0) {
+            
+            if($result2->num_rows === 0)
+            {
+                if ($result->num_rows === 0) {
                 
-                echo "<span style = 'color: red'>Username does not exist!</span>";
-            } else {
-                $row = $result->fetch_assoc();
-                if ($password == $row['Password']) {
-                    header("Location: dentalindex.php");
-                    exit;
+                    echo "<span style = 'color: red'>Username does not exist!</span>";
                 } else {
-                    echo '<span style = "color: red">Incorrect Password</span>';
-                    echo '<pre>';
-                    print_r($row);
-                    echo '</pre>';
+                    $row = $result->fetch_assoc();
+                    if (password_verify($password,$row['Password'])) {
+                        header("Location: Adminmanager.php");
+                        
+                    } else {
+                        echo '<span style = "color: red">Incorrect Password</span>';
+                    
+                    }
                 }
             }
+            else
+            {
+                ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+
+                $row = $result2->fetch_assoc();
+                if(password_verify($password,$row['Password']))
+                {
+                    header("Location: Adminmanager.php");
+                }
+                else
+                {
+                    echo '<span style = "color: red">Incorrect Password</span>';
+                    echo '<span style = "color: red">'.$row['Password'].'</span>';
+                }
+                
+            }
+            $stmt -> close();
+            $stmt2->close();
+            
         }
+  
         ?>
             <input type="submit" value="Login" name = "sub">
         </form>

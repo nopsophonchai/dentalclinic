@@ -19,7 +19,11 @@
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>
-                        <input type="text" id="last-name" name "last-name" required>
+                        <input type="text" id="last-name" name= "last-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="natid">National ID:</label>
+                        <input type="text" id="natid" name= "natid" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -29,12 +33,16 @@
                         <label for="female">Female</label>
                     </div>
                     <div class="form-group">
+                        <label for="date-of-birth">Date of Birth:</label>
+                        <input type="date" id="date-of-birth" name="date-of-birth" required>
+                    </div>
+                    <div class="form-group">
                         <label for="telephone">Telephone:</label>
                         <input type="text" id="telephone" name="telephone" required>
                     </div>
                     <div class="form-group">
-                        <label for="date-of-birth">Date of Birth:</label>
-                        <input type="date" id="date-of-birth" name="date-of-birth" required>
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="Username">Username:</label>
