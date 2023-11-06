@@ -34,12 +34,21 @@ CREATE TABLE staff(
     CONSTRAINT typeName FOREIGN KEY (typeID) REFERENCES type(typeID),
     CONSTRAINT genderStaff FOREIGN KEY (genderID) REFERENCES gender(genderID)
 );
+-- INSERT INTO staff (firstName,lastName,genderID,nationalID,telephone,houseAddress,dateOfBirth,avaStat,typeID,specialty)
+
 CREATE TABLE userAccounts(
     UserID INT PRIMARY KEY NOT NULL,
     Username VARCHAR(255),
     Password VARCHAR(255),
     CONSTRAINT user FOREIGN KEY (UserID) REFERENCES patient(PatientID)
 );
+CREATE TABLE staffAccounts(
+    accountID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    Username VARCHAR(255),
+    Password VARCHAR(255)
+    -- CONSTRAINT staffAcc FOREIGN KEY (accountID) REFERENCES staff(staffID)
+);
+INSERT INTO staffAccounts(Username, Password) VALUES ('Admin','Admin123');
 CREATE TABLE appointment(
     appointmentID INT PRIMARY KEY AUTO_INCREMENT,
     appointmentDate DATE,
@@ -72,3 +81,4 @@ CREATE TABLE records(
     patientID INT NOT NULL,
     CONSTRAINT recordPatient FOREIGN KEY (patientID) REFERENCES patient(patientID)
 );
+
