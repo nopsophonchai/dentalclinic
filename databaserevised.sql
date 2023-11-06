@@ -17,6 +17,9 @@ CREATE TABLE type(
     typeName VARCHAR(255) NOT NULL
 );
 
+INSERT INTO type (typeName) VALUES ('Dentist'),('Nurse'),('Receptionist'),('Janitor'),('Security Guard'); 
+
+
 CREATE TABLE staff(
     staffID INT PRIMARY KEY AUTO_INCREMENT,
     firstName VARCHAR(255) NOT NULL,
