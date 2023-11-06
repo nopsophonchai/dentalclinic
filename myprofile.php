@@ -1,3 +1,28 @@
+<?php 
+    session_start();
+    require_once('connect.php');
+    if(!isset($_SESSION['patientID']))
+    {
+        header("Location: login.php");
+    }
+    else
+    {
+        $id = $_SESSION['patientID'];
+        $info = $mysqli -> prepare("SELECT * FROM patient WHERE patientID = ?");
+        $info -> bind_param("i", $id);
+        if($info->execute()) {
+            $result = $info->get_result();
+            if($result->num_rows > 0) {
+                $userDetails = $result->fetch_assoc();
+            } else {
+                echo "No records found.";
+            }
+        } else {
+            echo "Select failed. Error: " . $mysqli->error;
+        }
+        
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +50,7 @@
                     <input type = "hidden" name="formType" value="signup"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
-                        <input type="text" id="first-name" name="first-name" required>
+                        <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>

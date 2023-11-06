@@ -1,4 +1,13 @@
+<?php 
+    session_start();
+    require_once('connect.php');
+    if(!isset($_SESSION['patientID']))
+    {
+        header("Location: login.php");
+    }
+?>
 <!DOCTYPE html>
+
 <html>
 <head>
     <title> Dentiste </title>
@@ -11,7 +20,7 @@
         <div class="signup-form">
         <h2 class="signup-heading"> Main Page </h2>
             <form action="dentalIndex.php" method="post">
-                    <input type = "hidden" name="formType" value="signup"/>
+                <input type = "hidden" name="formType" value="mainpage"/>
             
                 <div class="form-groupapp">
                         <button type="submit" name="myprofile" >My Profile</button>
@@ -26,7 +35,7 @@
                     <button type="submit" name="Billing History" >Billing History</button>
                 </div>
                     <div class="form-groupapp">
-                    <button type="submit" name="Log out" >Log Out</button>
+                    <button type="submit" name="123" >Log Out</button>
                 </div>
             </form>
         </div>

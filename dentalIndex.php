@@ -3,39 +3,6 @@
     
     require_once('connect.php');
     $formtype = $_POST['formType'];
-    
-    // if($formtype == 'login')
-    // {
-    //     echo "hi".$formtype;
-    //     if(isset($_POST['sub']))
-    //     {
-    //         $Username = $_POST['username'];
-    //         $Password = $_POST['password'];
-    //         if($Username == 'Admin' && $Password == 'Admin123')
-    //         {
-    //             header("Location: Adminmanager.php");
-    //         }
-    //         else
-    //         {
-    //             $q = "SELECT * FROM userAccounts WHERE Username = '$Username' AND Password = '$Password'";
-    //             $result = $mysqli->query($q);
-    //             if(!$result){
-    //                 echo "Select failed. Error: ".$mysqli->error ;
-    //                 return false;
-    //             }
-    //             elseif($result->num_rows == 0)
-    //             {
-    //                 echo "Incorrect username or password!";
-    //                 return false;
-    //             }
-    //             else
-    //             {
-    //                 //Redirects to Patient page
-    //             }
-    //         }
-    //     }
-        
-    // }
     if($formtype == 'signup')
     {
             
@@ -109,6 +76,22 @@
             }
             $usercheck -> close();
 
+        }
+    }
+    
+    elseif($formtype == 'mainpage')
+    {
+        echo 'Form Type is: ' . htmlspecialchars($_POST['logout']);
+        echo 'hi';
+        if(isset($_POST['123']))
+        {
+            header('Location: login.php');
+            exit;
+        }
+        elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
         }
     }
 
