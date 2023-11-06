@@ -1,9 +1,9 @@
 body {
-    background-image: url('bg.png'); /* Replace with your image file path */
-    background-size: cover; /* Ensures the image covers the entire background */
-    background-position: center; /* Centers the image */
-    background-attachment: fixed; /* Fixes the background position */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-image: url('bg.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+    background-repeat: no-repeat; 
     text-align: center;
     font-family: Helvetica, Arial, sans-serif;
     }
@@ -26,6 +26,18 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.logo-containermyapp{
+    background-image:url('logo.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 70px;
+    left: 70px;
+    transform: translate(-50%, -50%);
+}
 .login-form {
     padding: 20px;
     border-radius: 10px;
@@ -36,6 +48,7 @@ body {
 }   
 .form-group {
     margin-bottom: 15px;
+    
 }
 .form-groupAdminmana {
     float: left;
@@ -92,36 +105,75 @@ body {
     display: block;
     margin: 0 auto; 
 }
-.create_staff-form{
-    padding: 10px;
-    border-radius: 10px;
-    position: absolute;
-    top: 10px;
-    left: 150px;
-    text-align: left;
-    
-}
 
-.create_staff-form1{
-    padding: 10px;
+.appformcontainer{
+    width: 30%; 
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
+    padding: 20px;
     position: absolute;
-    top: 10px;
-    left: 150px;
+    top: 50%;
+    right: 5%;
+    transform: translate(0, -50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: left;
-    
-    
+
+} 
+.form-groupapp {
+    margin-bottom: 15px;
+    text-align: left;
 }
-.create_staff-form input[type="submit"] {
-    display: block;
-    margin: 0 auto; 
+.form-groupapp button {
+    width: 120px;
+    height: 30px;
     background-color: #48a4a7;
     border: none;
+    text-align: center;
+    border-radius: 10px;
 }
+.form-groupapp label {
+    display: block;
+    text-align: left;
+}
+.form-groupapp textarea {
+    width: 50%; 
+}
+input[type="submit"] {
+    background-color: #48a4a7;
+    color: black; 
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
 
-.bottom-spacer {
-    height: 100px;
-  }
-  :root {
-    --button-text-color: #FFFFFF;
-  }
+}
+.form-groupmy {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmy button {
+    width: 100px;
+    background-color: #48a4a7;
+   height: 30px;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-groupmyprof {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmyprof1 {
+    margin-top: 160px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmyprof button {
+    width: 100px;
+    background-color: #48a4a7;
+   height: 30px;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}

@@ -1,5 +1,9 @@
+<?php 
+session_start();
+require_once('connect.php')
+?>
 <!DOCTYPE html > 
-<?php require_once('connect.php')?>
+
 <html> 
     <head> 
         <title> Dentiste </title>
@@ -56,7 +60,9 @@
                 } else {
                     $row = $result->fetch_assoc();
                     if (password_verify($password,$row['Password'])) {
-                        header("Location: Adminmanager.php");
+                        $_SESSION['patientID'] = $row['patientID'];
+                        header("Location: mainpage.php");
+
                         
                     } else {
                         echo '<span style = "color: red">Incorrect Password</span>';
