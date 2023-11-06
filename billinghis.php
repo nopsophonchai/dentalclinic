@@ -9,16 +9,18 @@
         <div class="logo-containermyapp">
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My Appointments </h2>
+            <h2 class="signup-heading"> Billing History </h2>
+            <div class="app-form">
             <table> 
                 <col width="20%">
-                <col width="30%">
-                <col width="30%">
+                <col width="20%">
+                <col width="20%">
+
                
                 <tr> 
-                    <th>Date</th>
-                    <th>Doctor</th>
-                    <th>Reason</th>
+                    <th>Time</th>
+                    <th>Description</th>
+                    <th>Amount</th>
                 </tr>
             </table>
             <!--
@@ -41,7 +43,7 @@
                 -->
             <div class="form-groupmyapp">
                         <button type="submit" name="exit" >Exit</button>
-            </div>
+                    </div>
             </div>
         </div>
     </div>
