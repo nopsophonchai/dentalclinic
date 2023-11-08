@@ -94,7 +94,33 @@
             exit;
         }
     }
-
+    elseif($formtype == 'myprofile')
+    {   echo "thrthdg";
+        if(isset($_POST['edit']))
+        {
+            header('Location: editpatient.php');
+            exit;
+        }
+       /* elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
+        }*/
+    }
+    elseif($formtype == 'editpatient')
+    {   echo "thrthdg";
+        if(isset($_POST['editsubmit']))
+        {
+            header('Location:editpatient.php');
+            exit;
+        }
+       /* elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
+        }*/
+    }
+    echo 'Form Type is: ' .$formtype;
     
 
 
