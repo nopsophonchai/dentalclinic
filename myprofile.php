@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>
-                        <?php echo '<label>'.$userDetails['lasrName'].'</label>'; ?>
+                        <?php echo '<label>'.$userDetails['lastName'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>

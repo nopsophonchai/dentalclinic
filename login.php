@@ -31,7 +31,6 @@ require_once('connect.php')
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-
             $stmt = $mysqli->prepare("SELECT * FROM userAccounts WHERE Username = ?");
             
             $stmt->bind_param("s", $username);
@@ -82,8 +81,8 @@ require_once('connect.php')
                 }
                 else
                 {
-                    echo '<span style = "color: red">Incorrect Password</span>';
-                    echo '<span style = "color: red">'.$row['Password'].'</span>';
+                    echo '<span style = "color: red">Username does not exist!</span>';
+                   
                 }
                 
             }
