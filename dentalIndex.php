@@ -109,9 +109,8 @@
     }
     elseif($formtype == 'editpatient')
     {   echo "thrthdg";
-        if(isset($_POST['editsubmit']))
+      /*  if(isset($_POST['editsubmit']))
         {
-            header('Location:editpatient.php');
             exit;
         }
        /* elseif(isset($_POST['myprofile']))

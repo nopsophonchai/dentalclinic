@@ -1,3 +1,11 @@
+<?php
+
+    if(isset($_POST['myappexit'])){
+        header("Location: mainpage.php");
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,14 +19,21 @@
         <div class="signup-form">
             <h2 class="signup-heading"> My Appointments </h2>
             <table> 
-                <col width="20%">
-                <col width="30%">
-                <col width="30%">
+                <col width="25%">
+                <col width="50%">
+                <col width="25%">
                
                 <tr> 
                     <th>Date</th>
                     <th>Doctor</th>
                     <th>Reason</th>
+                </tr>
+
+                <tr>
+
+                <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
             <!--
@@ -39,9 +54,12 @@
                     <th>Del</th>
                 </tr>
                 -->
+            <form action="mainpage.php" method="post">
+
             <div class="form-groupmyapp">
-                        <button type="submit" name="exit" >Exit</button>
+                        <button type="submit" name="myappexit" >Return</button>
             </div>
+            </form>
             </div>
         </div>
     </div>

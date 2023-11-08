@@ -1,3 +1,10 @@
+<?php
+
+    if(isset($_POST["mainpage.php"])){
+        header("Location: mainpage.php");
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,28 +29,18 @@
                     <th>Description</th>
                     <th>Amount</th>
                 </tr>
-            </table>
-            <!--
-                <table>
-                <col width="10%">
-                <col width="20%">
-                <col width="30%">
-                <col width="30%">
-                <col width="5%">
-                <col width="5%">
-
-                <tr>
-                    <th>Group Code</th> 
-                    <th>Group Name</th>
-                    <th>Remark</th>
-                    <th>URL</th>
-                    <th>Edit</th>
-                    <th>Del</th>
+                <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
-                -->
+
+
+            </table>
+            <form action = "mainpage.php" method ="post">
             <div class="form-groupmyapp">
-                        <button type="submit" name="exit" >Exit</button>
+                        <button type="submit" name="billexit" >Return</button>
                     </div>
+            </form>
             </div>
         </div>
     </div>

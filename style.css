@@ -194,6 +194,7 @@ th{
 td{
 	border: 1px solid black;
     background-color: #75a3a4;
+    height: 20px;
 	
 }
 table{
@@ -205,5 +206,4 @@ table{
 
 h2{
     color: #1c7072;
-
 }
