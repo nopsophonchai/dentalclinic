@@ -87,8 +87,7 @@
     
     elseif($formtype == 'mainpage')
     {
-        echo 'Form Type is: ' . htmlspecialchars($_POST['logout']);
-        echo 'hi';
+        echo 'hi'.isset($_POST['BillingHistory']);
         if(isset($_POST['123']))
         {
             header('Location: login.php');
@@ -101,6 +100,22 @@
             header('Location: myprofile.php');
             exit;
         }
+        elseif(isset($_POST['myapp']))
+        {
+            header('Location: myapp.php');
+            exit;
+        }
+        elseif(isset($_POST['dentalrecords']))
+        {
+            header('Location: dentalrecords.php');
+            exit;
+        }
+        elseif(isset($_POST['BillingHistory']))
+        {
+            header('Location: billinghis.php');
+            exit;
+        }
+
     }
     elseif($formtype == 'myprofile')
     {   echo "thrthdg";
@@ -109,11 +124,11 @@
             header('Location: editpatient.php');
             exit;
         }
-       /* elseif(isset($_POST['myprofile']))
+        elseif(isset($_POST['myprofexit']))
         {
-            header('Location: myprofile.php');
+            header('Location: mainpage.php');
             exit;
-        }*/
+        }
     }
     elseif($formtype == 'editpatient')
     {   echo "thrthdg";

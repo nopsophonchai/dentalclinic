@@ -80,7 +80,7 @@
                     
                     <div class="form-groupmy">
                         <button type="submit" name="edit" >Edit</button>
-                        <button type="submit" name="exit" >Exit</button>
+                        <button type="submit" name="myprofexit" >Return</button>
                     </div>
                 </div>
                

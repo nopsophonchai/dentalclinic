@@ -32,7 +32,7 @@
                     <button type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
                 <div class="form-groupapp">
-                    <button type="submit" name="Billing History" >Billing History</button>
+                    <button type="submit" name="BillingHistory" >Billing History</button>
                 </div>
                     <div class="form-groupapp">
                     <button type="submit" name="123" >Log Out</button>
