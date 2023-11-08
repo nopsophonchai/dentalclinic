@@ -47,37 +47,35 @@
             <h2 class="signup-heading"> My profile</h2>
 
             <form action="dentalIndex.php" method="post">
-                    <input type = "hidden" name="formType" value="signup"/>
+                    <input type = "hidden" name="formType" value="myprofile"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name:</label>
-                        <input type="text" id="last-name" name= "last-name" required>
+                        <?php echo '<label>'.$userDetails['lasrName'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" required>
+                        <?php echo '<label>'.$userDetails['nationalID'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">Male</label>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label>
+                        <?php echo '<label>'.$userDetails['gender'].'</label>'; ?>
+
                     </div>
                     <div class="form-group">
                         <label for="date-of-birth">Date of Birth:</label>
-                        <input type="date" id="date-of-birth" name="date-of-birth" required>
+                        <?php echo '<label>'.$userDetails['dateOfBirth'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <input type="text" id="telephone" name="telephone" required>
+                        <?php echo '<label>'.$userDetails['telephone'].'</label>'; ?>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <textarea id="address" name="address" required></textarea>
+                        <?php echo '<label>'.$userDetails['houseAddress'].'</label>'; ?>
                     </div>
                     
                     <div class="form-groupmy">
