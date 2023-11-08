@@ -23,7 +23,7 @@
                    </div>
                     <div></div>
                    <div class="form-groupAdminmana1">
-                   <form action="signup.php" method="post">
+                   <form action="Adminlookup.php" method="post">
                    <button type="submit"style="color: var(--button-text-color);">
                     <span style="white-space: nowrap;">Patient And Staff</span>
                     <br>

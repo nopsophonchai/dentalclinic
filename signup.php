@@ -56,7 +56,10 @@
                         <label for="conpasswd">Confirm Password:</label>
                         <input type="text" id="conpasswd" name="conpasswd" required>
                     </div>
-                    <input type="submit" name="signupbutton" value="Sign Up">
+                    
+                    <input type="submit" name="signupbutton" value="Sign Up"> 
+                    <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
+                   
             </form>
         </div>
     </div>
