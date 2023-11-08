@@ -17,6 +17,9 @@ CREATE TABLE type(
     typeName VARCHAR(255) NOT NULL
 );
 
+INSERT INTO type (typeName) VALUES ('Dentist'),('Nurse'),('Receptionist'),('Janitor'),('Security Guard'); 
+
+
 CREATE TABLE staff(
     staffID INT PRIMARY KEY AUTO_INCREMENT,
     firstName VARCHAR(255) NOT NULL,
@@ -24,11 +27,12 @@ CREATE TABLE staff(
     gender VARCHAR(255),
     nationalID VARCHAR(255) NOT NULL UNIQUE,
     telephone VARCHAR(255),
-    houseAddress VARCHAR(255),
+    houseAddress TEXT,
     dateOfBirth DATE,
-    avaStat VARCHAR(255),
+    avaStat INT(1),
     typeID INT NOT NULL,
     specialty VARCHAR(255) NOT NULL,
+    salary INT,
     FOREIGN KEY (typeID) REFERENCES type(typeID)
 );
 
