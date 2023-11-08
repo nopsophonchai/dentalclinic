@@ -1,6 +1,6 @@
 
 <?php
-    
+    // session_start();
     require_once('connect.php');
     $formtype = $_POST['formType'];
     if($formtype == 'signup')
@@ -41,6 +41,7 @@
                     if($stmt->execute()){
                         
                         echo "Data inserted successfully";
+
                     }
                     else
                     {
@@ -56,6 +57,8 @@
                     if($r->execute()){
                         
                         echo "Data inserted successfully";
+                        // $_SESSION['patientID'] = $lastid;
+                        // header('Location: mainpage.php')
                     }
                     else
                     {
