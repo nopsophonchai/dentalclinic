@@ -60,6 +60,7 @@ CREATE TABLE appointment(
     reason TEXT,
     staffID INT NOT NULL,
     patientID INT NOT NULL,
+    completion INT DEFAULT 0,
     FOREIGN KEY (patientID) REFERENCES patient(patientID),
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );

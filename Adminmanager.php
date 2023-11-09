@@ -32,7 +32,7 @@
                    </div>
                    <div class="form-groupAdminmana1">
                    <form action="createstaff.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Appiontment"></form>
+                   <input type="submit"style="color: var(--button-text-color);" value="Appointment"></form>
                    </div>
                     
                     
