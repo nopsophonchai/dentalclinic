@@ -53,9 +53,23 @@
             <input type="time" id="timeapp" name="timeapp" required>
         </div>
         <div class="form-group">
-            <label for="Docotr">Select Doctor:</label>
+            <label for="Docotr">Select Dentist:</label>
             <select id="Doctor" name="doctor" required>
-            <option value= "zues" >Zues</option>
+            <?php
+                $q = $mysqli->prepare("SELECT firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
+                if($q->execute())
+                {
+                    $results = $q->get_result();
+                    while($row=$results->fetch_assoc())
+                    {
+                        echo '<option value ='.$row['staffID'].'>'.$row['firstName'].' '.$row['lastName'].' | '.$row['specialty'].'</option>';
+                    }
+                    
+                }
+                else{
+                    echo '<option value ="e">error</option>';
+                }
+            ?>
             </select>
         </div>
         <div class="form-groupapp">

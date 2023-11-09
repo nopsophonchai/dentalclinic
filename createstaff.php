@@ -79,6 +79,7 @@
                     
                     
                     <input type="submit" name = "Submitr" value="Submitr" style="color: #FFFFFF;">
+                <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
             </form>
         </div>
     </div>
