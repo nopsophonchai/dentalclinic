@@ -181,6 +181,27 @@
                 echo "Error: " . $mysqli->error;
             }
         }
+        elseif (formtype =='appointment'){
+
+            if(isset($_POST['submitapp'])){
+                $date = $_POST['dateapp'];
+                $time = $_POST['timeapp'];
+                $doc = $_POST['doctor'];
+                $reason = $_POST['reason'];
+            
+                $q2 =$mysqli ->prepare("INSERT INTO appointments (appointmentDate,appointmentTime,reason,staffID) VALUES (?,?,?,?)");
+                $q2 -> bind_param("sssi",$date,$time,$doc,$reason);
+                if ($q2 -> execute()){
+
+                    header('Location: myapp.php');
+                    exit;
+                }else {
+                    echo '<span>Error: ' . $mysqli->error . '</span>';
+                }
+                $q2->close();
+
+            }
+        }
     }
     
     
