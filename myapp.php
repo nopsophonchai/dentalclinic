@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+require_once('connect.php');
     if(isset($_POST['myappexit'])){
         header("Location: mainpage.php");
         exit;
@@ -25,37 +26,33 @@
                
                 <tr> 
                     <th>Date</th>
+                    <th>Time</th>
                     <th>Doctor</th>
                     <th>Reason</th>
                 </tr>
-
-                <tr>
-
-                <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+        <?php
+            $pat_id = $_SESSION['patientID'];
+            $app = $mysqli->prepare("SELECT * FROM appointment,staff,patient WHERE patient.patientID = appointment.patientID AND patient.patientID = ? AND staff.staffID = appointment.staffID");
+            $app -> bind_param("i",$pat_id);
+            if ($app -> execute()){
+                $result=$app->get_result();
+                while($row=$result->fetch_assoc()){?>
+                 <tr>
+                 <td><?=$row['appointmentDate']?></td>
+                    <td><?=$row['appointmentTime']?></td>
+                    <td><?=$row['firstName']?></td>
+                    <td><?=$row['reason']?></td>
                 </tr>
+
+
+                <?php}
+                
+
+
+            }
+?>
             </table>
-            <!--
-                <table>
-                <col width="10%">
-                <col width="20%">
-                <col width="30%">
-                <col width="30%">
-                <col width="5%">
-                <col width="5%">
-
-                <tr>
-                    <th>Group Code</th> 
-                    <th>Group Name</th>
-                    <th>Remark</th>
-                    <th>URL</th>
-                    <th>Edit</th>
-                    <th>Del</th>
-                </tr>
-                -->
             <form action="mainpage.php" method="post">
-
             <div class="form-groupmyapp">
                         <button type="submit" name="myappexit" >Return</button>
             </div>

@@ -40,6 +40,9 @@
             </form>
         </div>
     <div class="appformcontainer">
+        <form action = "dentalindex.php" method ="post">
+        <input type = "hidden" name="formType" value="appointment"/>
+
         <p><u>Appointmet fillout form </u></p>
         <div class="form-group">
             <label for="dateapp">Select Date:</label>
@@ -77,6 +80,7 @@
             <input type="submit" name ="submitapp" value="Submit">
             <input type="submit"  name="cancelapp" value="Cancel">
         </div>
+</form>
     </div>
     </div>
 </body>
