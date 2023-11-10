@@ -40,7 +40,7 @@
             </form>
         </div>
     <div class="appformcontainer">
-        <form action = "dentalindex.php" method ="post">
+        <form action = "dentalIndex.php" method ="post">
         <input type = "hidden" name="formType" value="appointment"/>
 
         <p><u>Appointmet fillout form </u></p>
@@ -56,7 +56,7 @@
             <label for="Docotr">Select Dentist:</label>
             <select id="Doctor" name="doctor">
             <?php
-                $q = $mysqli->prepare("SELECT firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
+                $q = $mysqli->prepare("SELECT staffID,firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
                 if($q->execute())
                 {
                     $results = $q->get_result();
