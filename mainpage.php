@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <label for="Docotr">Select Dentist:</label>
-            <select id="Doctor" name="doctor" required>
+            <select id="Doctor" name="doctor">
             <?php
                 $q = $mysqli->prepare("SELECT firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
                 if($q->execute())
@@ -62,7 +62,7 @@
                     $results = $q->get_result();
                     while($row=$results->fetch_assoc())
                     {
-                        echo '<option value ='.$row['staffID'].'>'.$row['firstName'].' '.$row['lastName'].' | '.$row['specialty'].'</option>';
+                        echo '<option value ="'.$row['staffID'].'">'.$row['firstName'].' '.$row['lastName'].' | '.$row['specialty'].'</option>';
                     }
                     
                 }
