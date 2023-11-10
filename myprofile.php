@@ -5,6 +5,18 @@
     {
         header("Location: login.php");
     }
+    elseif(isset($_POST['myappointments'])){
+        header("Location: myapp.php");
+        exit;
+    }
+    elseif(isset($_POST['dentalrecords'])){
+        header("Location: dentalrecords.php");
+        exit;
+    }
+    elseif(isset($_POST['billinghistory'])){
+        header("Location: billinghis.php");
+        exit;
+    }
     else
     {
         $id = $_SESSION['patientID'];
@@ -31,18 +43,22 @@
 </head>
 <body>
     <div class="container">
-        
         <div class="logo-containersignup">
-        <div class="form-groupmyprof1">
-
-        <div class="form-groupmyprof">
-                <button type="submit" name="dentalrecords" >Dental Records</button>
-                </div>
+            <div class="form-groupmyprof1">
+                <form action ="myapp.php" method="post">
                 <div class="form-groupmyprof">
-                <button type="submit" name="Billing History" >Billing History</button>
-</div>
-</div>
+                    <button type="submit" name="myappointments" >My Appointments</button>
+                </div> </form>
+                <form action="dentalrecords.php" method="post">
+                <div class="form-groupmyprof">
+                    <button type="submit" name="dentalrecords" >Dental Records</button>
+                </div></form>
+                <form action="billinghis.php" method="post">
+                <div class="form-groupmyprof">
+                    <button type="submit" name="billinghistory" >Billing History</button>
+            </div></form>
         </div>
+    </div>
         <div class="signup-form">
             <h2 class="signup-heading"> My profile</h2>
 
