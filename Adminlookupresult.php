@@ -1,0 +1,102 @@
+<?php
+session_start();
+require_once('connect.php');
+
+if (isset($_POST['searchbutton'])) {
+    $searchitem = $_POST['SearchText'];
+
+    // Using prepared statements to prevent SQL injection
+    $q = "SELECT CONCAT(patient.firstname, ' ', patient.lastname) AS name,patientID, 'patient' AS table_name FROM patient  
+          WHERE CONCAT(patient.firstname, ' ', patient.lastname) LIKE ?";
+    $q .= " UNION ALL ";
+    $q .= "SELECT CONCAT(staff.firstname, ' ', staff.lastname) AS name,staffID, 'staff' AS table_name FROM staff  
+          WHERE CONCAT(staff.firstname, ' ', staff.lastname) LIKE ?";
+
+    $stmt = $mysqli->prepare($q);
+    if (!$stmt) {
+        echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+    } else {
+        // Bind the parameter
+        $param = "%$searchitem%";
+        $stmt->bind_param("ss", $param, $param);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Check for errors
+        if (!$result) {
+            echo "Select failed. Error: " . $mysqli->error;
+            return false;
+        }
+    }
+} else {
+    $result = null; // If the form is not submitted, set $result to null to avoid errors
+}
+
+function getTableName($data)
+{
+    if (isset($data['name']) && isset($data['table_name'])) {
+        return $data['table_name'];
+    } else {
+        return 'unknown';
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Dentiste </title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-containermyapp">
+        </div>
+        <div class="signup-form">
+            <h2 class="signup-heading"> Admin Lookup Result </h2>
+            <div class="app-form">
+                <table>
+                    <thead>
+                        <tr>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($result) {
+                            while ($row = $result->fetch_array()) {
+                                $table = getTableName($row);
+                            
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo $table; ?></td><td>
+                                    <form action="view_profile.php" method="post">
+            <input type="hidden" name="row_id" value="<?php echo $row['patientID']; ?>">
+            <input type="hidden" name="type" value="<?php echo $table; ?>">
+            <input type="submit" name="view_profile" value="view profile"></input>
+                                        </form></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <form action="Adminlookup.php" method="post">
+                    <div class="form-groupmyapp">
+                        <button type="submit" name="Adminlookupexit">Return</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
