@@ -29,7 +29,12 @@ require_once('connect.php');
                     <div>
                         <label>Search By Date:</label>
                         <input type="date" name="searchDate">
-                        </label>
+
+                    </div>
+                    <div>
+                        <label>Show Completed:</label>
+                        <input type="checkbox" name="complete" value = 1>
+  
                     </div>
                     <div>
                         <button type = "submit" name = "subsearch">Search</button>
@@ -37,25 +42,31 @@ require_once('connect.php');
                     </form>
                 </div>
                 <br>
-</br>
-                <table> 
-                    <col width="10%" >
-                    <col width="10%">
-                    <col width="15%">
-                    <col width="25%">
-                    <col width="25%">
-                    <col width="50%">
+                </br>
+                <table style="table-layout: fixed; width: 55%;"> 
+                    <colgroup>
+                        <col style="width: 60px;">
+                        <col style="width: 60px;">
+                        <col style="width: 50px;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 150px;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                    </colgroup>
                 
                     <tr> 
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Dentist</th>
-                        <th>Patient</th>
-                        <th>Patient National ID</th>
-                        <th>Reason</th>
+                        <th style="white-space: nowrap;">Date</th>
+                        <th style="word-wrap: break-word;">Time</th>
+                        <th style="word-wrap: break-word;">Dentist</th>
+                        <th style="word-wrap: break-word;">Patient</th>
+                        <th style="word-wrap: break-word;">Patient National ID</th>
+                        <th >Reason</th>
+                        <th style="word-wrap: break-word;">Status</th>
+                        <th style="word-wrap: break-word;">Toggle Status</th>
                     </tr>
                     <?php
-                    $query = "SELECT a.appointmentDate as ad, a.appointmentTime as at, s.firstName as sfn, p.firstName as pfn, p.nationalID as nid, a.reason as reason FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
+                    $query = "SELECT a.appointmentID as aid, a.appointmentDate as ad, a.appointmentTime as at, s.firstName as sfn, p.firstName as pfn, p.nationalID as nid, a.reason as reason FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
                     $parameters = [];
                     $types = '';
                     if(isset($_POST['subsearch']))
@@ -79,6 +90,11 @@ require_once('connect.php');
                         $parameters[] = $datesearch;
                         $types = 's';
                     }
+                    if(isset($_POST['complete']))
+                    {
+                        $query .= " AND completion = 0";
+                    }
+
                     
                     }
                     $que = $mysqli->prepare($query);
@@ -97,7 +113,21 @@ require_once('connect.php');
                             echo    '<td>'.$row['sfn'].'</td>'; 
                             echo    '<td>'.$row['pfn'].'</td>';
                             echo    '<td>'.$row['nid'].'</td>';
-                            echo    '<td>'.$row['reason'].'</td>';
+                            echo    '<td style="word-break: break-all; overflow: auto; ">'.$row['reason'].'</td>';
+                            if($row['completion'] == 0)
+                            {
+                                echo    '<td>Active</td>';
+                            }
+                            else
+                            {
+                                echo    '<td>Completed</td>';
+                            }
+                            echo '<td>';
+                            echo '<form action = "updateapp.php" method = "post">';
+                            echo '<input type="hidden" name="id" value="' . $row['aid'] . '">';
+                            echo '<input type = "submit" value = "Edit">';
+                            echo '</form>';
+                            echo '</td>';
                             echo '</tr>';
                         }
                     }
@@ -113,23 +143,90 @@ require_once('connect.php');
             </div>
         
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <div class="appformcontainer">
+    <p><u>Create Appointment</u></p>
+    <form action = "adminappointment.php" method ="post">
+                <div class="form-group">
+                    <label for="dateapp">Select Date:</label>
+                    <input type="date" id="dateapp" name="dateapp" required>
+                    <input type="submit" name = "subdate" value = "Confirm Date">
+                </div>
+     </form>
         <form action = "adminappointment.php" method ="post">
-            <p><u>Create Appointment</u></p>
+            
+            
+            
+            <?php
+
+            
+            if(isset($_POST['dateapp']) && !empty($_POST['dateapp']))
+            {
+                
+                $_SESSION['dateapp'] = $_POST['dateapp'];
+                $mydate = $_SESSION['dateapp'];
+                $times = $mysqli->prepare("SELECT appointmentTime FROM appointment WHERE appointmentDate = ?");
+                        $times -> bind_param("s",$mydate);
+                        $aquiredTime = [];
+                        if($times->execute())
+                        {
+                            $resultsTime = $times->get_result();
+
+                            while($myTime = $resultsTime->fetch_assoc())
+                            {
+                                $timeMine = new DateTime($myTime['appointmentTime']);
+                                $timeMine = $timeMine -> format('H:i');
+                                $aquiredTime[] = $timeMine;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                        // print_r($aquiredTime);
+            echo '<span>Current Date: '. $_SESSION['dateapp'].'</span>';
+            echo '<br></br>';
+            echo '<div class="form-group">';
+            echo   '<label for="timeapp">Select Time:</label>';
+            echo  '<select name = "timeapp">';
+
+                        
+                        
+                        $timestart = new DateTime('09:00');
+                        $timeend = new DateTime('17:00');
+                        $step = new DateInterval('PT30M');
+                        for($current = clone $timestart; $current < $timeend; $current->add($step))
+                        {
+                            $time = $current->format('H:i');
+                            if ($time >= '12:00' && $time < '13:00' || in_array($time, $aquiredTime)) {
+                                continue;
+                            }
+                            echo '<option value="'.$time.'">'.$time.'</option>';
+                        }
+                    
+            echo  '</select>';
+            echo '</div>';
+                    }
+            ?>
             <div class="form-group">
                 <label >National ID:</label>
                 <input type="text" name="nationalid" required>
             </div>
             <input type = "hidden" name="formType" value="adappointment"/>
-            <div class="form-group">
-                <label for="dateapp">Select Date:</label>
-                <input type="date" id="dateapp" name="dateapp" required>
-            </div>
-            <div class="form-group">
-                <label for="timeapp">Select Time:</label>
-                <input type="time" id="timeapp" name="timeapp" required>
-            </div>
             <div class="form-group">
                 <label for="Docotr">Select Dentist:</label>
                 <select id="Doctor" name="doctor">
@@ -172,7 +269,7 @@ require_once('connect.php');
                         }
                         else
                         {
-                            $date = $_POST['dateapp'];
+                            $date = $_SESSION['dateapp'];
                             $time = $_POST['timeapp'];
                             $doc = $_POST['doctor'];
                             $reason = $_POST['reason'];
