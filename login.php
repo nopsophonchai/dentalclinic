@@ -1,10 +1,34 @@
 <?php 
 session_start();
-require_once('connect.php')
+require_once('connect.php');
+$q = $mysqli->prepare("SELECT * FROM staffAccounts WHERE Username = 'Admin'");
+if($q->execute())
+{
+    $resultspass = $q->get_result();
+    $row = $resultspass->fetch_assoc();
+    $pass = $row['Password'];
+    if(password_verify('Admin123',$pass))
+    {
+
+    }
+    else
+    {
+        $hashedPass = password_hash('Admin123', PASSWORD_DEFAULT);
+        $stmt = $mysqli->prepare("UPDATE staffAccounts SET Password = ? WHERE Username = 'Admin'");
+        $stmt->bind_param("s", $hashedPass);
+        if ($stmt->execute()) {
+        
+        } else {
+            echo "Failed to update admin password: " . $mysqli->error;
+        }
+    }   
+}
+else
+{
+
+}
 
 ?>
-
-
 <!DOCTYPE html > 
 
 <html> 
@@ -80,6 +104,7 @@ require_once('connect.php')
                 $row = $result2->fetch_assoc();
                 if(password_verify($password,$row['Password']))
                 {
+                    $_SESSION['patientID'] = $row['accountID'];
                     header("Location: Adminmanager.php");
                 }
                 else

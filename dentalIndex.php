@@ -193,7 +193,9 @@
             $doc = $_POST['doctor'];
             $reason = $_POST['reason'];
         
+            //$timecheck = $mysqli ->prepare("SELECT * FROM appointment WHERE staffID = ? AND appointmentTime >= ? AND appointmentDate = ? AND ");
             
+
             $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
             $q2 -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
             if ($q2 -> execute()){
@@ -205,6 +207,23 @@
             }
             $q2->close();
 
+        }
+    }
+    elseif ($formtype =='adappointment')
+    {
+        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
+        $combid -> bind_param("s",$_POST['nationalid']);
+        if($combid->execute())
+        {
+            $idresults = $combid->get_result();
+            if($idresults -> num_rows === 0)
+            {
+                echo '<span>NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
+            }
+        }
+        else
+        {
+            echo '<span>Error: ' . $mysqli->error . '</span>';
         }
     }
     

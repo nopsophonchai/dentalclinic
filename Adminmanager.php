@@ -1,3 +1,17 @@
+<?php
+    session_start();
+    if(isset($_POST['log'])) {
+        session_unset();
+        session_destroy();
+        header('Location: login.php');
+        exit;
+    }
+    if(!isset($_SESSION['patientID']))
+    {
+        header('Location: login.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +27,7 @@
         <div class="create_staff-form1">
 
             <div class="form-groupAdminmana">
-                   <form action="signup.php" method="post">
+            <form action="signup.php" method="post">
                    <input type="submit"style="color: var(--button-text-color);" value="Create Patient"></form>
                    </div>
 
@@ -31,12 +45,16 @@
                     </button></form>
                    </div>
                    <div class="form-groupAdminmana1">
-                   <form action="createstaff.php" method="post">
+                   <form action="adminappointment.php" method="post">
                    <input type="submit"style="color: var(--button-text-color);" value="Appointment"></form>
                    </div>
                     
                     
                    
+            </form>
+            <form action = "Adminmanager.php" method = 'post'>
+                <input type = 'submit' value = 'logout' name='log'>
+        
             </form>
         </div>
     </div>
