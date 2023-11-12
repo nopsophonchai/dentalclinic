@@ -3,11 +3,22 @@
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
+    echo $_SESSION['formType'];
+    $formtype = 0; 
+    if(isset($_SESSION['formType']))
+    {
+        $ft = $_SESSION['formType'];
+    }
+    if(isset($_POST['formType']))
+    {
+        $formtype = $_POST['formType'];
+    }
+   
     require_once('connect.php');
-    $formtype = $_POST['formType'];
+    var_dump($_POST);
+    
     if($formtype == 'signup')
     {
-            
         if(isset($_POST['signupbutton']))
         {
             echo 'Hi';
@@ -209,30 +220,9 @@
 
         }
     }
-    elseif ($formtype =='adappointment')
+    elseif ($ft =='adappointment')
     {
-        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
-        $combid -> bind_param("s",$_POST['nationalid']);
-        if($combid->execute())
-        {
-            $idresults = $combid->get_result();
-            if($idresults -> num_rows === 0)
-            {
-                echo '<span>NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
-            }
-        }
-        else
-        {
-            echo '<span>Error: ' . $mysqli->error . '</span>';
-        }
+        echo 'hi';
     }
     
-    
-
-
-
-
-
-
-
 ?>
