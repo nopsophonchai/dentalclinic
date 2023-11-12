@@ -5,7 +5,6 @@ require_once('connect.php');
 if (isset($_POST['searchbutton'])) {
     $searchitem = $_POST['SearchText'];
 
-    // Using prepared statements to prevent SQL injection
     $q = "SELECT CONCAT(patient.firstname, ' ', patient.lastname) AS name,patientID, 'patient' AS table_name FROM patient  
           WHERE CONCAT(patient.firstname, ' ', patient.lastname) LIKE ?";
     $q .= " UNION ALL ";
@@ -16,25 +15,20 @@ if (isset($_POST['searchbutton'])) {
     if (!$stmt) {
         echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
     } else {
-        // Bind the parameter
         $param = "%$searchitem%";
         $stmt->bind_param("ss", $param, $param);
 
-        // Execute the query
         $stmt->execute();
 
-        // Get the result
         $result = $stmt->get_result();
 
-        // Check for errors
         if (!$result) {
             echo "Select failed. Error: " . $mysqli->error;
             return false;
         }
     }
 } else {
-    $result = null; // If the form is not submitted, set $result to null to avoid errors
-}
+    $result = null; }
 
 function getTableName($data)
 {
@@ -64,7 +58,9 @@ function getTableName($data)
                 <table>
                     <thead>
                         <tr>
-                            
+                        <th>Name</th>
+                    <th>Type</th>
+                    <th>profile</th>
                         </tr>
                     </thead>
                     <tbody>
