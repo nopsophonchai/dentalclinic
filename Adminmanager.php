@@ -45,9 +45,11 @@
                     </button></form>
                    </div>
                    <div class="form-groupAdminmana1">
-                   <form action="adminappointment.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Appointment"></form>
+                   <form action="createstaff.php" method="post">
+                   <input type="submit"style="color: var(--button-text-color);" value="Appiontment"></form>
                    </div>
+                   <form action="login.php" method="post">
+                   <input type="submit"style="color: var(--button-text-color);" value="Logout"></form>
                     
                     
                    
@@ -60,3 +62,4 @@
     </div>
 </body>
 </html>
+
