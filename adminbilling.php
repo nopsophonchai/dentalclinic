@@ -42,7 +42,7 @@ require_once('connect.php');
                 </tr>
             <?php
                     $pat_id = $_SESSION['patientID'];
-                    $bill = $mysqli->prepare("SELECT billing.amount,billing.billingTime,billing.description FROM billing JOIN patient on billing.patientID = patient.patientID WHERE patient.patientID = ?");
+                    $bill = $mysqli->prepare("SELECT billing.billingID, billing.patientID,billing.amount,billing.billingTime,billing.description FROM billing JOIN patient on billing.patientID = patient.patientID WHERE patient.patientID = ?");
                     $bill ->bind_param("i",$pat_id);
 
                     if ($bill-> execute()){
@@ -53,8 +53,8 @@ require_once('connect.php');
                             <td><?=$row['billingTime']?></td>
                             <td><?=$row['description']?></td>
                             <td><?=$row['amount']?></td>
-                            <td><a href='editbilling.php?patientid=<?=$row['patientID']?>'><img src="Modify.png" width="24" height="24"></a></td>
-                            <td><a href='delbilling.php?patuentid=<?=$row['patientID']?>'> <img src="Delete.png" width="24" height="24"></a></td>
+                            <td><a href='admineditbilling.php?patientid=<?=$row['patientID']?>&billingid=<?=$row['billingID']?>'><img src="Modify.png" width="24" height="24"></a></td>
+                            <td><a href='admindelbilling.php?patuentid=<?=$row['patientID']?>&billingid=<?=$row['billingID']?>'> <img src="Delete.png" width="24" height="24"></a></td>
                             </tr>
                             <?php
                         }

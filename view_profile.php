@@ -54,8 +54,10 @@
                 <button type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
                 
+                <form action="billing_history.php" method="post">
     <input type="hidden" name="patientID" value="<?php echo $userDetails['patientID'];?>">
-    <button type="submit" name="Billinghistory">Billing History</button>
+    <button type="submit" name="Billing History">Billing History</button>
+</form>
 </div>
         </div></form>
         <div class="signup-form">

@@ -3,12 +3,7 @@
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
-    echo $_SESSION['formType'];
     $formtype = 0; 
-    if(isset($_SESSION['formType']))
-    {
-        $ft = $_SESSION['formType'];
-    }
     if(isset($_POST['formType']))
     {
         $formtype = $_POST['formType'];
@@ -287,9 +282,6 @@
             //$timecheck = $mysqli ->prepare("SELECT * FROM appointment WHERE staffID = ? AND appointmentTime >= ? AND appointmentDate = ? AND ");
             
 
-=========
-            
->>>>>>>>> Temporary merge branch 2
             $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
             $q2 -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
             if ($q2 -> execute()){
@@ -321,15 +313,14 @@
         }
     }
     elseif($formtype=='insertbilling'){
-
         if(isset($_POST['subbill'])){
-            $patID = $_SESSION['patientID'];
-            $date = $_POST['bill-time'];
+            $patID = 1;
+     
             $description = $_POST['bill-des'];
             $amount = $_POST['bill-amount'];
 
-            $insb = $mysqli ->prepare("INSERT INTO billing(patientID,description,amount,billingTime) VALUES (?,?,?,?)");
-            $insb -> bind_param("isss",$patientID,$description,$amount,$date);
+            $insb = $mysqli ->prepare("INSERT INTO billing(description,amount,patientID) VALUES (?,?,?)");
+            $insb -> bind_param("ssi",$description,$amount,$patID);
             if ($insb -> execute()){
                 header('Location: adminbilling.php');
                 exit;
@@ -340,89 +331,33 @@
         }
         
     }
-    elseif($formtype == 'createpatient')
-    {
-            
-        if(isset($_POST['admincreatepatient']))
-        {
-            echo 'Hi';
+    elseif($formtype=='insertdental'){
+        if(isset($_POST['subdental'])){
+            $patID11 = 1;
+            $dentnote = $_POST['dental-note'];
+            $denttreat = $_POST['dental-treatment'];
+            $dentdiag = $_POST['dental-diagnosis'];
 
-            $Username = $_POST['username'];
-            $Password = $_POST['password'];
-            $fname = $_POST['first-name'];
-            $lname = $_POST['last-name'];
-            $gender = $_POST['gender'];
-            $telephone = $_POST['telephone'];
-            $dob = $_POST['date-of-birth'];
-            $nationalID = $_POST['natid'];
-            $address = $_POST['address'];
-            echo $Username."".$Password."".$fname."".$lname."".$gender."".$telephone."".$dob."".$nationalID."".$address;
-            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
-            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
-            $usercheck -> bind_param("s",$Username);
-            echo 'Hi';
-            ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-            if($usercheck -> execute())
-            {
-                $result = $usercheck->get_result();
-                if($result->num_rows === 0 )
-                {
-                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
-                    if ($stmt === false) {
-                        die("Prepare failed: " . $mysqli->error);
-                    }
-                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
-          
-                    if($stmt->execute()){
-                        
-                        echo "Data inserted successfully";
-
-                    }
-                    else
-                    {
-                        
-                        echo "Select failed. Error: ".$mysqli->error ;
-                        
-                    }
-                    
-                    $lastid = $mysqli->insert_id;
-                    $stmt->close();
-                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
-                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
-                    if($r->execute()){
-                        ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-                        echo "Data inserted successfully";
-                        $_SESSION['patientID'] = $lastid;
-                        header('Location: Adminmanager.php');
-                    }
-                    else
-                    {
-                        
-                        echo "Select failed. Error: ".$mysqli->error ;
-                        
-                    }
-                    $r->close();
-                }
-                else
-                {echo 'username already exists!';
-                header("Location: admincreatepatient.php");
-            exit;}
-            
+            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (?,?,?,?)");
+            $insd -> bind_param("sssi",$dentnote,$denttreat,$dentdiag,$patID11);
+            if ($insd -> execute()){
+                header('Location: admindental.php');
+                exit;
+            }else {
+                echo '<span>Error: ' . $mysqli->error . '</span>';
             }
-            else
-            {
-                echo $mysqli->error;
-            }
-            $usercheck -> close();
-
+            $insd->close();
         }
+        elseif(isset($_POST['canceldental'])){
+            header('Location: admindental.php');
+            exit;
+        }
+        
     }
     elseif($formtype =='viewprofile'){
 
         if (isset($_POST['Billinghistory'])){
-            header("Location: adminbilling.php");
+            header('Location: adminbilling.php');
             exit;
         }
     }

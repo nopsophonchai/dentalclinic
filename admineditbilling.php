@@ -1,7 +1,14 @@
 <?php 
     session_start();
     require_once('connect.php');
+    if (isset($_GET['patientid'])) {
+        $_SESSION['id2'] = $_GET['patientid'];
+    }
+    if (isset($_GET['billingid'])) {
+        $_SESSION['ID'] = $_GET['billingid'];
+    }
     
+    // echo $_SESSION['ID'];
     if(!isset($_SESSION['patientID']))
     {
         header("Location: login.php");
@@ -15,6 +22,9 @@
             $result = $info->get_result();
             if($result->num_rows > 0) {
                 $userDetails = $result->fetch_assoc();
+                $date = new DateTime($userDetails['billingTime']);
+                $formattedDate = $date ->format('Y-m-d\TH:i');
+                $userDetails['billingTime'] =$formattedDate;
             } else {
                 echo "No records found.";
             }
@@ -25,14 +35,15 @@
         
     }
     if (isset($_POST['billeditsubmit'])) {
-        echo "<span>frdgdg</span>";
-        $id2 = $_SESSION['patientID'];
+
+        $id2 = $_SESSION['id2'];
+        $ID = $_SESSION['ID'];
         $date = $_POST['bill-time'];
         $description = $_POST['bill-des'];
         $amount = $_POST['bill-amount'];
     
-        $q = $mysqli -> prepare("UPDATE billing SET description=?,amount=?,billingTime=? WHERE patientID = ?");
-        $q -> bind_param("isss", $id2,$date,$description,$amount);
+        $q = $mysqli -> prepare("UPDATE billing SET description=?,amount=?,billingTime=? WHERE billingID = ?");
+        $q -> bind_param("sssi",$description, $amount,$date,$ID);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
@@ -43,6 +54,10 @@
 
         }
         $q->close();
+    }
+    elseif($_POST['billeditcancel']){
+        header('Location: adminbilling.php');
+        exit;
     }
 ?>
 
@@ -56,10 +71,9 @@
     <div class="container"> 
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="formgroup">
             <h2 class="signup-heading"> Edit Billing  </h2>
-
-            <form action="editbilling.php" method="post">
+            <form action="admineditbilling.php" method="post">
                     <input type = "hidden" name="formType" value="editpatient"/>
                     <div class="form-group">
                     <label for="bill-time">Time:</label>
@@ -74,13 +88,16 @@
                         <label for="bill-amount">Amount:</label>
                         <?php        echo "<input type='text' name='bill-amount' value=" .$userDetails['amount'] . ">";
 ?>                    </div>
+
                     <div class="form-groupbilledit">
                         <button type="submit" name="billeditsubmit" >Submit</button>
-                        <button type="submit" name="billeditCancel" >Cancel</button>
-                    </div>
-                </div>
-               
+                        <button type="submit" name="billeditcancel" >Cancel</button>
+                    </div>               
             </form>
+            <div class ="form-groupbilledit">
+            <form action = "adminbilling.php" method = "post">
+                <button type="submit" name="back" >Back</button>
+</div></form>
         </div>
     </div>
 </body>
