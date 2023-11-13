@@ -132,6 +132,60 @@ body {
     margin-bottom: 15px;
     text-align: left;
 }
+.form-groupbillinsert{
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+   
+}
+.form-groupbill{
+    margin-top: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+.form-groupbilledit{
+    margin-bottom: 15px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+
+.form-groupbill button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.form-groupbillinsert button {
+    width: 160px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+.form-groupbilledit button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-groupbillinsert input[type="submit"] {
+    display: inline-block; /* Override to inline-block */
+    margin: 0 10px; /* Adjust margins as needed */
+}
+
+
 .form-groupapp button {
     width: 120px;
     height: 30px;

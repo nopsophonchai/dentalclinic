@@ -299,5 +299,105 @@
     {
         echo 'hi';
     }
+    elseif($formtype=='insertbilling'){
+
+        if(isset($_POST['subbill'])){
+            $patID = $_SESSION['patientID'];
+            $date = $_POST['bill-time'];
+            $description = $_POST['bill-des'];
+            $amount = $_POST['bill-amount'];
+
+            $insb = $mysqli ->prepare("INSERT INTO billing(patientID,description,amount,billingTime) VALUES (?,?,?,?)");
+            $insb -> bind_param("isss",$patientID,$description,$amount,$date);
+            if ($insb -> execute()){
+                header('Location: adminbilling.php');
+                exit;
+            }else {
+                echo '<span>Error: ' . $mysqli->error . '</span>';
+            }
+            $insb->close();
+        }
+        
+    }
+    elseif($formtype == 'createpatient')
+    {
+            
+        if(isset($_POST['admincreatepatient']))
+        {
+            echo 'Hi';
+
+            $Username = $_POST['username'];
+            $Password = $_POST['password'];
+            $fname = $_POST['first-name'];
+            $lname = $_POST['last-name'];
+            $gender = $_POST['gender'];
+            $telephone = $_POST['telephone'];
+            $dob = $_POST['date-of-birth'];
+            $nationalID = $_POST['natid'];
+            $address = $_POST['address'];
+            echo $Username."".$Password."".$fname."".$lname."".$gender."".$telephone."".$dob."".$nationalID."".$address;
+            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
+            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+            $usercheck -> bind_param("s",$Username);
+            echo 'Hi';
+            ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+            if($usercheck -> execute())
+            {
+                $result = $usercheck->get_result();
+                if($result->num_rows === 0 )
+                {
+                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+                    if ($stmt === false) {
+                        die("Prepare failed: " . $mysqli->error);
+                    }
+                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+          
+                    if($stmt->execute()){
+                        
+                        echo "Data inserted successfully";
+
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    
+                    $lastid = $mysqli->insert_id;
+                    $stmt->close();
+                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
+                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+                    if($r->execute()){
+                        ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+                        echo "Data inserted successfully";
+                        $_SESSION['patientID'] = $lastid;
+                        header('Location: Adminmanager.php');
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    $r->close();
+                }
+                else
+                {echo 'username already exists!';
+                header("Location: admincreatepatient.php");
+            exit;}
+            
+            }
+            else
+            {
+                echo $mysqli->error;
+            }
+            $usercheck -> close();
+
+        }
+    }
+    
     
 ?>
