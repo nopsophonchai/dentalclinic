@@ -1,9 +1,13 @@
-
 <?php
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
+    echo $_SESSION['formType'];
     $formtype = 0; 
+    if(isset($_SESSION['formType']))
+    {
+        $ft = $_SESSION['formType'];
+    }
     if(isset($_POST['formType']))
     {
         $formtype = $_POST['formType'];
@@ -210,9 +214,32 @@
             header('Location: mainpage.php');
             exit;
         }
-        elseif(isset($_POST['myprofexittolookup']))
+    }elseif($formtype == 'viewprofile')
+    {   echo "thrthdg";
+        if(isset($_POST['editpatient']))
         {
-            header('Location: Adminlookup.php');
+            header('Location: editpatientforadmin.php');
+            exit;
+        }elseif(isset($_POST['editstaff']))
+        {
+            header('Location: editstaffforadmin.php');
+            exit;
+        }
+        elseif(isset($_POST['myprofexit']))
+        {
+            header('Location: mainpage.php');
+            exit;
+        }elseif(isset($_POST['dentalrecords']))
+        {
+            header('Location: dentalrecords.php');
+            exit;
+        }elseif(isset($_POST['adminbilling']))
+        {
+            header('Location: adminbilling.php');
+            exit;
+        }elseif(isset($_POST['myprofexittolookup']))
+        {
+            header('Location: adminlookup.php');
             exit;
         }
     }
@@ -220,6 +247,23 @@
     {   echo "thrthdg";
       /*  if(isset($_POST['editsubmit']))
         {
+            exit;
+        }
+       /* elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
+        }*/
+    }
+    
+    elseif($formtype == 'editpatientforadmin')
+    {   echo "thrthdg";
+        if(isset($_POST['editsubmit']))
+        {header('Location: view_profile.php');
+            exit;
+        }
+        elseif(isset($_POST['editcancel']))
+        {header('Location: view_profile.php');
             exit;
         }
        /* elseif(isset($_POST['myprofile']))
@@ -295,32 +339,20 @@
 
         }
     }
-    elseif ($formtype =='adappointment')
+    elseif ($ft =='adappointment')
     {
-        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
-        $combid -> bind_param("s",$_POST['nationalid']);
-        if($combid->execute())
-        {
-            $idresults = $combid->get_result();
-            if($idresults -> num_rows === 0)
-            {
-                echo '<span>NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
-            }
-        }
-        else
-        {
-            echo '<span>Error: ' . $mysqli->error . '</span>';
-        }
+        echo 'hi';
     }
     elseif($formtype=='insertbilling'){
+
         if(isset($_POST['subbill'])){
-            $patID = 1;
-     
+            $patID = $_SESSION['patientID'];
+            $date = $_POST['bill-time'];
             $description = $_POST['bill-des'];
             $amount = $_POST['bill-amount'];
 
-            $insb = $mysqli ->prepare("INSERT INTO billing(description,amount,patientID) VALUES (?,?,?)");
-            $insb -> bind_param("ssi",$description,$amount,$patID);
+            $insb = $mysqli ->prepare("INSERT INTO billing(patientID,description,amount,billingTime) VALUES (?,?,?,?)");
+            $insb -> bind_param("isss",$patientID,$description,$amount,$date);
             if ($insb -> execute()){
                 header('Location: adminbilling.php');
                 exit;
@@ -331,44 +363,85 @@
         }
         
     }
-    elseif($formtype=='insertdental'){
-        if(isset($_POST['subdental'])){
-            $patID11 = 1;
-            $dentnote = $_POST['dental-note'];
-            $denttreat = $_POST['dental-treatment'];
-            $dentdiag = $_POST['dental-diagnosis'];
+    elseif($formtype == 'createpatient')
+    {
+            
+        if(isset($_POST['admincreatepatient']))
+        {
+            echo 'Hi';
 
-            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (?,?,?,?)");
-            $insd -> bind_param("sssi",$dentnote,$denttreat,$dentdiag,$patID11);
-            if ($insd -> execute()){
-                header('Location: admindental.php');
-                exit;
-            }else {
-                echo '<span>Error: ' . $mysqli->error . '</span>';
+            $Username = $_POST['username'];
+            $Password = $_POST['password'];
+            $fname = $_POST['first-name'];
+            $lname = $_POST['last-name'];
+            $gender = $_POST['gender'];
+            $telephone = $_POST['telephone'];
+            $dob = $_POST['date-of-birth'];
+            $nationalID = $_POST['natid'];
+            $address = $_POST['address'];
+            echo $Username."".$Password."".$fname."".$lname."".$gender."".$telephone."".$dob."".$nationalID."".$address;
+            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
+            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+            $usercheck -> bind_param("s",$Username);
+            echo 'Hi';
+            ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+            if($usercheck -> execute())
+            {
+                $result = $usercheck->get_result();
+                if($result->num_rows === 0 )
+                {
+                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+                    if ($stmt === false) {
+                        die("Prepare failed: " . $mysqli->error);
+                    }
+                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+          
+                    if($stmt->execute()){
+                        
+                        echo "Data inserted successfully";
+
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    
+                    $lastid = $mysqli->insert_id;
+                    $stmt->close();
+                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
+                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+                    if($r->execute()){
+                        ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+                        echo "Data inserted successfully";
+                        $_SESSION['patientID'] = $lastid;
+                        header('Location: Adminmanager.php');
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    $r->close();
+                }
+                else
+                {echo 'username already exists!';
+                header("Location: admincreatepatient.php");
+            exit;}
+            
             }
-            $insd->close();
-        }
-        elseif(isset($_POST['canceldental'])){
-            header('Location: admindental.php');
-            exit;
-        }
-        
-    }
-    elseif($formtype =='viewprofile'){
+            else
+            {
+                echo $mysqli->error;
+            }
+            $usercheck -> close();
 
-        if (isset($_POST['Billinghistory'])){
-            header('Location: adminbilling.php');
-            exit;
         }
     }
     
     
-    
-
-
-
-
-
-
-
 ?>
