@@ -3,11 +3,22 @@
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
+    echo $_SESSION['formType'];
+    $formtype = 0; 
+    if(isset($_SESSION['formType']))
+    {
+        $ft = $_SESSION['formType'];
+    }
+    if(isset($_POST['formType']))
+    {
+        $formtype = $_POST['formType'];
+    }
+   
     require_once('connect.php');
-    $formtype = $_POST['formType'];
+    var_dump($_POST);
+    
     if($formtype == 'signup')
     {
-            
         if(isset($_POST['signupbutton']))
         {
             echo 'Hi';
@@ -73,6 +84,81 @@
                 else
                 {echo 'username already exists!';
                 header("Location: signup.php");
+            exit;}
+            
+            }
+            else
+            {
+                echo $mysqli->error;
+            }
+            $usercheck -> close();
+
+        }
+    }
+    if($formtype == 'createpatient')
+    {
+        if(isset($_POST['signupbutton']))
+        {
+
+            $Username = $_POST['username'];
+            $Password = $_POST['password'];
+            $fname = $_POST['first-name'];
+            $lname = $_POST['last-name'];
+            $gender = $_POST['gender'];
+            $telephone = $_POST['telephone'];
+            $dob = $_POST['date-of-birth'];
+            $nationalID = $_POST['natid'];
+            $address = $_POST['address'];
+            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
+            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+            $usercheck -> bind_param("s",$Username);
+            echo 'Hi';
+            ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+            if($usercheck -> execute())
+            {
+                $result = $usercheck->get_result();
+                if($result->num_rows === 0 )
+                {
+                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+                    if ($stmt === false) {
+                        die("Prepare failed: " . $mysqli->error);
+                    }
+                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+          
+                    if($stmt->execute()){
+                        
+                        echo "Data inserted successfully";
+
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    
+                    $lastid = $mysqli->insert_id;
+                    $stmt->close();
+                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
+                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+                    if($r->execute()){
+                        ini_set('display_errors', 1);
+                error_reporting(E_ALL);
+                        echo "Data inserted successfully";
+                        header('Location: Adminmanager.php');
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    $r->close();
+                }
+                else
+                {echo 'username already exists!';
+                header("Location: admincreate.php");
             exit;}
             
             }
@@ -201,7 +287,9 @@
             //$timecheck = $mysqli ->prepare("SELECT * FROM appointment WHERE staffID = ? AND appointmentTime >= ? AND appointmentDate = ? AND ");
             
 
+=========
             
+>>>>>>>>> Temporary merge branch 2
             $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
             $q2 -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
             if ($q2 -> execute()){
