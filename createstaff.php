@@ -76,7 +76,18 @@
                         <label for="salary">Salary:</label>
                         <input type="text" id="salary" name="salary" required>
                     </div>
-                    
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" name="usernameStaff" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="text" name="passwordStaff" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Confirm Password:</label>
+                        <input type="text" name="staffConfirm" required>
+                    </div>
                     
                     <input type="submit" name = "Submitr" value="Submitr" style="color: #FFFFFF;">
                 <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">

@@ -3,7 +3,6 @@
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
-    echo $_SESSION['formType'];
     $formtype = 0; 
     if(isset($_SESSION['formType']))
     {
@@ -21,10 +20,16 @@
     {
         if(isset($_POST['signupbutton']))
         {
-            echo 'Hi';
-
             $Username = $_POST['username'];
             $Password = $_POST['password'];
+            $confirmPassword = $_POST['conpasswd'];
+            if ($Password !== $confirmPassword) {
+                header("Location: signup.php?error=Passwords do not match");
+                exit();
+            }
+        
+
+            
             $fname = $_POST['first-name'];
             $lname = $_POST['last-name'];
             $gender = $_POST['gender'];
@@ -229,9 +234,8 @@
         }*/
     }
     elseif ($formtype == 'createstaff') {
-        
         if (isset($_POST['Submitr'])) {
-            echo 'hi';
+
             $fname = $_POST['first-name'];
             $lname = $_POST['last-name'];
             $natid = $_POST['natid'];
@@ -243,6 +247,8 @@
             $address = $_POST['address'];
             $specialty = $_POST['specialty'];
             $ava = 1;
+            $Username = $_POST['usernameStaff'];
+            $hashedPass = password_hash($_POST['passwordStaff'],PASSWORD_DEFAULT);
             
             $q = $mysqli->prepare("SELECT * FROM staff WHERE nationalID = ?");
             $q->bind_param("s", $natid);
@@ -253,16 +259,30 @@
                     $w->bind_param("sssssssiisi", $fname, $lname, $gender, $natid, $tele, $address, $dob, $ava, $type, $specialty, $salary);
                     if ($w->execute()) {
                         echo '<span>Staff created</span>';
-                        header('Location: Adminmanager.php');
-                        exit;
+                  
                     } else {
                         echo '<span>Error: ' . $mysqli->error . '</span>';
                     }
-                    $w->close();
+                    
+                    $lastid = $mysqli->insert_id;
+                    $r = $mysqli->prepare("INSERT INTO staffAccount (username, password,staffID) VALUES (?,?,?)");
+                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+                    if($r->execute()){
+                        
+                        echo "Data inserted successfully";
+                        header('Location: Adminmanager.php');
+                    }
+                    else
+                    {
+                        
+                        echo "Select failed. Error: ".$mysqli->error ;
+                        
+                    }
+                    $r->close();
                 } else {
                     echo '<span>National ID already exists!</span>';
                 }
-                $q->close();
+                
             } else {
                 echo "Error: " . $mysqli->error;
             }

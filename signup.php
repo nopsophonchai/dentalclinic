@@ -48,13 +48,19 @@
                         <label for="Username">Username:</label>
                         <input type="text" id="username" name="username" required>
                     </div>
+                    <?php
+                        if (isset($_GET['error'])) {
+                            echo '<p style="color: red;">' . htmlspecialchars($_GET['error']) . '</p>';
+                        }
+                    ?>
                     <div class="form-group">
                         <label for="passrord">Password:</label>
-                        <input type="text" id="password" name="password" required>
+                        <input type="password" id="password" name="password" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="conpasswd">Confirm Password:</label>
-                        <input type="text" id="conpasswd" name="conpasswd" required>
+                        <input type="password" id="conpasswd" name="conpasswd" required>
                     </div>
                     
                     <input type="submit" name="signupbutton" value="Sign Up"> 

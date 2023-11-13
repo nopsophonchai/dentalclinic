@@ -43,7 +43,13 @@ CREATE TABLE userAccounts(
     patientID INT NOT NULL UNIQUE,
     FOREIGN KEY (patientID) REFERENCES patient(patientID)
 );
-
+CREATE TABLE staffAccount(
+    accountID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    staffID INT NOT NULL,
+    FOREIGN KEY (staffID) REFERENCES staff(StaffID)
+);
 CREATE TABLE staffAccounts(
     accountID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(255) NOT NULL UNIQUE,

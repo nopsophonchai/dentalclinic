@@ -68,7 +68,7 @@ else
             $stmt2->bind_param("s",$username);
             $stmt2->execute();
             $result2 = $stmt2->get_result();
-            $stmt->execute();
+
                 if ($stmt2->errno) {
                     // handle error here
                     echo "Execute failed: (" . $stmt2->errno . ") " . $stmt2->error;
@@ -81,8 +81,32 @@ else
             if($result2->num_rows === 0)
             {
                 if ($result->num_rows === 0) {
-                
-                    echo "<span style = 'color: red'>Username does not exist!</span>";
+                    $ss = $mysqli->prepare("SELECT * FROM staffAccount WHERE username = ?");
+                    $ss -> bind_param("s",$username);
+                    if($ss->execute())
+                    {
+                        $resultS = $ss->get_result();
+                        if($resultS -> num_rows === 0)
+                        {
+                            echo "<span style = 'color: red'>Username does not exist!</span>";
+                        }
+                        else
+                        {
+                            $rowS = $resultS ->fetch_assoc();
+                            if(password_verify($password,$rowS['password']))
+                            {
+                                $_SESSION['patientID'] = $rowS['accountID'];
+                                header("Location: staff/staffmain.php");
+                            }
+                            else {
+                                echo '<span style = "color: red">Incorrect Password/Username</span>';
+                            
+                            }
+                        }
+
+                    }
+                    else{echo "<span>error</span>";}
+                    
                 } else {
                     $row = $result->fetch_assoc();
                     if (password_verify($password,$row['Password'])) {
