@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('connect.php');
-
+$today = date("Y-m-d");
 
 
 ?>
@@ -32,7 +32,7 @@ require_once('connect.php');
 
                     </div>
                     <div>
-                        <label>Show Completed:</label>
+                        <label>Show Active Appointments Only:</label>
                         <input type="checkbox" name="complete" value = 1>
   
                     </div>
@@ -66,7 +66,7 @@ require_once('connect.php');
                         <th style="word-wrap: break-word;">Toggle Status</th>
                     </tr>
                     <?php
-                    $query = "SELECT a.appointmentID as aid, a.appointmentDate as ad, a.appointmentTime as at, s.firstName as sfn, p.firstName as pfn, p.nationalID as nid, a.reason as reason FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
+                    $query = "SELECT a.appointmentID as aid, a.appointmentDate as ad, a.appointmentTime as at, s.firstName as sfn, p.firstName as pfn, p.nationalID as nid, a.reason as reason,a.completion as com FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
                     $parameters = [];
                     $types = '';
                     if(isset($_POST['subsearch']))
@@ -107,6 +107,7 @@ require_once('connect.php');
                         $results = $que->get_result();
                         while($row = $results->fetch_assoc())
                         {
+                            
                             echo '<tr>';
                             echo    '<td>'.$row['ad'].'</td>';
                             echo    '<td>'.$row['at'].'</td>';
@@ -114,13 +115,17 @@ require_once('connect.php');
                             echo    '<td>'.$row['pfn'].'</td>';
                             echo    '<td>'.$row['nid'].'</td>';
                             echo    '<td style="word-break: break-all; overflow: auto; ">'.$row['reason'].'</td>';
-                            if($row['completion'] == 0)
+                            if($row['com'] == 0)
                             {
                                 echo    '<td>Active</td>';
                             }
-                            else
+                            elseif($row['com'] == 1)
                             {
                                 echo    '<td>Completed</td>';
+                            }
+                            else
+                            {
+                                echo '<td>CANCELLED</td>';
                             }
                             echo '<td>';
                             echo '<form action = "updateapp.php" method = "post">';
@@ -163,7 +168,7 @@ require_once('connect.php');
     <form action = "adminappointment.php" method ="post">
                 <div class="form-group">
                     <label for="dateapp">Select Date:</label>
-                    <input type="date" id="dateapp" name="dateapp" required>
+                    <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>
                     <input type="submit" name = "subdate" value = "Confirm Date">
                 </div>
      </form>
@@ -179,7 +184,7 @@ require_once('connect.php');
                 
                 $_SESSION['dateapp'] = $_POST['dateapp'];
                 $mydate = $_SESSION['dateapp'];
-                $times = $mysqli->prepare("SELECT appointmentTime FROM appointment WHERE appointmentDate = ?");
+                $times = $mysqli->prepare("SELECT appointmentTime FROM appointment WHERE appointmentDate = ? AND completion = 0");
                         $times -> bind_param("s",$mydate);
                         $aquiredTime = [];
                         if($times->execute())
@@ -275,17 +280,34 @@ require_once('connect.php');
                             $reason = $_POST['reason'];
                             $natid = $idresults->fetch_assoc();
                             $patientID = $natid['patientID'];
-                            $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
-                            $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
-                            if ($ins -> execute()){
 
-                                header('Location: adminappointment.php');
-                                exit;
-                            }else {
+                            $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = ?");
+                            $check -> bind_param("sss",$date,$time,$reason);
+                            if($check->execute())
+                            {
+                                $checkresult = $check->get_result();
+                                if($checkresult -> num_rows === 0)
+                                {
+                                    $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
+                                        $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
+                                        if ($ins -> execute()){
+
+                                            header('Location: adminappointment.php');
+                                            exit;
+                                        }else {
+                                            echo '<span>Error: ' . $mysqli->error . '</span>';
+                                        }
+                                        $ins->close();
+                                }
+                            }
+                            else
+                            {
                                 echo '<span>Error: ' . $mysqli->error . '</span>';
                             }
-                            $ins->close();
+
                         }
+                        $check->close();
+
                     }
                     else
                     {

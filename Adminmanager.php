@@ -27,37 +27,39 @@
         <div class="create_staff-form1">
 
             <div class="form-groupAdminmana">
-            <form action="signup.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Create Patient"></form>
+            <form action="admincreate.php" method="post">
+                   <input type="submit"style="color: var(--button-text-color);" value="Create Patient">
+            </form>
                    </div>
 
                    <div class="form-groupAdminmana">
                    <form action="createstaff.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Create Staff"></form>
+                   <input type="submit"style="color: var(--button-text-color);" value="Create Staff">
+                </form>
                    </div>
                     <div></div>
                    <div class="form-groupAdminmana1">
-                   <form action="Adminlookup.php" method="post">
+                <form action="Adminlookup.php" method="post">
                    <button type="submit"style="color: var(--button-text-color);">
                     <span style="white-space: nowrap;">Patient And Staff</span>
                     <br>
                     <span style="white-space: nowrap;">Lookup</span>
-                    </button></form>
+                    </button>
+                </form>
                    </div>
                    <div class="form-groupAdminmana1">
-                   <form action="adminappointment.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Appointment"></form>
+                <form action="adminappointment.php" method="post">
+                   <input type="submit"style="color: var(--button-text-color);" value="Appointment">
+                </form>
                    </div>
                    <form action="login.php" method="post">
                    <input type="submit"style="color: var(--button-text-color);" value="Logout"></form>
                     
                     
                    
-   
-            <form action = "Adminmanager.php" method = 'post'>
-                <input type = 'submit' value = 'logout' name='log'>
+
         
-            </form>
+
         </div>
     </div>
 </body>

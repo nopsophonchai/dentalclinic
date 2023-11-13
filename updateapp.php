@@ -18,6 +18,17 @@ if (isset($_POST['complete']) || isset($_POST['active']) || isset($_POST['cancel
     }
     $up->close();
 }
+elseif (isset($_POST['delete']))
+{
+    $del = $mysqli->prepare("DELETE FROM appointment WHERE appointmentID = ?");
+    $del -> bind_param("i", $_SESSION['id']);
+    if($del->execute())
+    {
+        header('Location: adminappointment.php');
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,6 +56,7 @@ if (isset($_POST['complete']) || isset($_POST['active']) || isset($_POST['cancel
                 <input type = "submit" value = "Set as complete" name = "complete">
                 <input type = "submit" value = "Set as active" name = "active">
                 <input type = "submit" value = "Set as cancelled" name = "cancelled">
+                <input type = "submit" value = "Delete" name = "delete">
             </form>
             
         </div>
