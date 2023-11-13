@@ -58,7 +58,7 @@
                     </div>
                     
                     <input type="submit" name="signupbutton" value="Create"> 
-                    <input type="submit" name="backbutton" value="Back"onClick="window.location='login.php';">
+                    <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
                    
             </form>
         </div>
