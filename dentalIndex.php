@@ -129,14 +129,11 @@
             header('Location: mainpage.php');
             exit;
         }
-<<<<<<< HEAD
-=======
         elseif(isset($_POST['myprofexittolookup']))
         {
             header('Location: Adminlookup.php');
             exit;
         }
->>>>>>> 4a4601fc27b19ff8938fe438a5848570a725e263
     }
     elseif($formtype == 'editpatient')
     {   echo "thrthdg";
@@ -201,13 +198,10 @@
             $doc = $_POST['doctor'];
             $reason = $_POST['reason'];
         
-<<<<<<< HEAD
             //$timecheck = $mysqli ->prepare("SELECT * FROM appointment WHERE staffID = ? AND appointmentTime >= ? AND appointmentDate = ? AND ");
             
 
-=======
             
->>>>>>> 4a4601fc27b19ff8938fe438a5848570a725e263
             $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
             $q2 -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
             if ($q2 -> execute()){
@@ -221,7 +215,6 @@
 
         }
     }
-<<<<<<< HEAD
     elseif ($formtype =='adappointment')
     {
         $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
@@ -338,9 +331,14 @@
 
         }
     }
+    elseif($formtype =='viewprofile'){
+
+        if (isset($_POST['Billinghistory'])){
+            header("Location: adminbilling.php");
+            exit;
+        }
+    }
     
-=======
->>>>>>> 4a4601fc27b19ff8938fe438a5848570a725e263
     
     
 

@@ -67,7 +67,7 @@ require_once('connect.php');
             <div class="form-groupbill">
                         <button type="submit" name="adminbillinsert" >Insert</button>
                 </form>
-                <form action ="adminmanager.php" method ="post">
+                <form action ="view_profile.php" method ="post">
                         <button type="submit" name="adminbillexit" >Return</button>
                     </div>
             </form>

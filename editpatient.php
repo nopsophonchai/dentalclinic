@@ -25,7 +25,6 @@
         
     }
     if (isset($_POST['editsubmit'])) {
-        // Extra all data from POST
         echo "<span>frdgdg</span>";
         $id2 = $_SESSION['patientID'];
         $firstname = $_POST['first-name'];

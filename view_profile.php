@@ -10,7 +10,9 @@
 
             <?php
             // Assuming you have a database connection established
+            session_start();
             require_once('connect.php');
+
 
             if (isset($_POST['view_profile'])) {
                 $row_id = $_POST['row_id'];
@@ -37,7 +39,7 @@
                         ?>
 
                         <form action="dentalIndex.php" method="post">
-                            <input type="hidden" name="formType" value="myprofile" />
+                            <input type="hidden" name="formType" value="view_profile" />
 
                             <?php
                             if ($table === 'patient') {
@@ -52,11 +54,10 @@
                 <button type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
                 
-                <div class="form-groupmyprof">
-                <button type="submit" name="Billing History" >Billing History</button>
+    <input type="hidden" name="patientID" value="<?php echo $userDetails['patientID'];?>">
+    <button type="submit" name="Billinghistory">Billing History</button>
 </div>
-</div>
-        </div>
+        </div></form>
         <div class="signup-form">
             <h2 class="signup-heading"> My profile</h2>
 

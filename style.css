@@ -126,22 +126,123 @@ body {
     transform: translate(0, -50%);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: left;
-    
+
+} 
+.form-groupapp {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.form-groupbillinsert{
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+   
+}
+.form-groupbill{
+    margin-top: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+.form-groupbilledit{
+    margin-bottom: 15px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
 }
 
-.create_staff-form1{
-    padding: 10px;
-    border-radius: 10px;
-    position: absolute;
-    top: 10px;
-    left: 150px;
-    text-align: left;
-    
-    
+.form-groupbill button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-.create_staff-form input[type="submit"] {
+.form-groupbillinsert button {
+    width: 160px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+.form-groupbilledit button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-groupbillinsert input[type="submit"] {
+    display: inline-block; /* Override to inline-block */
+    margin: 0 10px; /* Adjust margins as needed */
+}
+
+
+.form-groupapp button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-groupapp label {
     display: block;
-    margin: 0 auto; 
+    text-align: left;
+}
+.form-groupapp textarea {
+    width: 50%; 
+}
+input[type="submit"] {
+    background-color: #48a4a7;
+    color: black; 
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+
+}
+.form-groupmy {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmy button {
+    width: 100px;
+    background-color: #48a4a7;
+   height: 30px;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-groupmyapp button {
+    width: 100px;
+    background-color: #48a4a7;
+   height: 30px;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 200px;
+}
+.form-groupmyprof {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmyprof1 {
+    margin-top: 160px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.form-groupmyprof button {
+    width: 100px;
     background-color: #48a4a7;
    height: 30px;
     border: none;

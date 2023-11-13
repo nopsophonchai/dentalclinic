@@ -54,10 +54,7 @@
                     
                    
             </form>
-            <form action = "Adminmanager.php" method = 'post'>
-                <input type = 'submit' value = 'logout' name='log'>
-        
-            </form>
+          
         </div>
     </div>
 </body>
