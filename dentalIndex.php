@@ -1,4 +1,3 @@
-
 <?php
     session_start();
     ini_set('display_errors', 1);
@@ -219,11 +218,11 @@
     {   echo "thrthdg";
         if(isset($_POST['editpatient']))
         {
-            header('Location: editpatient.php');
+            header('Location: editpatientforadmin.php');
             exit;
         }elseif(isset($_POST['editstaff']))
         {
-            header('Location: editpatient.php');
+            header('Location: editstaffforadmin.php');
             exit;
         }
         elseif(isset($_POST['myprofexit']))
@@ -248,6 +247,23 @@
     {   echo "thrthdg";
       /*  if(isset($_POST['editsubmit']))
         {
+            exit;
+        }
+       /* elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
+        }*/
+    }
+    
+    elseif($formtype == 'editpatientforadmin')
+    {   echo "thrthdg";
+        if(isset($_POST['editsubmit']))
+        {header('Location: view_profile.php');
+            exit;
+        }
+        elseif(isset($_POST['editcancel']))
+        {header('Location: view_profile.php');
             exit;
         }
        /* elseif(isset($_POST['myprofile']))

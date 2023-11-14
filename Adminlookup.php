@@ -17,12 +17,13 @@
                         <input type="text" id="SearchText" name="SearchText" >
                   
                     </div>
+                    <div class="form-group">
                     <input type="submit" name="searchbutton" value="Search">
                     </form>
                     <form action="Adminmanager.php" method="post">
-                <input type="submit" name="backbutton" value="Back"  >
+                <input type="submit" name="backbutton" value="Back">
 </form>
-                
+                </div>
             
         </div>
     </div>

@@ -2,14 +2,15 @@
     session_start();
     require_once('connect.php');
     
-    if(!isset($_SESSION['patientID']))
+    if(!isset($_SESSION['staffID']))
     {
         header("Location: login.php");
     }
     else
     {
-        $id = $_SESSION['patientID'];
-        $info = $mysqli -> prepare("SELECT * FROM patient WHERE patientID = ?");
+        $id = $_SESSION['staffID'];
+        echo $_SESSION['staffID'];
+        $info = $mysqli -> prepare("SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?");
         $info -> bind_param("i", $id);
         if($info->execute()) {
             $result = $info->get_result();
@@ -25,25 +26,28 @@
         
     }
     if (isset($_POST['editsubmit'])) {
+        // Extra all data from POST
         echo "<span>frdgdg</span>";
         $id2 = $_SESSION['patientID'];
         $firstname = $_POST['first-name'];
         $lastname = $_POST['last-name'];
-        $natid = $_POST['natID'];
-        $address = $_POST['address'];
-        $tel = $_POST['telephone'];
+        $gender = $_POST['gender'];
+        $type = $_POST['type'];
         $dob = $_POST['date-of-birth'];
+        $stat = $_POST['status'];
+        
 
     
-        $q = $mysqli -> prepare("UPDATE patient SET firstName=?,lastName=?,nationalID=?,houseAddress=?,telephone=?,dateOfBirth=? WHERE patientID = ?");
-        $q -> bind_param("ssssssi", $firstname,$lastname,$natid,$address,$tel,$dob,$id2);
+        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=? WHERE staffID = ?");
+        $q -> bind_param("sssssi", $firstname,$lastname,$gender ,$dob,$stat,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
-            header('Location: myprofile.php');
+            $_SESSION['staffID'] = $id2;
+            header('Location: view_profile.php');
     
         } else {
-            header('Location: myprofile.php');
+            header('Location: view_profile.php');
             echo "Select failed. Error: " .$mysqli->error;
 
         }
@@ -64,8 +68,8 @@
         <div class="signup-form">
             <h2 class="signup-heading"> Patient Profile </h2>
 
-            <form action="editpatient.php" method="post">
-                    <input type = "hidden" name="formType" value="editpatient"/>
+            <form action="editstaffforadmin.php" method="post">
+            <input type="hidden" name="formType" value="editstaff"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
 <?php                        echo "<input type='text' name='first-name' value=" .$userDetails['firstName'] . ">";
@@ -76,20 +80,22 @@
                         <?php       echo "<input type='text' name='last-name' value=" .$userDetails['lastName'] . ">";
 ?>                    </div>
                     <div class="form-group">
-                        <label for="natid">National ID:</label>
-                        <?php        echo "<input type='text' name='natID' value=" .$userDetails['nationalID'] . ">";
+                        <label for="gender">Gender:</label>
+                        <?php        echo "<input type='text' name='gender' value=" .$userDetails['gender'] . ">";
+?>                    </div>
+                        <div class="form-group">
+                        <label for="type">Type:</label>
+                        <?php                        echo "<input type='text' name='type' value=" .$userDetails['type'] . ">";
 ?>                    </div>
                     <div class="form-group">
                         <label for="date-of-birth">Date of Birth:</label>
                         <?php                        echo "<input type='text' name='date-of-birth' value=" .$userDetails['dateOfBirth'] . ">";
 ?>                    </div>
-                    <div class="form-group">
-                        <label for="telephone">Telephone:</label>
-                        <?php                        echo "<input type='text' name='telephone' value=" .$userDetails['telephone'] . ">";
-?>                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <?php                        echo "<input type='text' name='address' value=" .$userDetails['houseAddress'] . ">";
+                    
+                    
+                            <div class="form-group">
+                        <label for="status">Status:</label>
+                        <?php                        echo "<input type='text' name='status' value=" .$userDetails['avaStat'] . ">";
 ?>                    </div>
                     
                     <div class="form-groupmy">
