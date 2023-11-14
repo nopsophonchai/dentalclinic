@@ -145,6 +145,12 @@ body {
     display: flex;
     justify-content: center;
 }
+.form-groupdental{
+    margin-top: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
 .form-groupbilledit{
     margin-bottom: 15px;
     text-align: left;
@@ -163,6 +169,17 @@ body {
     margin-left: 10px;
     margin-right: 10px;
 }
+.form-groupdental button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .form-groupbillinsert button {
     width: 160px;
     height: 30px;
@@ -170,7 +187,7 @@ body {
     border: none;
     text-align: center;
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .form-groupbilledit button {
     width: 120px;
@@ -178,13 +195,45 @@ body {
     background-color: #48a4a7;
     border: none;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 20px;
+    margin-bottom: 0%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px ;
+}
+.form-groupdentaledit button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 1px ;
 }
 .form-groupbillinsert input[type="submit"] {
     display: inline-block; /* Override to inline-block */
     margin: 0 10px; /* Adjust margins as needed */
 }
-
+.form-groupdentaledit{
+    margin-top: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+.form-groupdentaledit input[type="submit"] {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 .form-groupapp button {
     width: 120px;
@@ -269,4 +318,8 @@ table{
 
 h2{
     color: #1c7072;
+}
+.formgroup{
+
+    margin-bottom: 1px;
 }

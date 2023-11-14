@@ -28,7 +28,8 @@
 
             <div class="form-groupAdminmana">
             <form action="admincreate.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Create Patient"></form>
+                   <input type="submit"style="color: var(--button-text-color);" value="Create Patient">
+            </form>
                    </div>
 
                    <div class="form-groupAdminmana">

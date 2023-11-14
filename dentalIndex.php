@@ -1,13 +1,8 @@
-
 <?php
     session_start();
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
     $formtype = 0; 
-    if(isset($_SESSION['formType']))
-    {
-        $ft = $_SESSION['formType'];
-    }
     if(isset($_POST['formType']))
     {
         $formtype = $_POST['formType'];
@@ -224,11 +219,11 @@
     {   echo "thrthdg";
         if(isset($_POST['editpatient']))
         {
-            header('Location: editpatientAdmin.php');
+            header('Location: editpatientforadmin.php');
             exit;
         }elseif(isset($_POST['editstaff']))
         {
-            header('Location: editpatientAdmin.php');
+            header('Location: editstaffforadmin.php');
             exit;
         }
         elseif(isset($_POST['myprofexit']))
@@ -245,6 +240,8 @@
             exit;
         }elseif(isset($_POST['myprofexittolookup']))
         {
+            session_unset();
+            session_destroy();
             header('Location: adminlookup.php');
             exit;
         }
@@ -253,6 +250,23 @@
     {   echo "thrthdg";
       /*  if(isset($_POST['editsubmit']))
         {
+            exit;
+        }
+       /* elseif(isset($_POST['myprofile']))
+        {
+            header('Location: myprofile.php');
+            exit;
+        }*/
+    }
+    
+    elseif($formtype == 'editpatientforadmin')
+    {   echo "thrthdg";
+        if(isset($_POST['editsubmit']))
+        {header('Location: view_profile.php');
+            exit;
+        }
+        elseif(isset($_POST['editcancel']))
+        {header('Location: view_profile.php');
             exit;
         }
        /* elseif(isset($_POST['myprofile']))
@@ -343,20 +357,17 @@
 
         }
     }
-    elseif ($ft =='adappointment')
-    {
-        echo 'hi';
-    }
+
     elseif($formtype=='insertbilling'){
 
         if(isset($_POST['subbill'])){
-            $patID = $_SESSION['patientID'];
+            $patID = $_POST['patientIDBil'];
             $date = $_POST['bill-time'];
             $description = $_POST['bill-des'];
             $amount = $_POST['bill-amount'];
 
-            $insb = $mysqli ->prepare("INSERT INTO billing(patientID,description,amount,billingTime) VALUES (?,?,?,?)");
-            $insb -> bind_param("isss",$patientID,$description,$amount,$date);
+            $insb = $mysqli ->prepare("INSERT INTO billing(description,amount,billingTime,patientID) VALUES (?,?,?,?)");
+            $insb -> bind_param("sssi",$description,$amount,$date,$patID);
             if ($insb -> execute()){
                 header('Location: adminbilling.php');
                 exit;
@@ -367,85 +378,85 @@
         }
         
     }
-    elseif($formtype == 'createpatient')
-    {
+    // elseif($formtype == 'createpatient')
+    // {
             
-        if(isset($_POST['admincreatepatient']))
-        {
-            echo 'Hi';
+    //     if(isset($_POST['admincreatepatient']))
+    //     {
+    //         echo 'Hi';
 
-            $Username = $_POST['username'];
-            $Password = $_POST['password'];
-            $fname = $_POST['first-name'];
-            $lname = $_POST['last-name'];
-            $gender = $_POST['gender'];
-            $telephone = $_POST['telephone'];
-            $dob = $_POST['date-of-birth'];
-            $nationalID = $_POST['natid'];
-            $address = $_POST['address'];
-            echo $Username."".$Password."".$fname."".$lname."".$gender."".$telephone."".$dob."".$nationalID."".$address;
-            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
-            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
-            $usercheck -> bind_param("s",$Username);
-            echo 'Hi';
-            ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-            if($usercheck -> execute())
-            {
-                $result = $usercheck->get_result();
-                if($result->num_rows === 0 )
-                {
-                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
-                    if ($stmt === false) {
-                        die("Prepare failed: " . $mysqli->error);
-                    }
-                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+    //         $Username = $_POST['username'];
+    //         $Password = $_POST['password'];
+    //         $fname = $_POST['first-name'];
+    //         $lname = $_POST['last-name'];
+    //         $gender = $_POST['gender'];
+    //         $telephone = $_POST['telephone'];
+    //         $dob = $_POST['date-of-birth'];
+    //         $nationalID = $_POST['natid'];
+    //         $address = $_POST['address'];
+    //         echo $Username."".$Password."".$fname."".$lname."".$gender."".$telephone."".$dob."".$nationalID."".$address;
+    //         $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
+    //         $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+    //         $usercheck -> bind_param("s",$Username);
+    //         echo 'Hi';
+    //         ini_set('display_errors', 1);
+    //             error_reporting(E_ALL);
+    //         if($usercheck -> execute())
+    //         {
+    //             $result = $usercheck->get_result();
+    //             if($result->num_rows === 0 )
+    //             {
+    //                 $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+    //                 if ($stmt === false) {
+    //                     die("Prepare failed: " . $mysqli->error);
+    //                 }
+    //                 $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
           
-                    if($stmt->execute()){
+    //                 if($stmt->execute()){
                         
-                        echo "Data inserted successfully";
+    //                     echo "Data inserted successfully";
 
-                    }
-                    else
-                    {
+    //                 }
+    //                 else
+    //                 {
                         
-                        echo "Select failed. Error: ".$mysqli->error ;
+    //                     echo "Select failed. Error: ".$mysqli->error ;
                         
-                    }
+    //                 }
                     
-                    $lastid = $mysqli->insert_id;
-                    $stmt->close();
-                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
-                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
-                    if($r->execute()){
-                        ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-                        echo "Data inserted successfully";
-                        $_SESSION['patientID'] = $lastid;
-                        header('Location: Adminmanager.php');
-                    }
-                    else
-                    {
+    //                 $lastid = $mysqli->insert_id;
+    //                 $stmt->close();
+    //                 $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
+    //                 $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+    //                 if($r->execute()){
+    //                     ini_set('display_errors', 1);
+    //             error_reporting(E_ALL);
+    //                     echo "Data inserted successfully";
+    //                     $_SESSION['patientID'] = $lastid;
+    //                     header('Location: Adminmanager.php');
+    //                 }
+    //                 else
+    //                 {
                         
-                        echo "Select failed. Error: ".$mysqli->error ;
+    //                     echo "Select failed. Error: ".$mysqli->error ;
                         
-                    }
-                    $r->close();
-                }
-                else
-                {echo 'username already exists!';
-                header("Location: admincreatepatient.php");
-            exit;}
+    //                 }
+    //                 $r->close();
+    //             }
+    //             else
+    //             {echo 'username already exists!';
+    //             header("Location: admincreatepatient.php");
+    //         exit;}
             
-            }
-            else
-            {
-                echo $mysqli->error;
-            }
-            $usercheck -> close();
+    //         }
+    //         else
+    //         {
+    //             echo $mysqli->error;
+    //         }
+    //         $usercheck -> close();
 
-        }
-    }
+    //     }
+    // }
     
     
 ?>

@@ -70,7 +70,6 @@ else
             $result2 = $stmt2->get_result();
 
                 if ($stmt2->errno) {
-                    // handle error here
                     echo "Execute failed: (" . $stmt2->errno . ") " . $stmt2->error;
                 }
 
