@@ -203,6 +203,29 @@
         }
 
     }
+     elseif($formtype=='insertdental'){
+        if(isset($_POST['subdental'])){
+            $patID11 = $_SESSION['patientID'];
+            $dentnote = $_POST['dental-note'];
+            $denttreat = $_POST['dental-treatment'];
+            $dentdiag = $_POST['dental-diagnosis'];
+
+            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (?,?,?,?)");
+            $insd -> bind_param("sssi",$dentnote,$denttreat,$dentdiag,$patID11);
+            if ($insd -> execute()){
+                header('Location: admindental.php');
+                exit;
+            }else {
+                echo '<span>Error: ' . $mysqli->error . '</span>';
+            }
+            $insd->close();
+        }
+        elseif(isset($_POST['canceldental'])){
+            header('Location: admindental.php');
+            exit;
+        }
+        
+    }
     elseif($formtype == 'myprofile')
     {   echo "thrthdg";
         if(isset($_POST['edit']))
@@ -232,7 +255,7 @@
             exit;
         }elseif(isset($_POST['dentalrecords']))
         {
-            header('Location: dentalrecords.php');
+            header('Location: admindental.php');
             exit;
         }elseif(isset($_POST['adminbilling']))
         {

@@ -23,7 +23,7 @@ require_once('connect.php');
     
     </div>
         <div class="formgroup">
-            <h2 class="signup-heading"> Patient Dental Records </h2>
+            <h2 class="signup-heading"> <?php echo $_SESSION['patientID'];?>Patient Dental Records </h2>
             <div class="app-form">
             <table> 
                 <col width="30%">
