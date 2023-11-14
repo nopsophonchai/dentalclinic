@@ -2,14 +2,24 @@
 session_start();
 require_once('connect.php');
 
+// Assuming you have a function getTableName defined
+function getTableName($data)
+{
+    if (isset($data['name']) && isset($data['table_name'])) {
+        return $data['table_name'];
+    } else {
+        return 'unknown';
+    }
+}
+
 if (isset($_POST['searchbutton'])) {
     $searchitem = $_POST['SearchText'];
 
-    $q = "SELECT CONCAT(patient.firstname, ' ', patient.lastname) AS name,patientID, 'patient' AS table_name FROM patient  
-          WHERE CONCAT(patient.firstname, ' ', patient.lastname) LIKE ?";
+    $q = "SELECT CONCAT(patient.firstname, ' ', patient.lastname) AS name, patientID, 'patient' AS table_name FROM patient  
+          WHERE (CONCAT(patient.firstname, ' ', patient.lastname)) LIKE (?)";
     $q .= " UNION ALL ";
-    $q .= "SELECT CONCAT(staff.firstname, ' ', staff.lastname) AS name,staffID, 'staff' AS table_name FROM staff  
-          WHERE CONCAT(staff.firstname, ' ', staff.lastname) LIKE ?";
+    $q .= "SELECT CONCAT(staff.firstname, ' ', staff.lastname) AS name, staffID, 'staff' AS table_name FROM staff  
+          WHERE (CONCAT(staff.firstname, ' ', staff.lastname)) LIKE (?)";
 
     $stmt = $mysqli->prepare($q);
     if (!$stmt) {
@@ -26,28 +36,22 @@ if (isset($_POST['searchbutton'])) {
             echo "Select failed. Error: " . $mysqli->error;
             return false;
         }
+
+        // Store the search results in a session variable
+        $_SESSION['search_results'] = $result->fetch_all(MYSQLI_ASSOC);
     }
 } else {
-    $result = null; }
-
-function getTableName($data)
-{
-    if (isset($data['name']) && isset($data['table_name'])) {
-        return $data['table_name'];
-    } else {
-        return 'unknown';
-    }
+    // If no search is performed, set the session variable to an empty array
+    $_SESSION['search_results'] = [];
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title> Dentiste </title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 <body>
     <div class="container">
         <div class="logo-containermyapp">
@@ -58,28 +62,29 @@ function getTableName($data)
                 <table>
                     <thead>
                         <tr>
-                        <th>Name</th>
-                    <th>Type</th>
-                    <th>profile</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Profile</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        if ($result) {
-                            while ($row = $result->fetch_array()) {
+                        if ($_SESSION['search_results']) {
+                            foreach ($_SESSION['search_results'] as $row) {
                                 $table = getTableName($row);
-                            
-                                ?>
+                        ?>
                                 <tr>
                                     <td><?php echo $row['name']; ?></td>
-                                    <td><?php echo $table; ?></td><td>
-                                    <form action="view_profile.php" method="post">
-            <input type="hidden" name="row_id" value="<?php echo $row['patientID']; ?>">
-            <input type="hidden" name="type" value="<?php echo $table; ?>">
-            <input type="submit" name="view_profile" value="view profile"></input>
-                                        </form></td>
+                                    <td><?php echo $table; ?></td>
+                                    <td>
+                                        <form action="view_profile.php" method="post">
+                                            <input type="hidden" name="row_id" value="<?php echo $row['patientID']; ?>">
+                                            <input type="hidden" name="type" value="<?php echo $table; ?>">
+                                            <input type="submit" name="view_profile" value="View Profile">
+                                        </form>
+                                    </td>
                                 </tr>
-                                <?php
+                        <?php
                             }
                         }
                         ?>
@@ -94,5 +99,4 @@ function getTableName($data)
         </div>
     </div>
 </body>
-
 </html>
