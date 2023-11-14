@@ -224,16 +224,16 @@
     {   echo "thrthdg";
         if(isset($_POST['editpatient']))
         {
-            header('Location: editpatient.php');
+            header('Location: editpatientAdmin.php');
             exit;
         }elseif(isset($_POST['editstaff']))
         {
-            header('Location: editpatient.php');
+            header('Location: editpatientAdmin.php');
             exit;
         }
         elseif(isset($_POST['myprofexit']))
         {
-            header('Location: mainpage.php');
+            header('Location: adminlookup.php');
             exit;
         }elseif(isset($_POST['dentalrecords']))
         {

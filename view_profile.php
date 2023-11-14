@@ -5,112 +5,102 @@
     <title> Dentiste </title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+<?php
+    require_once('connect.php');
+    if (isset($_POST['view_profile'])) {
+        $row_id = $_POST['row_id'];
+        $table = $_POST['type'];
+        $query = "";
+        if ($table === 'patient') {
+            $query = "SELECT * FROM patient WHERE patientID = ?";
+        } 
+        elseif ($table === 'staff') 
+        {
+            $query = "SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?";
+        } 
+        else 
+        {
+            echo "Invalid table type.";
+            exit();
+        }
 
+        $stmt = $mysqli->prepare($query);
 
+        if ($stmt) {
+            $stmt->bind_param("s", $row_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            <?php
-            // Assuming you have a database connection established
-            require_once('connect.php');
+            if ($result->num_rows > 0) {
+                $userDetails = $result->fetch_assoc();
+                if($table === 'patient'){
+                $_SESSION['patientID'] = $row['patientID'];}
+?>
 
-            if (isset($_POST['view_profile'])) {
-                $row_id = $_POST['row_id'];
-    $table = $_POST['type'];
-                $query = "";
-                if ($table === 'patient') {
-                    $query = "SELECT * FROM patient WHERE patientID = ?";
-                } elseif ($table === 'staff') {
-                    $query = "SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?";
-                } else {
-                    echo "Invalid table type.";
-                    exit();
-                }
+                <form action="dentalIndex.php" method="post">
+                    <input type="hidden" name="formType" value="viewprofile" />
 
-                $stmt = $mysqli->prepare($query);
-
-                if ($stmt) {
-                    $stmt->bind_param("s", $row_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    if ($result->num_rows > 0) {
-                        $userDetails = $result->fetch_assoc();
-                        if($table === 'patient'){
-                        $_SESSION['patientID'] = $row['patientID'];}
-                        ?>
-
-                        <form action="dentalIndex.php" method="post">
+<?php
+    if ($table === 'patient') {
+?>
+                    <div class="container">
+                        <div class="logo-containersignup">
+                            <div class="form-groupmyprof1">
+                                <div class="form-groupmyprof">
+                                    <button type="submit" name="dentalrecords" >Dental Records</button>
+                                </div>
+                                <div class="form-groupmyprof">
+                                    <button type="submit" name="adminbilling" >Billing History</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="signup-form">
+                            <h2 class="signup-heading"> My profile</h2>
+                            <form action="dentalIndex.php" method="post">
                             <input type="hidden" name="formType" value="viewprofile" />
-
-                            <?php
-                            if ($table === 'patient') {
-                                // Display patient-specific information
-                                ?>
-                                   <div class="container">
-        
-        <div class="logo-containersignup">
-        <div class="form-groupmyprof1">
-
-        <div class="form-groupmyprof">
-                <button type="submit" name="dentalrecords" >Dental Records</button>
-                </div>
-                
-                <div class="form-groupmyprof">
-                <button type="submit" name="adminbilling" >Billing History</button>
-</div>
-</div>
-        </div>
-        <div class="signup-form">
-            <h2 class="signup-heading"> My profile</h2>
-
-            <form action="dentalIndex.php" method="post">
-            <input type="hidden" name="formType" value="viewprofile" />
-                    <div class="form-group">
-                        <label for="first-name">First Name:</label>
-                        <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name:</label>
-                        <?php echo '<label>'.$userDetails['lastName'].'</label>'; ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="natid">National ID:</label>
-                        <?php echo '<label>'.$userDetails['nationalID'].'</label>'; ?>
-                    </div>
-                    <div class="form-group">
-                        <label>Gender:</label>
-                        <?php echo '<label>'.$userDetails['gender'].'</label>'; ?>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="date-of-birth">Date of Birth:</label>
-                        <?php echo '<label>'.$userDetails['dateOfBirth'].'</label>'; ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="telephone">Telephone:</label>
-                        <?php echo '<label>'.$userDetails['telephone'].'</label>'; ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <?php echo '<label>'.$userDetails['houseAddress'].'</label>'; ?>
-                    </div>
+                            <div class="form-group">
+                                <label for="first-name">First Name:</label>
+                                <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name:</label>
+                                <?php echo '<label>'.$userDetails['lastName'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="natid">National ID:</label>
+                                <?php echo '<label>'.$userDetails['nationalID'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender:</label>
+                                <?php echo '<label>'.$userDetails['gender'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="date-of-birth">Date of Birth:</label>
+                                <?php echo '<label>'.$userDetails['dateOfBirth'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="telephone">Telephone:</label>
+                                <?php echo '<label>'.$userDetails['telephone'].'</label>'; ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <?php echo '<label>'.$userDetails['houseAddress'].'</label>'; ?>
+                            </div>
                     
-                    <div class="form-groupmy">
-                        <button type="submit" name="editpatient" >Edit</button>
-                        <button type="submit" name="myprofexittolookup" >Return</button>
-                    </div>
-                </div>
-               
-            </form>
+                            <div class="form-groupmy">
+                                <button type="submit" name="editpatient" >Edit</button>
+                                <button type="submit" name="myprofexittolookup" >Return</button>
+                            </div>
+                        </div>
+                </form>
         </div>
     </div>
-                                <?php
-                            } elseif ($table === 'staff') {
-                                // Display staff-specific information
-                                ?>
-                                 <div class="container">
-        
+<?php
+    } elseif ($table === 'staff') {
+?>
+    <div class="container">
         <div class="logo-containersignup">
-        <div class="form-groupmyprof1">
+            <div class="form-groupmyprof1">
 
         
                 
