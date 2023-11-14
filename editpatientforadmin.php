@@ -35,7 +35,7 @@ if (isset($_POST['editsubmit'])) {
     $q->bind_param("ssssssi", $firstname, $lastname, $natid, $address, $tel, $dob, $id2);
     
     if ($q->execute()) {
-        header('Location: view_profile.php');
+        header('Location: view_profile.php?type=patient');
     } else {
         echo "Update failed. Error: " . $mysqli->error;
         // Uncomment the line below if you want to see the error on the page

@@ -28,7 +28,7 @@
     if (isset($_POST['editsubmit'])) {
         // Extra all data from POST
         echo "<span>frdgdg</span>";
-        $id2 = $_SESSION['patientID'];
+        $id2 = $_SESSION['staffID'];
         $firstname = $_POST['first-name'];
         $lastname = $_POST['last-name'];
         $gender = $_POST['gender'];
@@ -38,16 +38,16 @@
         
 
     
-        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=? WHERE staffID = ?");
-        $q -> bind_param("sssssi", $firstname,$lastname,$gender ,$dob,$stat,$id2);
+        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=?,typeID=? WHERE staffID = ?");
+        $q -> bind_param("sssssii", $firstname,$lastname,$gender ,$dob,$stat,$type,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
             $_SESSION['staffID'] = $id2;
-            header('Location: view_profile.php');
+            header('Location: view_profile.php?type=staff');
     
         } else {
-            header('Location: view_profile.php');
+            header('Location: view_profile.php?type=staff');
             echo "Select failed. Error: " .$mysqli->error;
 
         }
@@ -66,7 +66,7 @@
         <div class="logo-containersignup">
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Patient Profile </h2>
+            <h2 class="signup-heading"> Staff Profile </h2>
 
             <form action="editstaffforadmin.php" method="post">
             <input type="hidden" name="formType" value="editstaff"/>
@@ -80,13 +80,33 @@
                         <?php       echo "<input type='text' name='last-name' value=" .$userDetails['lastName'] . ">";
 ?>                    </div>
                     <div class="form-group">
-                        <label for="gender">Gender:</label>
-                        <?php        echo "<input type='text' name='gender' value=" .$userDetails['gender'] . ">";
-?>                    </div>
-                        <div class="form-group">
-                        <label for="type">Type:</label>
-                        <?php                        echo "<input type='text' name='type' value=" .$userDetails['type'] . ">";
-?>                    </div>
+                        <label>Gender:</label>
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select name="type" required>
+                        <?php
+                            $t = $mysqli->prepare("SELECT * FROM type");
+                            if($t->execute())
+                            {
+                                $result = $t->get_result();
+                                while($row = $result-> fetch_assoc()){
+                                    echo '<option value ="'.$row['typeID'].'">'.$row['typeName'].'</option>';
+                                }
+                                
+                            }
+                            else
+                            {
+                                echo 'error';
+                            }
+                            $t->close();
+                        ?>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="date-of-birth">Date of Birth:</label>
                         <?php                        echo "<input type='text' name='date-of-birth' value=" .$userDetails['dateOfBirth'] . ">";
