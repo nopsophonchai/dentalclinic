@@ -27,7 +27,7 @@
                         <input type="text" name= "dental-diagnosis" required>
                     </div>
                     
-                    <div class="form-groupbilledit">
+                    <div class="form-groupdentaledit">
                     <button type="submit" name="subdental">Submit</button> 
                     <button type="button"name="canceldental">Return</button>
                 </div>

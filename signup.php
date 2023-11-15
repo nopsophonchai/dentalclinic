@@ -8,7 +8,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="formgroup">
             <h2 class="signup-heading"> Patient Sign Up </h2>
 
             <form action="dentalIndex.php" method="post">

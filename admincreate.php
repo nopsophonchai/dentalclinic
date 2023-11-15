@@ -8,7 +8,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="formgroup">
             <h2 class="signup-heading">Create Patient</h2>
 
             <form action="dentalIndex.php" method="post">
@@ -58,7 +58,7 @@
                     </div>
                     
                     <input type="submit" name="signupbutton" value="Create"> 
-                    <input type="submit" name="backbutton" value="Back"onClick="window.location='login.php';">
+                    <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
                    
             </form>
         </div>

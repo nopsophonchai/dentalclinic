@@ -36,10 +36,12 @@
 
                     if ($result->num_rows > 0) {
                         $userDetails = $result->fetch_assoc();
+                        if($table === 'patient'){
+                        $_SESSION['patientID'] = $row['patientID'];}
                         ?>
 
                         <form action="dentalIndex.php" method="post">
-                            <input type="hidden" name="formType" value="view_profile" />
+                            <input type="hidden" name="formType" value="viewprofile" />
 
                             <?php
                             if ($table === 'patient') {
@@ -54,17 +56,15 @@
                 <button type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
                 
-                <form action="billing_history.php" method="post">
-    <input type="hidden" name="patientID" value="<?php echo $userDetails['patientID'];?>">
-    <button type="submit" name="Billing History">Billing History</button>
-</form>
+                <div class="form-groupmyprof">
+                <button type="submit" name="adminbilling" >Billing History</button>
 </div>
         </div></form>
         <div class="signup-form">
             <h2 class="signup-heading"> My profile</h2>
 
             <form action="dentalIndex.php" method="post">
-                    <input type = "hidden" name="formType" value="myprofile"/>
+            <input type="hidden" name="formType" value="viewprofile" />
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
@@ -96,7 +96,7 @@
                     </div>
                     
                     <div class="form-groupmy">
-                        <button type="submit" name="edit" >Edit</button>
+                        <button type="submit" name="editpatient" >Edit</button>
                         <button type="submit" name="myprofexittolookup" >Return</button>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
             <h2 class="signup-heading"> My profile</h2>
 
             <form action="dentalIndex.php" method="post">
-                    <input type = "hidden" name="formType" value="myprofile"/>
+                    <input type = "hidden" name="formType" value="viewprofile"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <?php echo '<label>'.$userDetails['firstName'].'</label>'; ?>
@@ -154,7 +154,7 @@
                         <?php echo '<label>'.$userDetails['avaStat'].'</label>'; ?>
                     </div>
                     <div class="form-groupmy">
-                        <button type="submit" name="edit" >Edit</button>
+                        <button type="submit" name="editstaff" >Edit</button>
                         <button type="submit" name="myprofexittolookup" >Return</button>
                     </div>
                 </div>
@@ -166,10 +166,7 @@
                             }
                             ?>
 
-                            <div class="form-groupmy">
-                                <button type="submit" name="edit">Edit</button>
-                                <button type="submit" name="myprofexit">Return</button>
-                            </div>
+                            
                         </form>
 
                     <?php

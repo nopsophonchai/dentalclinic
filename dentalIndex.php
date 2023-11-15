@@ -213,6 +213,33 @@
         elseif(isset($_POST['myprofexittolookup']))
         {
             header('Location: Adminlookup.php');
+        }
+        elseif($formtype == 'viewprofile')
+    {   echo "thrthdg";
+        if(isset($_POST['editpatient']))
+        {
+            header('Location: editpatient.php');
+            exit;
+        }elseif(isset($_POST['editstaff']))
+        {
+            header('Location: editpatient.php');
+            exit;
+        }
+        elseif(isset($_POST['myprofexit']))
+        {
+            header('Location: mainpage.php');
+            exit;
+        }elseif(isset($_POST['dentalrecords']))
+        {
+            header('Location: dentalrecords.php');
+            exit;
+        }elseif(isset($_POST['adminbilling']))
+        {
+            header('Location: adminbilling.php');
+            exit;
+        }elseif(isset($_POST['myprofexittolookup']))
+        {
+            header('Location: adminlookup.php');
             exit;
         }
     }

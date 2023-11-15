@@ -20,39 +20,43 @@ $today = date("Y-m-d");
     </div>
             <div class="signup-form">
                 <h2 class="signup-heading"> My Appointments </h2>
-                <div>
-                    <div>
+                <div class ="checkapp">
+                    <div class = "form-group">
                         <form action = "adminappointment.php" method = "post">
                         <label>Search By Dentist:</label>
                         <input type="text" name="searchName">
                     </div>
-                    <div>
+                    <div class = "form-group">
                         <label>Search By Date:</label>
                         <input type="date" name="searchDate">
 
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label>Show Active Appointments Only:</label>
                         <input type="checkbox" name="complete" value = 1>
   
                     </div>
-                    <div>
-                        <button type = "submit" name = "subsearch">Search</button>
-                    </div>
+                    <div class="form-group1">
+                        <button type = "submit" name = "subsearch">Search</button>   
                     </form>
+                    <form action="Adminmanager.php" method="post">
+                    <button type="submit" name="myappexit" >Return</button>
+                </form>
+            </div>
                 </div>
                 <br>
                 </br>
-                <table style="table-layout: fixed; width: 55%;"> 
+                <div class="admintable">
+                <table style="table-layout: fixed; width: 80%;"> 
                     <colgroup>
-                        <col style="width: 60px;">
-                        <col style="width: 60px;">
-                        <col style="width: 50px;">
-                        <col style="width: 100px;">
-                        <col style="width: 100px;">
-                        <col style="width: 150px;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 12.5%;">
+                        <col style="width: 12.5%;">
                     </colgroup>
                 
                     <tr> 
@@ -140,42 +144,21 @@ $today = date("Y-m-d");
                     
                 ?>
                 </table>
-                <form action="Adminmanager.php" method="post">
-                    <div class="form-groupmyapp">
-                    <button type="submit" name="myappexit" >Return</button>
-                    </div>
-                </form>
-            </div>
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    <div class="appformcontainer">
-    <p><u>Create Appointment</u></p>
-    <form action = "adminappointment.php" method ="post">
-                <div class="form-group">
-                    <label for="dateapp">Select Date:</label>
-                    <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>
-                    <input type="submit" name = "subdate" value = "Confirm Date">
                 </div>
+
+        
+    <div class="appformcontainer1">
+    <form action = "adminappointment.php" method ="post">
+                <div class="appformcontainertime">  
+                    <div class = "form-groupapptime"> 
+                     <p><u>Create Appointment</u></p>
+                    <label for="dateapp">Select Date:</label>
+                    <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>   
+                     </div>
+                    <div class = "form-groupapp1">
+                    <input type="submit" name = "subdate" value = "Confirm Date"></div>
      </form>
         <form action = "adminappointment.php" method ="post">
-            
-            
-            
             <?php
 
             
@@ -226,13 +209,15 @@ $today = date("Y-m-d");
             echo  '</select>';
             echo '</div>';
                     }
-            ?>
-            <div class="form-group">
+
+            ?></div>
+            <div class="appformcontainerreason">
+            <div class="form-groupapp">
                 <label >National ID:</label>
                 <input type="text" name="nationalid" required>
             </div>
             <input type = "hidden" name="formType" value="adappointment"/>
-            <div class="form-group">
+            <div class="form-groupapp">
                 <label for="Docotr">Select Dentist:</label>
                 <select id="Doctor" name="doctor">
                 <?php
@@ -256,10 +241,10 @@ $today = date("Y-m-d");
                 <label for="reason">Please write your Reason:</label>
                 <textarea id="reason" name="reason" ></textarea>
             </div>
-            <div class="form-groupapp">
+            <div class="form-groupapp1">
                 <input type="submit" name ="submitapp" value="Submit">
                 <input type="submit"  name="cancelapp" value="Cancel">
-            </div>
+            </div></div>
             <?php
                 if(isset($_POST['submitapp']))
                 {
@@ -317,6 +302,6 @@ $today = date("Y-m-d");
                 }
             ?>
         </form>
-    </div>
+    </div></div>
 </body>
 </html> 
