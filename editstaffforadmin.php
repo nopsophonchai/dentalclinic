@@ -34,12 +34,13 @@
         $gender = $_POST['gender'];
         $type = $_POST['type'];
         $dob = $_POST['date-of-birth'];
+        $salary = $_POST['salary'];
         $stat = $_POST['status'];
         
 
     
-        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=?,typeID=? WHERE staffID = ?");
-        $q -> bind_param("sssssii", $firstname,$lastname,$gender ,$dob,$stat,$type,$id2);
+        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=?,typeID=?,salary=? WHERE staffID = ?");
+        $q -> bind_param("sssssiii", $firstname,$lastname,$gender ,$dob,$stat,$type,$salary,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
@@ -108,6 +109,10 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Salary: </label>
+                            <input type = "text" name = "salary" value ="<?php echo $userDetails['salary'];?>">
+                    </div>
+                    <div class="form-group">
                         <label for="date-of-birth">Date of Birth:</label>
                         <?php                        echo "<input type='text' name='date-of-birth' value=" .$userDetails['dateOfBirth'] . ">";
 ?>                    </div>
@@ -115,8 +120,11 @@
                     
                             <div class="form-group">
                         <label for="status">Status:</label>
-                        <?php                        echo "<input type='text' name='status' value=" .$userDetails['avaStat'] . ">";
-?>                    </div>
+                        <select name = "status" required>
+                            <option value = 1 >1</option>
+                            <option value = 0>0</option>
+                        </select>
+                    </div>
                     
                     <div class="form-groupmy">
                         <button type="submit" name="editsubmit" >Submit</button>

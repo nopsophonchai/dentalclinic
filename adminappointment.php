@@ -43,6 +43,11 @@ if(isset($_POST['myappexit']))
                         <input type="text" name="searchName">
                     </div>
                     <div class = "form-group">
+                        <label>Search By Patient National ID:</label>
+                        <input type="text" name="searchPatient">
+
+                    </div>
+                    <div class = "form-group">
                         <label>Search By Date:</label>
                         <input type="date" name="searchDate">
 
@@ -93,16 +98,44 @@ if(isset($_POST['myappexit']))
                     {
                     $namesearch = $_POST['searchName'] ?? "";
                     $datesearch = $_POST['searchDate'] ?? "";
-                    if($namesearch != "" && $datesearch != "")
+                    $patsearch = $_POST['searchPatient'] ?? "";
+                    if($namesearch != "" && $datesearch != "" && $patsearch != "")
+                    {
+                        $query .= "WHERE s.firstName LIKE ? AND a.appointmentDate = ? AND p.nationalID LIKE ?";
+                        $parameters[] = "%".$namesearch."%";
+                        $parameters[] = $datesearch;
+                        $parameters[] = "%".$patsearch."%";
+                        $types = "sss";
+                    }
+                    elseif($namesearch != "" && $datesearch != "")
                     {
                         $query .= "WHERE s.firstName LIKE ? AND a.appointmentDate = ?";
                         $parameters[] = "%".$namesearch."%";
                         $parameters[] = $datesearch;
                         $types = "ss";
                     }
+                    elseif($namesearch != "" && $patsearch != "")
+                    {
+                        $query .= "WHERE s.firstName LIKE ? AND p.nationalID  LIKE ?";
+                        $parameters[] = "%".$namesearch."%";
+                        $parameters[] = "%".$patsearch."%";
+                        $types = "ss";
+                    }
+                    elseif($patsearch != "" && $datesearch != "")
+                    {
+                        $query .= "WHERE s.firstName LIKE ? AND p.nationalID  LIKE ?";
+                        $parameters[] = "%".$namesearch."%";
+                        $parameters[] = "%".$patsearch."%";
+                        $types = "ss";
+                    }
                     elseif ($namesearch != "") {
                         $query .= " WHERE s.firstName LIKE ?";
                         $parameters[] = "%".$namesearch."%";
+                        $types = 's';
+                    } 
+                    elseif ($patsearch != "") {
+                        $query .= " WHERE p.nationalID  LIKE ?";
+                        $parameters[] = "%".$patsearch."%";
                         $types = 's';
                     } 
                     elseif ($datesearch != "") {
