@@ -53,7 +53,7 @@ function getTableName($data)
         <div class="logo-containermyapp">
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Admin Lookup Result </h2>
+            <h2 class="signup-heading"> Lookup Result </h2>
             <div class="app-form">
                 <table>
                     <thead>

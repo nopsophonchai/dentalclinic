@@ -32,7 +32,7 @@ CREATE TABLE staff(
     avaStat INT(1),
     typeID INT NOT NULL,
     specialty VARCHAR(255) NOT NULL,
-    salary INT,
+    salary INT(255),
     FOREIGN KEY (typeID) REFERENCES type(typeID)
 );
 

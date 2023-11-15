@@ -35,7 +35,16 @@ if (isset($_POST['editsubmit'])) {
     $q->bind_param("ssssssi", $firstname, $lastname, $natid, $address, $tel, $dob, $id2);
     
     if ($q->execute()) {
-        header('Location: view_profile.php?type=patient');
+        if(isset($_SESSION['adminID']))
+        {
+            header('Location: view_profile.php?type=patient');
+            exit;
+        }
+        elseif(isset($_SESSION['staffID']))
+        {
+            header('Location: staff/staffview.php?type=patient');
+            exit;
+        }
     } else {
         echo "Update failed. Error: " . $mysqli->error;
         // Uncomment the line below if you want to see the error on the page
@@ -45,7 +54,16 @@ if (isset($_POST['editsubmit'])) {
 }
 if (isset($_POST['editCancel']))
 {
-    header('Location: view_profile.php');
+    if(isset($_SESSION['adminID']))
+        {
+            header('Location: view_profile.php?type=patient');
+            exit;
+        }
+        elseif(isset($_SESSION['staffID']))
+        {
+            header('Location: staff/staffview.php?type=patient');
+            exit;
+        }
 }
 ?>
 

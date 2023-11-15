@@ -50,9 +50,25 @@ body {
     margin-bottom: 15px;
     
 }
-.form-groupbutton {
-    margin-bottom: 15px;
+.form-group1{
+    display: inline-block;
+
 }
+.form-group1 button {
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom:5px;
+    margin-left: 10px;
+}
+
+.checkapp{
+    margin-bottom: 1px;
+}
+
 .form-groupAdminmana {
     float: left;
     margin-bottom: 15px;
@@ -121,12 +137,38 @@ body {
     border-radius: 10px;
     padding: 20px;
     position: absolute;
-    top: 50%;
+    top: 60%;
     right: 5%;
     transform: translate(0, -50%);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: left;
 
+} 
+.appformcontainer1{
+    width: 48%; 
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    position: absolute;
+    top: 33%;
+    right: 5%;
+    transform: translate(0, -50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    display: inline-flex;
+
+}
+.appformcontainertime{
+    display: flex;
+    flex-direction: column; /* Adjust as needed */
+    height: 100%;
+} 
+.appformcontainerreason{
+    display: flex;
+    flex-direction: column; /* Adjust as needed */
+    justify-content: space-between; /* This will distribute the space */
+    height: 100%;
+    margin-left: 30px;
 } 
 .form-groupapp {
     margin-bottom: 15px;
@@ -211,7 +253,7 @@ body {
     margin-bottom: 0px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 1px ;
+    margin-top: 10px ;
 }
 .form-groupbillinsert input[type="submit"] {
     display: inline-block; /* Override to inline-block */
@@ -243,6 +285,20 @@ body {
     text-align: center;
     border-radius: 10px;
 }
+.form-groupapptime{
+    margin-bottom: 5px;
+}
+.form-groupapp1 input[type="submit"] {
+    display: inline-block;
+    width: 120px;
+    height: 30px;
+    background-color: #48a4a7;
+    border: none;
+    text-align: center;
+    border-radius: 20px;
+    margin: 5px;
+}
+
 .form-groupapp label {
     display: block;
     text-align: left;
@@ -320,6 +376,9 @@ h2{
     color: #1c7072;
 }
 .formgroup{
-
     margin-bottom: 1px;
+}
+.admintable{
+    margin-right: 10px;
+    margin-top: 70px;
 }

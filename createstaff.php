@@ -1,4 +1,60 @@
-<?php require_once('connect.php')?>
+<?php
+session_start();
+require_once('connect.php');
+$err = "";
+if (isset($_POST['Submit'])) { // Updated the condition here
+
+    $fname = $_POST['first-name'];
+            $lname = $_POST['last-name'];
+            $natid = $_POST['natid'];
+            $gender = $_POST['gender'];
+            $type = $_POST['type'];
+            $dob = $_POST['date-of-birth'];
+            $tele = $_POST['telephone'];
+            $salary = $_POST['salary'];
+            $address = $_POST['address'];
+            $specialty = $_POST['specialty'];
+            $ava = 1;
+            $Username = $_POST['usernameStaff'];
+
+    $hashedPass = password_hash($_POST['passwordStaff'], PASSWORD_DEFAULT);
+    if ($_POST['passwordStaff'] !== $_POST['staffConfirm']) {
+        $err =  '<span style="color: red">Passwords do not match!</span>';
+        
+    } else {
+        $q = $mysqli->prepare("SELECT * FROM staff WHERE nationalID = ?");
+        $q->bind_param("s", $natid);
+        if ($q->execute()) {
+            $results = $q->get_result();
+            if ($results->num_rows === 0) {
+                $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $w->bind_param("sssssssiisi", $fname, $lname, $gender, $natid, $tele, $address, $dob, $ava, $type, $specialty, $salary);
+                if ($w->execute()) {
+                    echo '<span>Staff created</span>';
+                    $lastid = $mysqli->insert_id;
+                    $r = $mysqli->prepare("INSERT INTO staffAccount (username, password,staffID) VALUES (?,?,?)");
+                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+                    if($r->execute()){
+                        echo "Data inserted successfully";
+                        header('Location: Adminmanager.php');
+                    } else {
+                        echo "Select failed. Error: " . $mysqli->error;
+                    }
+                    $r->close();
+                } else {
+                    echo '<span>Error: ' . $mysqli->error . '</span>';
+                }
+            } else {
+                echo '<span>National ID already exists!</span>';
+            }
+        } else {
+            echo "Error: " . $mysqli->error;
+        }
+    }
+}
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +70,9 @@
         <div class="create_staff-form">
             <h2 class="signup-heading"> Create Staff </h2>
 
-            <form action="dentalIndex.php" method="post">
+            <form action="createstaff.php" method="post">
                     <input type = "hidden" name = "formType" value = "createstaff"/>
+                    
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
                         <input type="text" id="first-name" name="first-name" required>
@@ -88,8 +145,13 @@
                         <label for="password">Confirm Password:</label>
                         <input type="text" name="staffConfirm" required>
                     </div>
+                    <div class="form-group">
+                    <label for="password"><?php echo $err;?></label>
+                        </div>
+                   
+            
                     
-                    <input type="submit" name = "Submitr" value="Submitr" style="color: #FFFFFF;">
+                    <input type="submit" name = "Submit" value="Submit" style="color: #FFFFFF;">
                 <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
             </form>
         </div>

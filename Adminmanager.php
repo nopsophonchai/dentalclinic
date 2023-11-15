@@ -6,7 +6,7 @@
         header('Location: login.php');
         exit;
     }
-    if(!isset($_SESSION['patientID']))
+    if(!isset($_SESSION['adminID']))
     {
         header('Location: login.php');
     }
@@ -52,8 +52,8 @@
                    <input type="submit"style="color: var(--button-text-color);" value="Appointment">
                 </form>
                    </div>
-                   <form action="login.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Logout"></form>
+                   <form action="Adminmanager.php" method="post">
+                   <input type="submit"style="color: var(--button-text-color);" name="log" value="Logout"></form>
                     
                     
                    

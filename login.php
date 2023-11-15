@@ -94,7 +94,7 @@ else
                             $rowS = $resultS ->fetch_assoc();
                             if(password_verify($password,$rowS['password']))
                             {
-                                $_SESSION['patientID'] = $rowS['accountID'];
+                                $_SESSION['staffID'] = $rowS['accountID'];
                                 header("Location: staff/staffmain.php");
                             }
                             else {
@@ -127,7 +127,7 @@ else
                 $row = $result2->fetch_assoc();
                 if(password_verify($password,$row['Password']))
                 {
-                    $_SESSION['patientID'] = $row['accountID'];
+                    $_SESSION['adminID'] = $row['accountID'];
                     header("Location: Adminmanager.php");
                 }
                 else

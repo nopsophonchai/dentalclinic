@@ -6,9 +6,26 @@ require_once('connect.php');
         exit;
     }
     elseif(isset($_POST['admindentalexit'])){
-        header("Location: view_profile.php");
-        exit;
+        if(isset($_SESSION['adminID']))
+        {
+            header("Location: view_profile.php?type=patient");
+            exit;
+        }
+        elseif(isset($_SESSION['staffID']))
+        {
+            header("Location: staff/staffview.php?type=patient");
+            exit;
+        }
     }
+    if(!isset($_SESSION['staffID']))
+    {
+        header("Location: login.php");
+    }
+    elseif(!isset($_SESSION['adminID']))
+    {
+        header("Location: login.php");
+    }
+
    
 ?>
 <!DOCTYPE html>
@@ -69,8 +86,8 @@ require_once('connect.php');
             <div class="form-groupdental">
                         <button type="submit" name="admindentalinsert" >Insert</button>
                 </form>
-                <form action ="view_profile.php" method ="post">
-                        <button type="submit" name="admindentexit" >Return</button>
+                <form action ="admindental.php" method ="post">
+                        <button type="submit" name="admindentalexit" >Return</button>
                     </div>
             </form>
             </div>

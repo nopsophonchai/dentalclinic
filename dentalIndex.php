@@ -102,6 +102,13 @@
 
             $Username = $_POST['username'];
             $Password = $_POST['password'];
+            $Conpass = $_POST['conpasswd'];
+            if($Password != $Conpass)
+            {
+                echo "<span>Passwords do not match!</span>";
+                header("Location: admincreate.php");
+                exit();
+            }
             $fname = $_POST['first-name'];
             $lname = $_POST['last-name'];
             $gender = $_POST['gender'];
@@ -146,7 +153,17 @@
                         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
                         echo "Data inserted successfully";
-                        header('Location: Adminmanager.php');
+                        if(isset($_SESSION['adminID']))
+                        {
+                            header("Location: Adminmanager.php");
+                            exit;
+                        }
+                        elseif(isset($_SESSION['staffID']))
+                        {
+                            header("Location: staff/staffmain.php");
+                            exit;
+                        }
+                    
                     }
                     else
                     {
@@ -168,6 +185,19 @@
             }
             $usercheck -> close();
 
+        }
+        elseif(isset($_POST['backbutton']))
+        {
+            if(isset($_SESSION['adminID']))
+            {
+                header("Location: Adminmanager.php");
+                exit;
+            }
+            elseif(isset($_SESSION['staffID']))
+            {
+                header("Location: staff/staffmain.php");
+                exit;
+            }
         }
     }
     
@@ -238,7 +268,8 @@
             header('Location: mainpage.php');
             exit;
         }
-    }elseif($formtype == 'viewprofile')
+    }
+    elseif($formtype == 'viewprofile')
     {   echo "thrthdg";
         if(isset($_POST['editpatient']))
         {
@@ -263,9 +294,62 @@
             exit;
         }elseif(isset($_POST['myprofexittolookup']))
         {
-            session_unset();
-            session_destroy();
+            // session_unset();
+            // session_destroy();
             header('Location: adminlookup.php');
+            exit;
+        }
+    }
+    elseif($formtype == 'status')
+    {
+        if(isset($_POST['statusset']))
+                        {
+                            $statusNum = 0;
+                            if($_POST['avaStat'] == 0)
+                            {
+                                $statusNum = 1;
+                            }
+                            $st = $mysqli->prepare("UPDATE staff SET avaStat = ? WHERE staffID = ?");
+                            $st -> bind_param("ii",$statusNum,$_POST['staffID']);
+                            if($st->execute())
+                            {
+                             
+                                header("Location: staff/staffview.php?type=staff");
+                            }
+                            else
+                            {
+                                echo "error".$mysqli->error;
+                            }
+                        }
+    }
+    elseif($formtype == 'staffview')
+    { 
+        if(isset($_POST['editpatient']))
+        {
+            header('Location: editpatientforadmin.php');
+            exit;
+        }elseif(isset($_POST['editstaff']))
+        {
+            header('Location: editstaffforadmin.php');
+            exit;
+        }
+        elseif(isset($_POST['myprofexit']))
+        {
+            header('Location: adminlookup.php');
+            exit;
+        }elseif(isset($_POST['dentalrecords']))
+        {
+            header('Location: admindental.php');
+            exit;
+        }elseif(isset($_POST['adminbilling']))
+        {
+            header('Location: adminbilling.php');
+            exit;
+        }elseif(isset($_POST['myprofexittolookup']))
+        {
+            // session_unset();
+            // session_destroy();
+            header('Location: staff/stafflookup.php');
             exit;
         }
     }

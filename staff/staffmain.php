@@ -6,7 +6,7 @@
         header('Location: login.php');
         exit;
     }
-    if(!isset($_SESSION['patientID']))
+    if(!isset($_SESSION['staffID']))
     {
         header('Location: ../login.php');
     }
@@ -50,7 +50,7 @@
             </form>
                    </div>
                    <form action="../login.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Logout"></form>
+                   <input type="submit"style="color: var(--button-text-color);" name = "log" value="Logout"></form>
                     
                     
                    
