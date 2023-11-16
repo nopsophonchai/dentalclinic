@@ -61,8 +61,9 @@
                 </tr>
             <?php 
                 $pat_id = $_SESSION['patientID'];
-                $dent = $mysqli->prepare("SELECT records.recordTime,records.diagnosis,records.treatment,records.remarks FROM records JOIN patient ON patient.patientID = records.patientID WHERE patient.patientID = ?");
-                $dent -> bind_param("i",$pat_id);
+                $dent = $mysqli->prepare("SELECT records.recordTime as recordtime, records.diagnosis , records.treatment, AES_DECRYPT(records.remarks,?) as recordremark FROM records JOIN patient ON patient.patientID = records.patientID WHERE patient.patientID = ?");
+                $dent -> bind_param("si",$key,$pat_id);
+
                 if ($dent -> execute()){
                     $result=$dent->get_result();
                     while($row=$result->fetch_assoc()){

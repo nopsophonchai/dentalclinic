@@ -125,7 +125,7 @@ if(isset($_POST['myappexit']))
                         
                 echo  '</select>';
                 echo '</div>';
-                        }
+                        
     
                 ?></div>
                 <div class="appformcontainerreason">
@@ -162,12 +162,14 @@ if(isset($_POST['myappexit']))
                 <div class="form-groupapp1">
                     <input type="submit" name ="submitapp" value="Submit">
                     <input type="submit"  name="cancelapp" value="Cancel">
-                </div></div>
+                </div>
+                <?php } ?>
+            </div>
                 <?php
                     if(isset($_POST['submitapp']))
                     {
-                        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
-                        $combid -> bind_param("s",$_POST['nationalid']);
+                        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = AES_ENCRYPT(?,?)");
+                        $combid -> bind_param("ss",$_POST['nationalid'],$key);
                         if($combid->execute())
                         {
                             $idresults = $combid->get_result();
@@ -184,15 +186,15 @@ if(isset($_POST['myappexit']))
                                 $natid = $idresults->fetch_assoc();
                                 $patientID = $natid['patientID'];
     
-                                $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = ?");
-                                $check -> bind_param("sss",$date,$time,$reason);
+                                $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = AES_ENCRYPT(?,?) AND appointmentTime = AES_ENCRYPT(?,?) AND reason = AES_ENCRYPT(?,?)");
+                                $check -> bind_param("ssssss",$date,$key,$time,$key,$reason,$key);
                                 if($check->execute())
                                 {
                                     $checkresult = $check->get_result();
                                     if($checkresult -> num_rows === 0)
                                     {
-                                        $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
-                                            $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
+                                        $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,AES_ENCRYPT(?,?),?,?,0)");
+                                            $ins -> bind_param("ssssii",$date,$time,$reason,$key,$doc,$patientID);
                                             if ($ins -> execute()){
     
                                                 header('Location: adminappointment.php');
@@ -249,65 +251,55 @@ if(isset($_POST['myappexit']))
                         <th style="word-wrap: break-word;">Toggle Status</th>
                     </tr>
                     <?php
-                    $query = "SELECT a.appointmentID as aid, a.appointmentDate as ad, a.appointmentTime as at, s.firstName as sfn, p.firstName as pfn, p.nationalID as nid, a.reason as reason,a.completion as com FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
+                    $query = "SELECT a.appointmentID as aid, a.appointmentDate as ad, a.appointmentTime as at, AES_DECRYPT(s.firstName,'dental') as sfn, AES_DECRYPT(p.firstName,'dental') as pfn, AES_DECRYPT(p.nationalID,'dental') as nid, AES_DECRYPT(a.reason,'dental') as reason,a.completion as com FROM appointment a JOIN patient p ON p.patientID = a.patientID JOIN staff s ON s.staffID = a.staffID ";
                     $parameters = [];
                     $types = '';
-                    if(isset($_POST['subsearch']))
-                    {
-                    $namesearch = $_POST['searchName'] ?? "";
-                    $datesearch = $_POST['searchDate'] ?? "";
-                    $patsearch = $_POST['searchPatient'] ?? "";
-                    if($namesearch != "" && $datesearch != "" && $patsearch != "")
-                    {
-                        $query .= "WHERE s.firstName LIKE ? AND a.appointmentDate = ? AND p.nationalID LIKE ?";
-                        $parameters[] = "%".$namesearch."%";
-                        $parameters[] = $datesearch;
-                        $parameters[] = "%".$patsearch."%";
-                        $types = "sss";
-                    }
-                    elseif($namesearch != "" && $datesearch != "")
-                    {
-                        $query .= "WHERE s.firstName LIKE ? AND a.appointmentDate = ?";
-                        $parameters[] = "%".$namesearch."%";
-                        $parameters[] = $datesearch;
-                        $types = "ss";
-                    }
-                    elseif($namesearch != "" && $patsearch != "")
-                    {
-                        $query .= "WHERE s.firstName LIKE ? AND p.nationalID  LIKE ?";
-                        $parameters[] = "%".$namesearch."%";
-                        $parameters[] = "%".$patsearch."%";
-                        $types = "ss";
-                    }
-                    elseif($patsearch != "" && $datesearch != "")
-                    {
-                        $query .= "WHERE s.firstName LIKE ? AND p.nationalID  LIKE ?";
-                        $parameters[] = "%".$namesearch."%";
-                        $parameters[] = "%".$patsearch."%";
-                        $types = "ss";
-                    }
-                    elseif ($namesearch != "") {
-                        $query .= " WHERE s.firstName LIKE ?";
-                        $parameters[] = "%".$namesearch."%";
-                        $types = 's';
-                    } 
-                    elseif ($patsearch != "") {
-                        $query .= " WHERE p.nationalID  LIKE ?";
-                        $parameters[] = "%".$patsearch."%";
-                        $types = 's';
-                    } 
-                    elseif ($datesearch != "") {
-                        $query .= " WHERE a.appointmentDate = ?";
-                        $parameters[] = $datesearch;
-                        $types = 's';
-                    }
-                    if(isset($_POST['complete']))
-                    {
-                        $query .= " AND completion = 0";
-                    }
 
-                    
+                    if (isset($_POST['subsearch'])) {
+                        $namesearch = $_POST['searchName'] ?? "";
+                        $datesearch = $_POST['searchDate'] ?? "";
+                        $patsearch = $_POST['searchPatient'] ?? "";
+
+                        if ($namesearch != "" || $datesearch != "" || $patsearch != "") {
+                            $query .= "WHERE ";
+
+                            if ($namesearch != "") {
+                                $query .= "AES_DECRYPT(s.firstName, 'dental') LIKE ?";
+                                $parameters[] = "%" . $namesearch . "%";
+                                $types .= 's';
+                            }
+
+                            if ($datesearch != "") {
+                                if ($namesearch != "") {
+                                    $query .= " AND ";
+                                }
+                                $query .= "a.appointmentDate = ?";
+                                $parameters[] = $datesearch;
+                                $types .= 's';
+                            }
+
+                            if ($patsearch != "") {
+                                if ($namesearch != "" || $datesearch != "") {
+                                    $query .= " AND ";
+                                }
+                                $query .= "AES_DECRYPT(p.nationalID, 'dental') LIKE ?";
+                                $parameters[] = "%" . $patsearch . "%";
+                                $types .= 's';
+                            }
+
+                            if (isset($_POST['complete'])) {
+                                $query .= " AND a.completion = 0";
+                            }
+                        }
+                        else
+                        {
+                            if (isset($_POST['complete'])) {
+                                $query .= "WHERE a.completion = 0";
+                            }
+                        }
                     }
+                    
+
                     $que = $mysqli->prepare($query);
                     if(!empty($parameters))
                     {
