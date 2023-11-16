@@ -40,7 +40,15 @@ require_once('connect.php');
             <form action="billinghis.php" method="post">
             <div class="form-groupmyprof">
             <button type="submit" name="billinghistory" >Billing History</button>
+            </form>
+            
+            
 </div>
+<form action="mainpage.php" method="post">
+            <div class="form-groupmyprof">
+                        <button type="submit" name="myappexit" >Return</button>
+            </div>
+            </form>
 </div>     
         </div>
         <div class="signup-form">
@@ -80,11 +88,7 @@ require_once('connect.php');
 
 ?>
             </table>
-            <form action="mainpage.php" method="post">
-            <div class="form-groupmyapp">
-                        <button type="submit" name="myappexit" >Return</button>
-            </div>
-            </form>
+            
             </div>
         </div>
     </div>

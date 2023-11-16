@@ -1,3 +1,105 @@
+<?php
+session_start();
+require_once("connect.php");
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once('adminconfig.php');
+$key = $key; 
+if(isset($_POST['signupbutton']))
+{
+
+    $Username = $_POST['username'];
+    $Password = $_POST['password'];
+    $Conpass = $_POST['conpasswd'];
+    
+    if($Password != $Conpass)
+    {
+        
+
+    }
+    else{
+    $fname = $_POST['first-name'];
+    $lname = $_POST['last-name'];
+    $gender = $_POST['gender'];
+    $telephone = $_POST['telephone'];
+    $dob = $_POST['date-of-birth'];
+    $nationalID = $_POST['natid'];
+    $address = $_POST['address'];
+    $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
+    
+    $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+    $usercheck->bind_param("s", $Username);
+    
+    if($usercheck->execute())
+    {
+        $result = $usercheck->get_result();
+        if($result->num_rows === 0)
+        {
+            $stmt = $mysqli->prepare("INSERT INTO patient (firstName, lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),?,AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),?)");
+            if ($stmt === false) {
+                die("Prepare failed: " . $mysqli->error);
+            }
+            $stmt->bind_param("ssssssssssss", $fname,$key, $lname, $key,$gender, $nationalID, $key,$telephone, $key,$address,$key, $dob);
+
+            if($stmt->execute()){
+                echo "Data inserted successfully";
+            }
+            else
+            {
+                echo "Select failed. Error: " . $mysqli->error;
+            }
+
+            $lastid = $mysqli->insert_id;
+            $stmt->close();
+            
+            $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password, patientID) VALUES (?,?,?)");
+            $r->bind_param("ssi", $Username, $hashedPass, $lastid);
+            if($r->execute()){
+                echo "Data inserted successfully";
+                if(isset($_SESSION['adminID']))
+                {
+                    header("Location: Adminmanager.php");
+                    exit();
+                }
+                elseif(isset($_SESSION['staffID']))
+                {
+                    header("Location: staff/staffmain.php");
+                    exit();
+                }
+            }
+            else
+            {
+                echo "Select failed. Error: " . $mysqli->error;
+            }
+            $r->close();
+        }
+        else
+        {
+            echo 'Username already exists!';
+            header("Location: admincreate.php");
+            exit();
+        }
+    }
+    else
+    {
+        echo $mysqli->error;
+    }
+    $usercheck->close();
+}}
+elseif(isset($_POST['backbutton']))
+{
+    if(isset($_SESSION['adminID']))
+    {
+        header("Location: Adminmanager.php");
+        exit();
+    }
+    elseif(isset($_SESSION['staffID']))
+    {
+        header("Location: staff/staffmain.php");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +113,7 @@
         <div class="formgroup">
             <h2 class="signup-heading">Create Patient</h2>
 
-            <form action="dentalIndex.php" method="post">
+            <form action="admincreate.php" method="post">
                     <input type = "hidden" name="formType" value="createpatient"/>
                     <div class="form-group">
                         <label for="first-name">First Name:</label>
@@ -23,7 +125,7 @@
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" required>
+                        <input type="text" id="natid" name= "natid" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -56,11 +158,26 @@
                         <label for="conpasswd">Confirm Password:</label>
                         <input type="text" id="conpasswd" name="conpasswd" required>
                     </div>
-                    
+                    <?php 
+                    if(isset($_POST['signupbutton']))
+                    {
+                        if($_POST['password'] != $_POST['conpasswd'])
+                        {
+                            echo "<span style='color:red'>Passwords do not match!</span>";
+                        }
+                    }
+                        
+            ?>
                     <input type="submit" name="signupbutton" value="Create"> 
-                    <input type="submit" name="backbutton" value="Back"onClick="window.location='Adminmanager.php';">
+                    
                    
             </form>
+            
+            <form action = "dentalIndex.php" method = "post">
+            <input type = "hidden" name="formType" value="createpatient"/>
+
+            <input type="submit" name="backbutton" value="Back">
+</form>
         </div>
     </div>
 </body>

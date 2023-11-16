@@ -18,7 +18,6 @@
         exit;
     }
 
-
 ?>
 
 <!DOCTYPE html>

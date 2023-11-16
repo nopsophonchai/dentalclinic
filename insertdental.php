@@ -29,7 +29,7 @@
                     
                     <div class="form-groupdentaledit">
                     <button type="submit" name="subdental">Submit</button> 
-                    <button type="button"name="canceldental">Return</button>
+
                 </div>
             </form>
             <div class ="form-groupdentaledit">

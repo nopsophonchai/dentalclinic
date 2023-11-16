@@ -6,8 +6,16 @@ require_once('connect.php');
         exit;
     }
     elseif(isset($_POST['adminbillexit'])){
-        header("Location: adminmanager.php");
-        exit;
+        if(isset($_SESSION['adminID']))
+        {
+            header("Location: view_profile.php?type=patient");
+            exit;
+        }
+        elseif(isset($_SESSION['staffID']))
+        {
+            header("Location: staff/staffview.php?type=patient");
+            exit;
+        }
     }
    
 ?>
@@ -23,7 +31,7 @@ require_once('connect.php');
     
     </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Patient Billing History </h2>
+            <h2 class="signup-heading"> Patient <?php echo $_SESSION['patientID'];?>Billing History </h2>
             <div class="app-form">
             <table> 
                 <col width="20%">
@@ -67,7 +75,8 @@ require_once('connect.php');
             <div class="form-groupbill">
                         <button type="submit" name="adminbillinsert" >Insert</button>
                 </form>
-                <form action ="view_profile.php" method ="post">
+                <form action ="adminbilling.php" method ="post">
+                        <input type ="hidden" name="patientIDb" value=<?php echo $_SESSION['patientID'];?>>
                         <button type="submit" name="adminbillexit" >Return</button>
                     </div>
             </form>
@@ -76,3 +85,5 @@ require_once('connect.php');
     </div>
 </body>
 </html>
+
+

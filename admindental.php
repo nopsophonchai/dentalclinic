@@ -6,9 +6,22 @@ require_once('connect.php');
         exit;
     }
     elseif(isset($_POST['admindentalexit'])){
-        header("Location: view_profile.php");
-        exit;
+        if(isset($_SESSION['adminID']))
+        {
+            header("Location: view_profile.php?type=patient");
+            exit;
+        }
+        elseif(isset($_SESSION['staffID']))
+        {
+            header("Location: staff/staffview.php?type=patient");
+            exit;
+        }
     }
+    if(!isset($_SESSION['staffID']) && !isset($_SESSION['adminID']))
+    {
+        header("Location: login.php");
+    }
+
    
 ?>
 <!DOCTYPE html>
@@ -23,7 +36,7 @@ require_once('connect.php');
     
     </div>
         <div class="formgroup">
-            <h2 class="signup-heading"> Patient Dental Records </h2>
+            <h2 class="signup-heading"> <?php echo $_SESSION['patientID'];?>Patient Dental Records </h2>
             <div class="app-form">
             <table> 
                 <col width="30%">
@@ -42,7 +55,7 @@ require_once('connect.php');
                     <th>Delete</th>
                 </tr>
             <?php
-                    $pat_id = 1;
+                    $pat_id = $_SESSION['patientID'];
                     $dental = $mysqli->prepare("SELECT records.patientID, records.recordID,records.recordTime,records.remarks,records.treatment, records.diagnosis FROM records JOIN patient on records.patientID = patient.patientID WHERE patient.patientID = ?");
                     $dental ->bind_param("i",$pat_id);
 
@@ -69,8 +82,8 @@ require_once('connect.php');
             <div class="form-groupdental">
                         <button type="submit" name="admindentalinsert" >Insert</button>
                 </form>
-                <form action ="view_profile.php" method ="post">
-                        <button type="submit" name="admindentexit" >Return</button>
+                <form action ="admindental.php" method ="post">
+                        <button type="submit" name="admindentalexit" >Return</button>
                     </div>
             </form>
             </div>

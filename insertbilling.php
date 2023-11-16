@@ -1,3 +1,5 @@
+<?php session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +11,11 @@
         <div class="logo-containersignup">
         </div>
         <div class="formgroup">
-            <h2 class="signup-heading"> Insert Billing </h2>
+            <h2 class="signup-heading"> <?php echo $_SESSION['patientID'];?>Insert Billing </h2>
 
             <form action="dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="insertbilling"/>
+                    <input type = "hidden" name="patientIDBil" value=<?php echo $_SESSION['patientID'];?>/>
                     <div class="form-group">
                         <label for="bill-des">Description:</label>
                         <input type="text" name= "bill-des" required>
