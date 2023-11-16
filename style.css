@@ -64,10 +64,20 @@ body {
     margin-bottom:5px;
     margin-left: 10px;
 }
+.sepapp {
+    display: flex;
+    justify-content: space-between; /* This will add space between the two child containers */
+}
 
 .checkapp{
-    margin-bottom: 1px;
+        display: flex;
+        justify-content: space-between; /* This will add space between the two child containers */
 }
+.checkapp > div {
+        flex: 1; /* Each child div takes up equal space */
+        padding: 10px; /* Optional, for some spacing inside each container */
+    }
+    
 
 .form-groupAdminmana {
     float: left;
@@ -145,17 +155,21 @@ body {
 
 } 
 .appformcontainer1{
-    width: 48%; 
+    width: 48%;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 20px;
-    position: absolute;
-    top: 33%;
-    right: 5%;
-    transform: translate(0, -50%);
+    /* Remove absolute positioning */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: left;
     display: inline-flex;
+    margin-right: 50px;
+}
+.sepapp{
+    display: flex;
+    flex-direction: column; /* Adjust as needed */
+    height: 100%;
+
 
 }
 .appformcontainertime{
@@ -380,5 +394,5 @@ h2{
 }
 .admintable{
     margin-right: 10px;
-    margin-top: 70px;
+    margin-top: 30px;
 }
