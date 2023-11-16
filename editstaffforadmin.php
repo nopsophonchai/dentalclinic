@@ -10,8 +10,11 @@
     {
         $id = $_SESSION['staffID'];
         echo $_SESSION['staffID'];
-        $info = $mysqli -> prepare("SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?");
-        $info -> bind_param("i", $id);
+        $info = $mysqli -> prepare("SELECT staffID,AES_DECRYPT(staff.firstName, ?) as firstName,AES_DECRYPT(staff.lastName, ?) as lastName,gender,
+        AES_DECRYPT(staff.nationalID, ?) as nationalID,telephone,AES_DECRYPT(staff.houseAddress, ?) as houseAddress,dateOfBirth,
+        avaStat,type.typeName,AES_DECRYPT(staff.specialty, ?) as specialty,AES_DECRYPT(staff.salary, ?) as salary
+ FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?");
+        $info->bind_param("ssssssi", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $id);
         if($info->execute()) {
             $result = $info->get_result();
             if($result->num_rows > 0) {
@@ -39,8 +42,8 @@
         
 
     
-        $q = $mysqli -> prepare("UPDATE staff SET firstName=?,lastName=?,gender=?,dateOfBirth=?,avaStat=?,typeID=?,salary=? WHERE staffID = ?");
-        $q -> bind_param("sssssiii", $firstname,$lastname,$gender ,$dob,$stat,$type,$salary,$id2);
+        $q = $mysqli -> prepare("UPDATE staff SET firstName=AES_ENCRYPT(?, ?),lastName=AES_ENCRYPT(?, ?),gender=?,dateOfBirth=?,avaStat=?,typeID=?,salary=AES_ENCRYPT(?, ?) WHERE staffID = ?");
+        $q -> bind_param("ssssssiiisi", $firstname, $encryption_key,$lastname, $encryption_key,$gender ,$dob,$stat,$type,$salary, $encryption_key,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {

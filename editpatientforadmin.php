@@ -1,13 +1,16 @@
 <?php
 session_start();
-require_once('connect.php');
+require_once('connect.php');    require_once('adminconfig.php');
+$encryption_key = $key;
 
 if (!isset($_SESSION['patientID'])) {
     header("Location: login.php");
 } else {
     $id = $_SESSION['patientID'];
-    $info = $mysqli->prepare("SELECT * FROM patient WHERE patientID = ?");
-    $info->bind_param("i", $id);
+    $info = $mysqli->prepare("SELECT patientID,AES_DECRYPT(firstName, ?) as firstName,AES_DECRYPT(lastName, ?) as lastName,gender,
+    AES_DECRYPT(nationalID, ?) as nationalID,AES_DECRYPT(telephone, ?) as telephone,AES_DECRYPT(houseAddress, ?) as houseAddress,
+    dateOfBirth FROM patient WHERE patientID = ?");
+    $info->bind_param("sssssi", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $id);
     if ($info->execute()) {
         $result = $info->get_result();
         if ($result->num_rows > 0) {
@@ -31,8 +34,9 @@ if (isset($_POST['editsubmit'])) {
     $tel = $_POST['telephone'];
     $dob = $_POST['date-of-birth'];
 
-    $q = $mysqli -> prepare("UPDATE patient SET firstName=?,lastName=?,nationalID=?,houseAddress=?,telephone=?,dateOfBirth=? WHERE patientID = ?");
-    $q->bind_param("ssssssi", $firstname, $lastname, $natid, $address, $tel, $dob, $id2);
+    
+    $q = $mysqli->prepare("UPDATE patient SET firstName = AES_ENCRYPT(?, ?), lastName = AES_ENCRYPT(?, ?), nationalID = AES_ENCRYPT(?, ?), houseAddress = AES_ENCRYPT(?, ?), telephone = AES_ENCRYPT(?, ?), dateOfBirth =  ? WHERE patientID = ?");
+    $q->bind_param("sssssssssssi", $firstname, $encryption_key, $lastname, $encryption_key, $natid, $encryption_key, $address, $encryption_key, $tel, $encryption_key, $dob,  $id2);
     
     if ($q->execute()) {
         if(isset($_SESSION['adminID']))
