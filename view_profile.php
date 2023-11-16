@@ -371,7 +371,7 @@
                     <div class="form-groupmy">
                         <form action="editstaffforadmin.php" method="post">
                     <input type="hidden" name="staffID" value="<?php echo $_SESSION['staffID']; ?>"/>
-                        <button type="submit" name="editpatient" >Edit</button>
+                        <button type="submit" name="editstaff" >Edit</button>
                         </form>
                         <button type="submit" name="myprofexittolookup" >Return</button>
                     </div>

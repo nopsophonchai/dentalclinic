@@ -24,6 +24,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
+        <h1 class = "form-groupAdminmana1">Welcome <?php echo $_SESSION['staffID'];?></h1> 
         <div class="create_staff-form1">
 
             

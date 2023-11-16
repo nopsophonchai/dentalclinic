@@ -17,11 +17,7 @@ require_once('connect.php');
             exit;
         }
     }
-    if(!isset($_SESSION['staffID']))
-    {
-        header("Location: login.php");
-    }
-    elseif(!isset($_SESSION['adminID']))
+    if(!isset($_SESSION['staffID']) && !isset($_SESSION['adminID']))
     {
         header("Location: login.php");
     }
@@ -59,7 +55,7 @@ require_once('connect.php');
                     <th>Delete</th>
                 </tr>
             <?php
-                    $pat_id = 1;
+                    $pat_id = $_SESSION['patientID'];
                     $dental = $mysqli->prepare("SELECT records.patientID, records.recordID,records.recordTime,records.remarks,records.treatment, records.diagnosis FROM records JOIN patient on records.patientID = patient.patientID WHERE patient.patientID = ?");
                     $dental ->bind_param("i",$pat_id);
 

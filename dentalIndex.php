@@ -243,6 +243,7 @@
             $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (?,?,?,?)");
             $insd -> bind_param("sssi",$dentnote,$denttreat,$dentdiag,$patID11);
             if ($insd -> execute()){
+                echo 'hi';
                 header('Location: admindental.php');
                 exit;
             }else {
@@ -373,7 +374,7 @@
             exit;
         }
         elseif(isset($_POST['editcancel']))
-        {header('Location: view_profile.php');
+        {header('Location: view_profile.php?');
             exit;
         }
        /* elseif(isset($_POST['myprofile']))

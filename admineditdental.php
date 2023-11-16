@@ -44,8 +44,8 @@
         $treat = $_POST['dental-treatment'];
         $diag = $_POST['dental-diagnosis'];
         // echo "<span>mm".$id2."</span>";
-        $q = $mysqli -> prepare("UPDATE records SET remarks=?,treatment=?,diagnosis=? WHERE recordID = ?");
-        $q -> bind_param("sssi",$note,$treat,$diag,$ID);
+        $q = $mysqli -> prepare("UPDATE records SET remarks=?,treatment=?,diagnosis=?, recordTime = ? WHERE recordID = ?");
+        $q -> bind_param("ssssi",$note,$treat,$diag,$_POST['dental-time'],$ID);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {

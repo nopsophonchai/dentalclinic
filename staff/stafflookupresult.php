@@ -1,6 +1,12 @@
 <?php
 session_start();
 require_once('../connect.php');
+if(!isset($_SESSION['staffID']))
+{
+    header('Location: ../login.php');
+    exit();
+
+}
 
 if (isset($_POST['searchbutton'])) {
     $searchitem = $_POST['SearchText'];
