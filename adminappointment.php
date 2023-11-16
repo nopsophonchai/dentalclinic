@@ -37,6 +37,7 @@ if(isset($_POST['myappexit']))
             <div class="signup-form">
                 <h2 class="signup-heading"> My Appointments </h2>
                 <div class ="checkapp">
+                    <div class ="sepapp">
                     <div class = "form-group">
                         <form action = "adminappointment.php" method = "post">
                         <label>Search By Dentist:</label>
@@ -45,17 +46,14 @@ if(isset($_POST['myappexit']))
                     <div class = "form-group">
                         <label>Search By Patient National ID:</label>
                         <input type="text" name="searchPatient">
-
                     </div>
                     <div class = "form-group">
                         <label>Search By Date:</label>
                         <input type="date" name="searchDate">
-
                     </div>
                     <div class="form-group">
                         <label>Show Active Appointments Only:</label>
                         <input type="checkbox" name="complete" value = 1>
-  
                     </div>
                     <div class="form-group1">
                         <button type = "submit" name = "subsearch">Search</button>   
@@ -65,6 +63,166 @@ if(isset($_POST['myappexit']))
                 </form>
             </div>
                 </div>
+        
+        <div class="appformcontainer1">
+        <form action = "adminappointment.php" method ="post">
+                    <div class="appformcontainertime">  
+                        <div class = "form-groupapptime"> 
+                         <p><u>Create Appointment</u></p>
+                        <label for="dateapp">Select Date:</label>
+                        <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>   
+                         </div>
+                        <div class = "form-groupapp1">
+                        <input type="submit" name = "subdate" value = "Confirm Date"></div>
+         </form>
+            <form action = "adminappointment.php" method ="post">
+                <?php
+    
+                
+                if(isset($_POST['dateapp']) && !empty($_POST['dateapp']))
+                {
+                    
+                    $_SESSION['dateapp'] = $_POST['dateapp'];
+                    $mydate = $_SESSION['dateapp'];
+                    $times = $mysqli->prepare("SELECT appointmentTime FROM appointment WHERE appointmentDate = ? AND completion = 0");
+                            $times -> bind_param("s",$mydate);
+                            $aquiredTime = [];
+                            if($times->execute())
+                            {
+                                $resultsTime = $times->get_result();
+    
+                                while($myTime = $resultsTime->fetch_assoc())
+                                {
+                                    $timeMine = new DateTime($myTime['appointmentTime']);
+                                    $timeMine = $timeMine -> format('H:i');
+                                    $aquiredTime[] = $timeMine;
+                                }
+                            }
+                            else
+                            {
+    
+                            }
+                            // print_r($aquiredTime);
+                echo '<span>Current Date: '. $_SESSION['dateapp'].'</span>';
+                echo '<br></br>';
+                echo '<div class="form-group">';
+                echo   '<label for="timeapp">Select Time:</label>';
+                echo  '<select name = "timeapp">';
+    
+                            
+                            
+                            $timestart = new DateTime('09:00');
+                            $timeend = new DateTime('17:00');
+                            $step = new DateInterval('PT30M');
+                            for($current = clone $timestart; $current < $timeend; $current->add($step))
+                            {
+                                $time = $current->format('H:i');
+                                if ($time >= '12:00' && $time < '13:00' || in_array($time, $aquiredTime)) {
+                                    continue;
+                                }
+                                echo '<option value="'.$time.'">'.$time.'</option>';
+                            }
+                        
+                echo  '</select>';
+                echo '</div>';
+                        }
+    
+                ?></div>
+                <div class="appformcontainerreason">
+                <div class="form-groupapp">
+                    <label >National ID:</label>
+                    <input type="text" name="nationalid" maxlength = "13" required>
+                </div>
+                <input type = "hidden" name="formType" value="adappointment"/>
+                <div class="form-groupapp">
+                    <label for="Docotr">Select Dentist:</label>
+                    <select id="Doctor" name="doctor">
+                    <?php
+                        $q = $mysqli->prepare("SELECT staffID,AES_DECRYPT(firstName,?) as firstName,AES_DECRYPT(lastName,?) as lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
+                        $q -> bind_param("ss", $key,$key);
+                        if($q->execute())
+                        {
+                            $results = $q->get_result();
+                            while($row=$results->fetch_assoc())
+                            {
+                                echo '<option value ="'.$row['staffID'].'">'.$row['firstName'].' '.$row['lastName'].' | '.$row['specialty'].'</option>';
+                            }
+                            
+                        }
+                        else{
+                            echo '<option value ="e">error</option>';
+                        }
+                    ?>
+                    </select>
+                </div>
+                <div class="form-groupapp">
+                    <label for="reason">Please write your Reason:</label>
+                    <textarea id="reason" name="reason" ></textarea>
+                </div>
+                <div class="form-groupapp1">
+                    <input type="submit" name ="submitapp" value="Submit">
+                    <input type="submit"  name="cancelapp" value="Cancel">
+                </div></div>
+                <?php
+                    if(isset($_POST['submitapp']))
+                    {
+                        $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
+                        $combid -> bind_param("s",$_POST['nationalid']);
+                        if($combid->execute())
+                        {
+                            $idresults = $combid->get_result();
+                            if($idresults -> num_rows === 0)
+                            {
+                                echo '<span style = "color: red; font-size: 12px;">NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
+                            }
+                            else
+                            {
+                                $date = $_SESSION['dateapp'];
+                                $time = $_POST['timeapp'];
+                                $doc = $_POST['doctor'];
+                                $reason = $_POST['reason'];
+                                $natid = $idresults->fetch_assoc();
+                                $patientID = $natid['patientID'];
+    
+                                $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = ?");
+                                $check -> bind_param("sss",$date,$time,$reason);
+                                if($check->execute())
+                                {
+                                    $checkresult = $check->get_result();
+                                    if($checkresult -> num_rows === 0)
+                                    {
+                                        $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
+                                            $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
+                                            if ($ins -> execute()){
+    
+                                                header('Location: adminappointment.php');
+                                                exit;
+                                            }else {
+                                                echo '<span>Error: ' . $mysqli->error . '</span>';
+                                            }
+                                            $ins->close();
+                                    }
+                                }
+                                else
+                                {
+                                    echo '<span>Error: ' . $mysqli->error . '</span>';
+                                }
+    
+                            }
+                            $check->close();
+    
+                        }
+                        else
+                        {
+                            echo '<span>Error: ' . $mysqli->error . '</span>';
+                        }
+                        $combid->close();
+                    }
+                ?>
+            </form>
+        </div>
+                </div>
+
                 <br>
                 </br>
                 <div class="admintable">
@@ -194,163 +352,6 @@ if(isset($_POST['myappexit']))
                 ?>
                 </table>
                 </div>
-
-        
-    <div class="appformcontainer1">
-    <form action = "adminappointment.php" method ="post">
-                <div class="appformcontainertime">  
-                    <div class = "form-groupapptime"> 
-                     <p><u>Create Appointment</u></p>
-                    <label for="dateapp">Select Date:</label>
-                    <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>   
-                     </div>
-                    <div class = "form-groupapp1">
-                    <input type="submit" name = "subdate" value = "Confirm Date"></div>
-     </form>
-        <form action = "adminappointment.php" method ="post">
-            <?php
-
-            
-            if(isset($_POST['dateapp']) && !empty($_POST['dateapp']))
-            {
-                
-                $_SESSION['dateapp'] = $_POST['dateapp'];
-                $mydate = $_SESSION['dateapp'];
-                $times = $mysqli->prepare("SELECT appointmentTime FROM appointment WHERE appointmentDate = ? AND completion = 0");
-                        $times -> bind_param("s",$mydate);
-                        $aquiredTime = [];
-                        if($times->execute())
-                        {
-                            $resultsTime = $times->get_result();
-
-                            while($myTime = $resultsTime->fetch_assoc())
-                            {
-                                $timeMine = new DateTime($myTime['appointmentTime']);
-                                $timeMine = $timeMine -> format('H:i');
-                                $aquiredTime[] = $timeMine;
-                            }
-                        }
-                        else
-                        {
-
-                        }
-                        // print_r($aquiredTime);
-            echo '<span>Current Date: '. $_SESSION['dateapp'].'</span>';
-            echo '<br></br>';
-            echo '<div class="form-group">';
-            echo   '<label for="timeapp">Select Time:</label>';
-            echo  '<select name = "timeapp">';
-
-                        
-                        
-                        $timestart = new DateTime('09:00');
-                        $timeend = new DateTime('17:00');
-                        $step = new DateInterval('PT30M');
-                        for($current = clone $timestart; $current < $timeend; $current->add($step))
-                        {
-                            $time = $current->format('H:i');
-                            if ($time >= '12:00' && $time < '13:00' || in_array($time, $aquiredTime)) {
-                                continue;
-                            }
-                            echo '<option value="'.$time.'">'.$time.'</option>';
-                        }
-                    
-            echo  '</select>';
-            echo '</div>';
-                    }
-
-            ?></div>
-            <div class="appformcontainerreason">
-            <div class="form-groupapp">
-                <label >National ID:</label>
-                <input type="text" name="nationalid" maxlength = "13" required>
-            </div>
-            <input type = "hidden" name="formType" value="adappointment"/>
-            <div class="form-groupapp">
-                <label for="Docotr">Select Dentist:</label>
-                <select id="Doctor" name="doctor">
-                <?php
-                    $q = $mysqli->prepare("SELECT staffID,firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
-                    if($q->execute())
-                    {
-                        $results = $q->get_result();
-                        while($row=$results->fetch_assoc())
-                        {
-                            echo '<option value ="'.$row['staffID'].'">'.$row['firstName'].' '.$row['lastName'].' | '.$row['specialty'].'</option>';
-                        }
-                        
-                    }
-                    else{
-                        echo '<option value ="e">error</option>';
-                    }
-                ?>
-                </select>
-            </div>
-            <div class="form-groupapp">
-                <label for="reason">Please write your Reason:</label>
-                <textarea id="reason" name="reason" ></textarea>
-            </div>
-            <div class="form-groupapp1">
-                <input type="submit" name ="submitapp" value="Submit">
-                <input type="submit"  name="cancelapp" value="Cancel">
-            </div></div>
-            <?php
-                if(isset($_POST['submitapp']))
-                {
-                    $combid = $mysqli->prepare("SELECT * FROM patient WHERE nationalID = ?");
-                    $combid -> bind_param("s",$_POST['nationalid']);
-                    if($combid->execute())
-                    {
-                        $idresults = $combid->get_result();
-                        if($idresults -> num_rows === 0)
-                        {
-                            echo '<span style = "color: red; font-size: 12px;">NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
-                        }
-                        else
-                        {
-                            $date = $_SESSION['dateapp'];
-                            $time = $_POST['timeapp'];
-                            $doc = $_POST['doctor'];
-                            $reason = $_POST['reason'];
-                            $natid = $idresults->fetch_assoc();
-                            $patientID = $natid['patientID'];
-
-                            $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = ?");
-                            $check -> bind_param("sss",$date,$time,$reason);
-                            if($check->execute())
-                            {
-                                $checkresult = $check->get_result();
-                                if($checkresult -> num_rows === 0)
-                                {
-                                    $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
-                                        $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
-                                        if ($ins -> execute()){
-
-                                            header('Location: adminappointment.php');
-                                            exit;
-                                        }else {
-                                            echo '<span>Error: ' . $mysqli->error . '</span>';
-                                        }
-                                        $ins->close();
-                                }
-                            }
-                            else
-                            {
-                                echo '<span>Error: ' . $mysqli->error . '</span>';
-                            }
-
-                        }
-                        $check->close();
-
-                    }
-                    else
-                    {
-                        echo '<span>Error: ' . $mysqli->error . '</span>';
-                    }
-                    $combid->close();
-                }
-            ?>
-        </form>
-    </div></div>
+</div>
 </body>
 </html> 
