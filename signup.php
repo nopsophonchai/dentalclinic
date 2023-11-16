@@ -8,7 +8,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="formgroup">
             <h2 class="signup-heading"> Patient Sign Up </h2>
 
             <form action="dentalIndex.php" method="post">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" required>
+                        <input type="text" id="natid" name= "natid" maxlength = "13" minlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>

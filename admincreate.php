@@ -3,7 +3,8 @@ session_start();
 require_once("connect.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+require_once('adminconfig.php');
+$key = $key; 
 if(isset($_POST['signupbutton']))
 {
 
@@ -34,11 +35,11 @@ if(isset($_POST['signupbutton']))
         $result = $usercheck->get_result();
         if($result->num_rows === 0)
         {
-            $stmt = $mysqli->prepare("INSERT INTO patient (firstName, lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+            $stmt = $mysqli->prepare("INSERT INTO patient (firstName, lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),?,AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),AES_ENCRYPT(?,?),?)");
             if ($stmt === false) {
                 die("Prepare failed: " . $mysqli->error);
             }
-            $stmt->bind_param("sssssss", $fname, $lname, $gender, $nationalID, $telephone, $address, $dob);
+            $stmt->bind_param("ssssssssssss", $fname,$key, $lname, $key,$gender, $nationalID, $key,$telephone, $key,$address,$key, $dob);
 
             if($stmt->execute()){
                 echo "Data inserted successfully";
@@ -109,7 +110,7 @@ elseif(isset($_POST['backbutton']))
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="formgroup">
             <h2 class="signup-heading">Create Patient</h2>
 
             <form action="admincreate.php" method="post">
@@ -124,7 +125,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" required>
+                        <input type="text" id="natid" name= "natid" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>

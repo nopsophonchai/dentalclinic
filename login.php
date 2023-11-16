@@ -1,6 +1,8 @@
 <?php 
 session_start();
 require_once('connect.php');
+require_once('adminconfig.php');
+$key = $key; 
 $q = $mysqli->prepare("SELECT * FROM staffAccounts WHERE Username = 'Admin'");
 if($q->execute())
 {

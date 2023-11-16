@@ -1,5 +1,7 @@
 <?php
     session_start();
+    require_once('adminconfig.php');
+    $encryption_key = $key; 
     ini_set('display_errors', 1);
                 error_reporting(E_ALL);
     $formtype = 0; 
@@ -44,11 +46,11 @@
                 $result = $usercheck->get_result();
                 if($result->num_rows === 0 )
                 {
-                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName, lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?)");
                     if ($stmt === false) {
                         die("Prepare failed: " . $mysqli->error);
                     }
-                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+                    $stmt -> bind_param("ssssssssssss", $fname, $encryption_key, $lname, $encryption_key, $gender, $nationalID, $encryption_key, $telephone, $encryption_key, $address, $encryption_key, $dob);
           
                     if($stmt->execute()){
                         

@@ -263,7 +263,7 @@ if(isset($_POST['myappexit']))
             <div class="appformcontainerreason">
             <div class="form-groupapp">
                 <label >National ID:</label>
-                <input type="text" name="nationalid" required>
+                <input type="text" name="nationalid" maxlength = "13" required>
             </div>
             <input type = "hidden" name="formType" value="adappointment"/>
             <div class="form-groupapp">

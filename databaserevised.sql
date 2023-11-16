@@ -3,12 +3,12 @@ USE dentalclinic;
 
 CREATE TABLE patient(
     patientID INT PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL,
+    firstName VARBINARY(255) NOT NULL,
+    lastName VARBINARY(255) NOT NULL,
     gender VARCHAR(255),
-    nationalID VARCHAR(255) NOT NULL UNIQUE,
-    telephone VARCHAR(255),
-    houseAddress TEXT,
+    nationalID VARBINARY(255) NOT NULL UNIQUE,
+    telephone VARBINARY(255),
+    houseAddress VARBINARY(255),
     dateOfBirth DATE
 );
 
@@ -22,17 +22,17 @@ INSERT INTO type (typeName) VALUES ('Dentist'),('Nurse'),('Receptionist'),('Jani
 
 CREATE TABLE staff(
     staffID INT PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL,
+    firstName VARBINARY(255) NOT NULL,
+    lastName VARBINARY(255) NOT NULL,
     gender VARCHAR(255),
-    nationalID VARCHAR(255) NOT NULL UNIQUE,
+    nationalID VARBINARY(255) NOT NULL UNIQUE,
     telephone VARCHAR(255),
-    houseAddress TEXT,
+    houseAddress VARBINARY(255),
     dateOfBirth DATE,
     avaStat INT(1),
     typeID INT NOT NULL,
     specialty VARCHAR(255) NOT NULL,
-    salary INT(255),
+    salary VARBINARY(255),
     FOREIGN KEY (typeID) REFERENCES type(typeID)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE appointment(
     appointmentID INT PRIMARY KEY AUTO_INCREMENT,
     appointmentDate DATE NOT NULL,
     appointmentTime TIME NOT NULL,
-    reason TEXT,
+    reason VARBINARY(255),
     staffID INT NOT NULL,
     patientID INT NOT NULL,
     completion INT DEFAULT 0,
@@ -71,17 +71,12 @@ CREATE TABLE appointment(
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );
 
-CREATE TABLE salary(
-    salaryID INT PRIMARY KEY AUTO_INCREMENT,
-    amount DECIMAL(10,2) NOT NULL,
-    staffID INT NOT NULL,
-    FOREIGN KEY (staffID) REFERENCES staff(staffID)
-);
+
 
 CREATE TABLE billing(
     billingID INT PRIMARY KEY AUTO_INCREMENT,
     description TEXT,
-    amount DECIMAL(10,2) NOT NULL,
+    amount VARBINARY(255) NOT NULL,
     billingTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     patientID INT NOT NULL,
     FOREIGN KEY (patientID) REFERENCES patient(patientID)
@@ -91,7 +86,7 @@ CREATE TABLE billing(
 CREATE TABLE records(
     recordID INT PRIMARY KEY AUTO_INCREMENT,
     recordTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    remarks TEXT,
+    remarks VARBINARY(255),
     treatment TEXT,
     diagnosis TEXT,
     patientID INT NOT NULL,
