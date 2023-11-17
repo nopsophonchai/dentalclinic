@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('connect.php');
+require_once('connect.php'); require_once('adminconfig.php');
+    $encryption_key = $key; 
 $err = "";
 if (isset($_POST['Submit'])) { // Updated the condition here
 
@@ -27,8 +28,10 @@ if (isset($_POST['Submit'])) { // Updated the condition here
         if ($q->execute()) {
             $results = $q->get_result();
             if ($results->num_rows === 0) {
-                $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $w->bind_param("sssssssiisi", $fname, $lname, $gender, $natid, $tele, $address, $dob, $ava, $type, $specialty, $salary);
+                $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), ?, ?, ?, ?, AES_ENCRYPT(?, ?))");
+                $w->bind_param("sssssssssssiisis", $fname, $encryption_key, $lname, $encryption_key, $gender, $natid, $encryption_key, 
+                $tele, $address, $encryption_key, $dob, $ava, $type, $specialty, $salary, $encryption_key);
+            
                 if ($w->execute()) {
                     echo '<span>Staff created</span>';
                     $lastid = $mysqli->insert_id;
