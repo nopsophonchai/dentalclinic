@@ -11,11 +11,11 @@ if(!isset($_SESSION['staffID']))
 if (isset($_POST['searchbutton'])) {
     $searchitem = $_POST['SearchText'];
 
-    $q = "SELECT CONCAT(patient.firstname, ' ', patient.lastname) AS name,patientID, 'patient' AS table_name FROM patient  
+    $q = "SELECT CONCAT(AES_DECRYPT(patient.firstname,'dental'), ' ', AES_DECRYPT(patient.lastname,'dental')) AS name,patientID, 'patient' AS table_name FROM patient  
           WHERE CONCAT(patient.firstname, ' ', patient.lastname) LIKE ?";
     $q .= " UNION ALL ";
-    $q .= "SELECT CONCAT(staff.firstname, ' ', staff.lastname) AS name,staffID, 'staff' AS table_name FROM staff  
-          WHERE CONCAT(staff.firstname, ' ', staff.lastname) LIKE ?";
+    $q .= "SELECT CONCAT(AES_DECRYPT(staff.firstname,'dental'), ' ', AES_DECRYPT(staff.lastname,'dental')) AS name,staffID, 'staff' AS table_name FROM staff  
+          WHERE CONCAT(AES_DECRYPT(staff.firstname,'dental'), ' ', AES_DECRYPT(staff.lastname,'dental')) LIKE ?";
 
     $stmt = $mysqli->prepare($q);
     if (!$stmt) {

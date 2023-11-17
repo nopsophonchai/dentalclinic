@@ -26,7 +26,7 @@
             if (isset($_POST['view_profile'])) { 
                 echo "gofirstif";
                 $row_id = $_POST['row_id'];
-    $table = $_POST['type'];
+                $table = $_POST['type'];
                 $query = "";
                 if ($table === 'patient') {
                     $query = "SELECT patientID,AES_DECRYPT(firstName, ?) as firstName,AES_DECRYPT(lastName, ?) as lastName,gender,
@@ -36,7 +36,7 @@
                     $query = "SELECT staffID,AES_DECRYPT(staff.firstName, ?) as firstName,AES_DECRYPT(staff.lastName, ?) as lastName,gender,
                     AES_DECRYPT(staff.nationalID, ?) as nationalID,telephone,AES_DECRYPT(staff.houseAddress, ?) as houseAddress,dateOfBirth,
                     avaStat,type.typeName,AES_DECRYPT(staff.specialty, ?) as specialty,AES_DECRYPT(staff.salary, ?) as salary
-             FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
+                    FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
                 } else {
                     echo "Invalid table type.";
                     exit();
