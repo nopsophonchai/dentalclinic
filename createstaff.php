@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('connect.php');
+$encryption_key = $key;
 $err = "";
 if (isset($_POST['Submit'])) { // Updated the condition here
 
@@ -22,13 +23,14 @@ if (isset($_POST['Submit'])) { // Updated the condition here
         $err =  '<span style="color: red">Passwords do not match!</span>';
         
     } else {
-        $q = $mysqli->prepare("SELECT * FROM staff WHERE nationalID = ?");
-        $q->bind_param("s", $natid);
+        $q = $mysqli->prepare("SELECT * FROM staff WHERE AES_DECRYPT(nationalID, ?) = ?");
+        $q->bind_param("ss", $encryption_key,$natid);
+        
         if ($q->execute()) {
             $results = $q->get_result();
             if ($results->num_rows === 0) {
-                $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $w->bind_param("sssssssiisi", $fname, $lname, $gender, $natid, $tele, $address, $dob, $ava, $type, $specialty, $salary);
+                $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, ?, ?, ?, AES_ENCRYPT(?, ?))");
+                $w->bind_param("ssssssssssssiisss", $fname, $encryption_key, $lname, $encryption_key, $gender, $natid, $encryption_key, $tele, $encryption_key, $address, $encryption_key, $dob, $ava, $type, $specialty, $salary, $encryption_key);
                 if ($w->execute()) {
                     echo '<span>Staff created</span>';
                     $lastid = $mysqli->insert_id;
@@ -83,7 +85,7 @@ if (isset($_POST['Submit'])) { // Updated the condition here
                     </div>
                     <div class="form-group">
                         <label>National ID:</label>
-                        <input type="text" name = "natid" required>
+                        <input type="text" name = "natid" minlength = "13" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -123,7 +125,7 @@ if (isset($_POST['Submit'])) { // Updated the condition here
                     </div>
                     <div class="form-group">
                         <label>Telephone:</label>
-                        <input type="text" name = "telephone" required>
+                        <input type="text" name = "telephone" maxlength = "10" required>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
@@ -131,7 +133,7 @@ if (isset($_POST['Submit'])) { // Updated the condition here
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary:</label>
-                        <input type="text" id="salary" name="salary" required>
+                        <input type="text" id="salary" name="salary" minlength = "10" maxlength = "10" required>
                     </div>
                     <div class="form-group">
                         <label for="username">Username:</label>
@@ -139,11 +141,11 @@ if (isset($_POST['Submit'])) { // Updated the condition here
                     </div>
                     <div class="form-group">
                         <label for="password">Password:</label>
-                        <input type="text" name="passwordStaff" required>
+                        <input type="password" name="passwordStaff" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Confirm Password:</label>
-                        <input type="text" name="staffConfirm" required>
+                        <input type="password" name="staffConfirm" required>
                     </div>
                     <div class="form-group">
                     <label for="password"><?php echo $err;?></label>

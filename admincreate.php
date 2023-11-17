@@ -125,7 +125,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" maxlength = "13" required>
+                        <input type="text" id="natid" name= "natid" minlength = "13" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -140,7 +140,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <input type="text" id="telephone" name="telephone" required>
+                        <input type="text" id="telephone" name="telephone" minlength = "13" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>

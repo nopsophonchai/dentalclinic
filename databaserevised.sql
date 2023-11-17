@@ -26,7 +26,7 @@ CREATE TABLE staff(
     lastName VARBINARY(255) NOT NULL,
     gender VARCHAR(255),
     nationalID VARBINARY(255) NOT NULL UNIQUE,
-    telephone VARCHAR(255),
+    telephone VARBINARY(255),
     houseAddress VARBINARY(255),
     dateOfBirth DATE,
     avaStat INT(1),
@@ -76,7 +76,7 @@ CREATE TABLE appointment(
 CREATE TABLE billing(
     billingID INT PRIMARY KEY AUTO_INCREMENT,
     description TEXT,
-    amount VARBINARY(255) NOT NULL,
+    amount DECIMAL(65,2) NOT NULL,
     billingTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     patientID INT NOT NULL,
     FOREIGN KEY (patientID) REFERENCES patient(patientID)

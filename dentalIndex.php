@@ -97,97 +97,97 @@
 
         }
     }
-    if($formtype == 'createpatient')
-    {
-        if(isset($_POST['signupbutton']))
-        {
+    // if($formtype == 'createpatient')
+    // {
+    //     if(isset($_POST['signupbutton']))
+    //     {
 
-            $Username = $_POST['username'];
-            $Password = $_POST['password'];
-            $Conpass = $_POST['conpasswd'];
-            if($Password != $Conpass)
-            {
-                echo "<span>Passwords do not match!</span>";
-                header("Location: admincreate.php");
-                exit();
-            }
-            $fname = $_POST['first-name'];
-            $lname = $_POST['last-name'];
-            $gender = $_POST['gender'];
-            $telephone = $_POST['telephone'];
-            $dob = $_POST['date-of-birth'];
-            $nationalID = $_POST['natid'];
-            $address = $_POST['address'];
-            $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
-            $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
-            $usercheck -> bind_param("s",$Username);
-            echo 'Hi';
-            ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-            if($usercheck -> execute())
-            {
-                $result = $usercheck->get_result();
-                if($result->num_rows === 0 )
-                {
-                    $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
-                    if ($stmt === false) {
-                        die("Prepare failed: " . $mysqli->error);
-                    }
-                    $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
+    //         $Username = $_POST['username'];
+    //         $Password = $_POST['password'];
+    //         $Conpass = $_POST['conpasswd'];
+    //         if($Password != $Conpass)
+    //         {
+    //             echo "<span>Passwords do not match!</span>";
+    //             header("Location: admincreate.php");
+    //             exit();
+    //         }
+    //         $fname = $_POST['first-name'];
+    //         $lname = $_POST['last-name'];
+    //         $gender = $_POST['gender'];
+    //         $telephone = $_POST['telephone'];
+    //         $dob = $_POST['date-of-birth'];
+    //         $nationalID = $_POST['natid'];
+    //         $address = $_POST['address'];
+    //         $hashedPass = password_hash($Password,PASSWORD_DEFAULT);
+    //         $usercheck = $mysqli->prepare("SELECT Username FROM userAccounts WHERE Username = ?");
+    //         $usercheck -> bind_param("s",$Username);
+    //         echo 'Hi';
+    //         ini_set('display_errors', 1);
+    //             error_reporting(E_ALL);
+    //         if($usercheck -> execute())
+    //         {
+    //             $result = $usercheck->get_result();
+    //             if($result->num_rows === 0 )
+    //             {
+    //                 $stmt = $mysqli->prepare("INSERT INTO patient (firstName,lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (?,?,?,?,?,?,?)");
+    //                 if ($stmt === false) {
+    //                     die("Prepare failed: " . $mysqli->error);
+    //                 }
+    //                 $stmt -> bind_param("sssssss",$fname,$lname,$gender,$nationalID,$telephone,$address,$dob);
           
-                    if($stmt->execute()){
+    //                 if($stmt->execute()){
                         
-                        echo "Data inserted successfully";
+    //                     echo "Data inserted successfully";
 
-                    }
-                    else
-                    {
+    //                 }
+    //                 else
+    //                 {
                         
-                        echo "Select failed. Error: ".$mysqli->error ;
+    //                     echo "Select failed. Error: ".$mysqli->error ;
                         
-                    }
+    //                 }
                     
-                    $lastid = $mysqli->insert_id;
-                    $stmt->close();
-                    $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
-                    $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
-                    if($r->execute()){
-                        ini_set('display_errors', 1);
-                error_reporting(E_ALL);
-                        echo "Data inserted successfully";
-                        if(isset($_SESSION['adminID']))
-                        {
-                            header("Location: Adminmanager.php");
-                            exit;
-                        }
-                        elseif(isset($_SESSION['staffID']))
-                        {
-                            header("Location: staff/staffmain.php");
-                            exit;
-                        }
+    //                 $lastid = $mysqli->insert_id;
+    //                 $stmt->close();
+    //                 $r = $mysqli->prepare("INSERT INTO userAccounts (Username, Password,patientID) VALUES (?,?,?)");
+    //                 $r -> bind_param("ssi",$Username,$hashedPass,$lastid);
+    //                 if($r->execute()){
+    //                     ini_set('display_errors', 1);
+    //             error_reporting(E_ALL);
+    //                     echo "Data inserted successfully";
+    //                     if(isset($_SESSION['adminID']))
+    //                     {
+    //                         header("Location: Adminmanager.php");
+    //                         exit;
+    //                     }
+    //                     elseif(isset($_SESSION['staffID']))
+    //                     {
+    //                         header("Location: staff/staffmain.php");
+    //                         exit;
+    //                     }
                     
-                    }
-                    else
-                    {
+    //                 }
+    //                 else
+    //                 {
                         
-                        echo "Select failed. Error: ".$mysqli->error ;
+    //                     echo "Select failed. Error: ".$mysqli->error ;
                         
-                    }
-                    $r->close();
-                }
-                else
-                {echo 'username already exists!';
-                header("Location: admincreate.php");
-            exit;}
+    //                 }
+    //                 $r->close();
+    //             }
+    //             else
+    //             {echo 'username already exists!';
+    //             header("Location: admincreate.php");
+    //         exit;}
             
-            }
-            else
-            {
-                echo $mysqli->error;
-            }
-            $usercheck -> close();
+    //         }
+    //         else
+    //         {
+    //             echo $mysqli->error;
+    //         }
+    //         $usercheck -> close();
 
-        }
+    //     }
         elseif(isset($_POST['backbutton']))
         {
             if(isset($_SESSION['adminID']))
@@ -201,7 +201,7 @@
                 exit;
             }
         }
-    }
+    
     
     elseif($formtype == 'mainpage')
     {
@@ -242,8 +242,8 @@
             $denttreat = $_POST['dental-treatment'];
             $dentdiag = $_POST['dental-diagnosis'];
 
-            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (?,?,?,?)");
-            $insd -> bind_param("sssi",$dentnote,$denttreat,$dentdiag,$patID11);
+            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (AES_ENCRYPT(?,?),?,?,?)");
+            $insd -> bind_param("ssssi",$dentnote,$encryption_key,$denttreat,$dentdiag,$patID11);
             if ($insd -> execute()){
                 echo 'hi';
                 header('Location: admindental.php');
@@ -402,13 +402,15 @@
             $Username = $_POST['usernameStaff'];
             $hashedPass = password_hash($_POST['passwordStaff'],PASSWORD_DEFAULT);
             
-            $q = $mysqli->prepare("SELECT * FROM staff WHERE nationalID = ?");
+            $q = $mysqli->prepare("SELECT staffID, AES_DECRYPT(firstName, ?) AS firstName, AES_DECRYPT(lastName, ?) AS lastName, gender, AES_DECRYPT(nationalID, ?) AS nationalID, AES_DECRYPT(telephone, ?) AS telephone, AES_DECRYPT(houseAddress, ?) AS houseAddress, dateOfBirth, avaStat, typeID, specialty, AES_DECRYPT(salary, ?) AS salary FROM staff WHERE AES_DECRYPT(nationalID, ?) = ?");
+            $q->bind_param("ssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key);
             $q->bind_param("s", $natid);
             if ($q->execute()) {
                 $results = $q->get_result();
                 if ($results->num_rows === 0) {
-                    $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $w->bind_param("sssssssiisi", $fname, $lname, $gender, $natid, $tele, $address, $dob, $ava, $type, $specialty, $salary);
+                    $w = $mysqli->prepare("INSERT INTO staff (firstName, LastName, gender, nationalID, telephone, houseAddress, dateOfBirth, avaStat, typeID, specialty, salary) VALUES (AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, ?, ?, AES_ENCRYPT(?, ?))");
+                    $w->bind_param("ssssssssisss", $fname, $encryption_key, $lname, $encryption_key, $gender, $natid, $encryption_key, $tele, $encryption_key, $address, $encryption_key, $dob, $ava, $type, $specialty, $salary, $encryption_key);
+
                     if ($w->execute()) {
                         echo '<span>Staff created</span>';
                   
@@ -454,8 +456,8 @@
             //$timecheck = $mysqli ->prepare("SELECT * FROM appointment WHERE staffID = ? AND appointmentTime >= ? AND appointmentDate = ? AND ");
             
 
-            $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
-            $q2 -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
+            $q2 =$mysqli ->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,AES_ENCRYPT(?,?),?,?,0)");
+            $q2 -> bind_param("ssssii",$date,$time,$reason,$key,$doc,$patientID);
             if ($q2 -> execute()){
 
                 header('Location: myapp.php');
