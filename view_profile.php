@@ -172,7 +172,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="address">Status:</label>
-                                                <?php echo '<label>'.$userDetails['avaStat'].'</label>'; ?>
+                                                <?php if($userDetails['avaStat'] == 0)
+                                                {
+                                                    echo '<label>Unavailable</label>'; 
+                                                }
+                                                else
+                                                {
+                                                    echo '<label>Available</label>'; 
+                                                }
+                                                ?>
                                             </div>
                                             <div class="form-groupmy">
                                                 <form action="editstaffforadmin.php" method="post">
@@ -376,7 +384,15 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Status:</label>
-                        <?php echo '<label>'.$userDetails['avaStat'].'</label>'; ?>
+                        <?php if($userDetails['avaStat'] == 0)
+                        {
+                            echo '<label>Unavailable</label>'; 
+                        }
+                        else
+                        {
+                            echo '<label>Available</label>'; 
+                        }
+                        ?>
                     </div>
                     <div class="form-groupmy">
                         <form action="editstaffforadmin.php" method="post">
