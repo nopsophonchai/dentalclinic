@@ -19,9 +19,9 @@ if (isset($_POST['searchbutton'])) {
     $q = "SELECT CONCAT(AES_DECRYPT(patient.firstname, ?), ' ', AES_DECRYPT(patient.lastname, ?)) AS name, patientID, 'patient' AS table_name FROM patient  
       WHERE CONCAT(AES_DECRYPT(patient.firstname, ?), ' ', AES_DECRYPT(patient.lastname, ?)) LIKE ?";
 
-    $q .= " UNION ALL ";
-    $q .= "SELECT CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) AS name, staffID, 'staff' AS table_name FROM staff  
-          WHERE (CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?))) LIKE ?";
+$q .= " UNION ALL ";
+$q .= "SELECT CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) AS name, staffID, 'staff' AS table_name FROM staff  
+          WHERE CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) LIKE ?";
 
     $stmt = $mysqli->prepare($q);
     if (!$stmt) {

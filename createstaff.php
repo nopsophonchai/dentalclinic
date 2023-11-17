@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once('connect.php');
-$encryption_key = $key;
+require_once('connect.php'); require_once('adminconfig.php');
+    $encryption_key = $key; 
 $err = "";
 if (isset($_POST['Submit'])) { // Updated the condition here
 
