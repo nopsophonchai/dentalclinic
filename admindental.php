@@ -51,13 +51,14 @@ require_once('connect.php');
                     <th>Note</th>
                     <th>Treatment</th>
                     <th>Diagnosis</th>
+                    <th>Dentist</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
             <?php
                     $pat_id = $_SESSION['patientID'];
-                    $dental = $mysqli->prepare("SELECT records.patientID, records.recordID,records.recordTime,records.remarks,records.treatment, records.diagnosis FROM records JOIN patient on records.patientID = patient.patientID WHERE patient.patientID = ?");
-                    $dental ->bind_param("i",$pat_id);
+                    $dental = $mysqli->prepare("SELECT records.patientID, records.recordID,records.recordTime,AES_DECRYPT(records.remarks,?) as remarks,records.treatment, records.diagnosis,AES_DECRYPT(staff.firstName,?) as firstName FROM records JOIN patient on records.patientID = patient.patientID JOIN staff on records.staffID = staff.staffID WHERE patient.patientID = ?");
+                    $dental ->bind_param("ssi",$key,$key,$pat_id);
 
                     if ($dental-> execute()){
                         $result=$dental->get_result();
@@ -68,6 +69,7 @@ require_once('connect.php');
                             <td><?=$row['remarks']?></td>
                             <td><?=$row['treatment']?></td>
                             <td><?=$row['diagnosis']?></td>
+                            <td><?=$row['firstName']?></td>
                             <td><a href='admineditdental.php?patientid=<?=$row['patientID']?>&recordid=<?=$row['recordID']?>'><img src="Modify.png" width="24" height="24"></a></td>
                             <td><a href='admindeldental.php?patientid=<?=$row['patientID']?>&recordid=<?=$row['recordID']?>'> <img src="Delete.png" width="24" height="24"></a></td>
                             </tr>

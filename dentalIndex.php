@@ -241,9 +241,10 @@
             $dentnote = $_POST['dental-note'];
             $denttreat = $_POST['dental-treatment'];
             $dentdiag = $_POST['dental-diagnosis'];
+            $staff = $_POST['doctor'];
 
-            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID) VALUES (AES_ENCRYPT(?,?),?,?,?)");
-            $insd -> bind_param("ssssi",$dentnote,$encryption_key,$denttreat,$dentdiag,$patID11);
+            $insd = $mysqli ->prepare("INSERT INTO records(remarks,treatment,diagnosis,patientID,staffID) VALUES (AES_ENCRYPT(?,?),?,?,?,?)");
+            $insd -> bind_param("ssssii",$dentnote,$encryption_key,$denttreat,$dentdiag,$patID11,$staff);
             if ($insd -> execute()){
                 echo 'hi';
                 header('Location: admindental.php');

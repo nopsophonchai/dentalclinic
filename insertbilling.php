@@ -20,9 +20,10 @@
                         <label for="bill-des">Description:</label>
                         <input type="text" name= "bill-des" required>
                     </div>
+                    
                     <div class="form-group">
                         <label for="bill-amount">Amount:</label>
-                        <input type="text" name= "bill-amount" required>
+                        <input type="number" name= "bill-amount" required>
                     </div>
                     
                     <div class="form-groupbilledit">
