@@ -101,7 +101,7 @@
                     
             echo  '</select>';
             echo '</div>';
-                    }
+                    
             ?>
 
 
@@ -109,7 +109,8 @@
                 <label for="Docotr">Select Dentist:</label>
                 <select id="Doctor" name="doctor">
                 <?php
-                    $q = $mysqli->prepare("SELECT staffID,firstName,lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
+                    $q = $mysqli->prepare("SELECT  staffID,AES_DECRYPT(firstName,?) as firstName,AES_DECRYPT(lastName,?) as lastName,specialty FROM staff WHERE typeID = 1 AND avaStat = 1");
+                    $q -> bind_param("ss", $key,$key);
                     if($q->execute())
                     {
                         $results = $q->get_result();
@@ -133,6 +134,7 @@
                 <input type="submit" name ="submitapp" value="Submit">
                 <input type="submit"  name="cancelapp" value="Cancel">
             </div>
+            <?php } ?>
             <?php
                 if(isset($_POST['submitapp']))
                 {
@@ -144,15 +146,15 @@
 
                             $patientID = $_SESSION['patientID'];
 
-                            $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = ?");
-                            $check -> bind_param("sss",$date,$time,$reason);
+                            $check = $mysqli->prepare("SELECT * FROM appointment WHERE appointmentDate = ? AND appointmentTime = ? AND reason = AES_ENCRYPT(?,?)");
+                            $check -> bind_param("ssss",$date,$time,$reason,$key);
                             if($check->execute())
                             {
                                 $checkresult = $check->get_result();
                                 if($checkresult -> num_rows === 0)
                                 {
-                                    $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,?,?,?,0)");
-                                        $ins -> bind_param("sssii",$date,$time,$reason,$doc,$patientID);
+                                    $ins = $mysqli->prepare("INSERT INTO appointment (appointmentDate,appointmentTime,reason,staffID,patientID,completion) VALUES (?,?,AES_ENCRYPT(?,?),?,?,0)");
+                                        $ins -> bind_param("ssssii",$date,$time,$reason,$key,$doc,$patientID);
                                         if ($ins -> execute()){
 
                                             header('Location: mainpage.php');

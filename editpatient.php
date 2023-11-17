@@ -9,8 +9,8 @@
     else
     {
         $id = $_SESSION['patientID'];
-        $info = $mysqli -> prepare("SELECT * FROM patient WHERE patientID = ?");
-        $info -> bind_param("i", $id);
+        $info = $mysqli -> prepare("SELECT AES_DECRYPT(firstName,?) as firstName,AES_DECRYPT(lastName,?) as lastName,AES_DECRYPT(nationalID,?) as nationalID,AES_DECRYPT(telephone,?) as telephone,gender,AES_DECRYPT(houseAddress,?) as houseAddress,dateOfBirth FROM patient WHERE patientID = ?");
+        $info -> bind_param("sssssi",$key,$key,$key,$key,$key,$id);
         if($info->execute()) {
             $result = $info->get_result();
             if($result->num_rows > 0) {
@@ -35,8 +35,8 @@
         $dob = $_POST['date-of-birth'];
 
     
-        $q = $mysqli -> prepare("UPDATE patient SET firstName=?,lastName=?,nationalID=?,houseAddress=?,telephone=?,dateOfBirth=? WHERE patientID = ?");
-        $q -> bind_param("ssssssi", $firstname,$lastname,$natid,$address,$tel,$dob,$id2);
+        $q = $mysqli -> prepare("UPDATE patient SET firstName=AES_ENCRYPT(?,?),lastName=AES_ENCRYPT(?,?),houseAddress=AES_ENCRYPT(?,?),telephone=AES_ENCRYPT(?,?),dateOfBirth=? WHERE patientID = ?");
+        $q -> bind_param("sssssssssi", $firstname,$key,$lastname,$key,$address,$key,$tel,$key,$dob,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
@@ -75,13 +75,10 @@
                         <label for="last-name">Last Name:</label>
                         <?php       echo "<input type='text' name='last-name' value=" .$userDetails['lastName'] . ">";
 ?>                    </div>
-                    <div class="form-group">
-                        <label for="natid">National ID:</label>
-                        <?php        echo "<input type='text' name='natID' value=" .$userDetails['nationalID'] . ">";
-?>                    </div>
+    
                     <div class="form-group">
                         <label for="date-of-birth">Date of Birth:</label>
-                        <?php                        echo "<input type='text' name='date-of-birth' value=" .$userDetails['dateOfBirth'] . ">";
+                        <?php                        echo "<input type='date' name='date-of-birth' value=" .$userDetails['dateOfBirth'] . ">";
 ?>                    </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>

@@ -20,7 +20,7 @@
     else
     {
         $id = $_SESSION['patientID'];
-        $info = $mysqli -> prepare("SELECT AES_DECRYPT(firstName,?) as fname,AES_DECRYPT(lastName,?) as lname,AES_DECRYPT(nationalID,?) as natID,AES_DECRYPT(telephone,?) as tel,AES_DECRYPT(houseAddress,?) as haddress,dateOfBirth FROM patient WHERE patientID = ?");
+        $info = $mysqli -> prepare("SELECT AES_DECRYPT(firstName,?) as firstName,AES_DECRYPT(lastName,?) as lastName,AES_DECRYPT(nationalID,?) as nationalID,AES_DECRYPT(telephone,?) as telephone,gender,AES_DECRYPT(houseAddress,?) as houseAddress,dateOfBirth FROM patient WHERE patientID = ?");
         $info -> bind_param("sssssi",$key,$key,$key,$key,$key,$id);
         if($info->execute()) {
             $result = $info->get_result();
