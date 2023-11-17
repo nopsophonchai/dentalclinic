@@ -17,11 +17,12 @@ if (isset($_POST['searchbutton'])) {
     $searchitem = $_POST['SearchText'];
 
     $q = "SELECT CONCAT(AES_DECRYPT(patient.firstname, ?), ' ', AES_DECRYPT(patient.lastname, ?)) AS name, patientID, 'patient' AS table_name FROM patient  
-      WHERE CONCAT(AES_DECRYPT(patient.firstname, ?), ' ', AES_DECRYPT(patient.lastname, ?)) LIKE ?";
+    WHERE CONCAT(LOWER(CONVERT(AES_DECRYPT(patient.firstname, ?) USING utf8)), ' ', LOWER(CONVERT(AES_DECRYPT(patient.lastname, ?) USING utf8))) LIKE LOWER(?)";
 
-$q .= " UNION ALL ";
-$q .= "SELECT CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) AS name, staffID, 'staff' AS table_name FROM staff  
-          WHERE CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) LIKE ?";
+    $q .= " UNION ALL ";
+
+    $q .= "SELECT CONCAT(AES_DECRYPT(staff.firstname, ?), ' ', AES_DECRYPT(staff.lastname, ?)) AS name, staffID, 'staff' AS table_name FROM staff  
+        WHERE CONCAT(LOWER(CONVERT(AES_DECRYPT(staff.firstname, ?) USING utf8)), ' ', LOWER(CONVERT(AES_DECRYPT(staff.lastname, ?) USING utf8))) LIKE LOWER(?)";
 
     $stmt = $mysqli->prepare($q);
     if (!$stmt) {

@@ -1,6 +1,8 @@
 <?php
     session_start();
     require_once('../connect.php');
+    require_once('adminconfig.php');
+    $encryption_key = $key; 
     if(isset($_POST['row_id']))
     {
         $_SESSION['patientID'] = $_POST['row_id'];
@@ -31,9 +33,14 @@
                 $table = $_POST['type'];
                 $query = "";
                 if ($table === 'patient') {
-                    $query = "SELECT * FROM patient WHERE patientID = ?";
+                    $query = "SELECT patientID,AES_DECRYPT(firstName, ?) as firstName,AES_DECRYPT(lastName, ?) as lastName,gender,
+                    AES_DECRYPT(nationalID, ?) as nationalID,AES_DECRYPT(telephone, ?) as telephone,AES_DECRYPT(houseAddress, ?) as houseAddress,
+                    dateOfBirth FROM patient WHERE patientID = ?";
                 } elseif ($table === 'staff') {
-                    $query = "SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?";
+                    $query = "SELECT staffID,AES_DECRYPT(staff.firstName, ?) as firstName,AES_DECRYPT(staff.lastName, ?) as lastName,gender,
+                    AES_DECRYPT(staff.nationalID, ?) as nationalID,telephone,AES_DECRYPT(staff.houseAddress, ?) as houseAddress,dateOfBirth,
+                    avaStat,type.typeName,AES_DECRYPT(staff.specialty, ?) as specialty,AES_DECRYPT(staff.salary, ?) as salary
+             FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
                 } else {
                     echo "Invalid table type.";
                     exit();
@@ -42,7 +49,13 @@
                 $stmt = $mysqli->prepare($query);
 
                 if ($stmt) {
-                    $stmt->bind_param("s", $row_id);
+                    if ($table === 'patient') {
+                        $stmt->bind_param("ssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $row_id);
+                        
+                    }
+                    elseif ($table === 'staff') {
+                        $stmt->bind_param("sssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $row_id);
+                        }
                     $stmt->execute();
                     $result = $stmt->get_result();
 
@@ -229,14 +242,16 @@
                 echo "gosecondif";
                 $row_id = $_SESSION['patientID'];
     $table = $_POST['type'];
-                $query = "";
+    $query = "";
                 
-                    $query = "SELECT * FROM patient WHERE patientID = ?";
+    $query = "SELECT patientID,AES_DECRYPT(firstName, ?) as firstName,AES_DECRYPT(lastName, ?) as lastName,gender,
+    AES_DECRYPT(nationalID, ?) as nationalID,AES_DECRYPT(telephone, ?) as telephone,AES_DECRYPT(houseAddress, ?) as houseAddress,
+    dateOfBirth FROM patient WHERE patientID = ?";
                 
                 $stmt = $mysqli->prepare($query);
 
                 if ($stmt) {
-                    $stmt->bind_param("s", $row_id);
+                    $stmt->bind_param("ssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $row_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
@@ -335,12 +350,15 @@
     $table = $_POST['type'];
                 
                 
-                $query = "SELECT staff.*, type.typeName FROM staff JOIN type ON staff.typeID = type.typeID WHERE staffID = ?";
-                
-                $stmt = $mysqli->prepare($query);
+    $query = "SELECT staffID,AES_DECRYPT(staff.firstName, ?) as firstName,AES_DECRYPT(staff.lastName, ?) as lastName,gender,
+    AES_DECRYPT(staff.nationalID, ?) as nationalID,telephone,AES_DECRYPT(staff.houseAddress, ?) as houseAddress,dateOfBirth,
+    avaStat,type.typeName,AES_DECRYPT(staff.specialty, ?) as specialty,AES_DECRYPT(staff.salary, ?) as salary
+    FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
+    
+    $stmt = $mysqli->prepare($query);
 
                 if ($stmt) {
-                    $stmt->bind_param("s", $row_id);
+                    $stmt->bind_param("sssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $row_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
