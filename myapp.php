@@ -67,8 +67,8 @@ require_once('connect.php');
                 </tr>
         <?php
             $pat_id = $_SESSION['patientID'];
-            $app = $mysqli->prepare("SELECT appointment.appointmentDate,appointment.appointmentTime,staff.firstName AS staffFirstName,appointment.reason FROM appointment JOIN staff on staff.staffID = appointment.staffID JOIN patient ON patient.patientID = appointment.patientID  WHERE  patient.patientID = ?");
-            $app -> bind_param("i",$pat_id);
+            $app = $mysqli->prepare("SELECT appointment.appointmentDate,appointment.appointmentTime,staff.firstName AS staffFirstName,AES_DECRYPT(appointment.reason,?) as appreason FROM appointment JOIN staff on staff.staffID = appointment.staffID JOIN patient ON patient.patientID = appointment.patientID  WHERE  patient.patientID = ?");
+            $app -> bind_param("si",$key,$pat_id);
 
             if ($app -> execute()){
                 $result=$app->get_result();

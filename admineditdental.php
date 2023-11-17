@@ -16,8 +16,8 @@
     else
     {
         $id = $_SESSION['patientID'];
-        $info = $mysqli -> prepare("SELECT * FROM records WHERE patientID = ? AND recordID = ?");
-        $info -> bind_param("ii", $id,$_SESSION['ID']);
+        $info = $mysqli -> prepare("SELECT recordID,recordTime,AES_DECRYPT(remarks,?) as dentalremark,treatment,diagnosis,patientID FROM records WHERE patientID = ? AND recordID = ?");
+        $info -> bind_param("sii",$key, $id,$_SESSION['ID']);
         if($info->execute()) {
             $result = $info->get_result();
             if($result->num_rows > 0) {
@@ -44,8 +44,8 @@
         $treat = $_POST['dental-treatment'];
         $diag = $_POST['dental-diagnosis'];
         // echo "<span>mm".$id2."</span>";
-        $q = $mysqli -> prepare("UPDATE records SET remarks=?,treatment=?,diagnosis=?, recordTime = ? WHERE recordID = ?");
-        $q -> bind_param("ssssi",$note,$treat,$diag,$_POST['dental-time'],$ID);
+        $q = $mysqli -> prepare("UPDATE records SET remark = AES_ENCRYPT(?,?),treatment=?,diagnosis=?, recordTime = ? WHERE recordID = ?");
+        $q -> bind_param("sssssi",$note,$key,$treat,$diag,$_POST['dental-time'],$ID);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
