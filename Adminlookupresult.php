@@ -48,6 +48,11 @@ if (isset($_POST['searchbutton'])) {
     // If no search is performed, set the session variable to an empty array
     $_SESSION['search_results'] = [];
 }
+if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+    {
+        header("Location: login.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>

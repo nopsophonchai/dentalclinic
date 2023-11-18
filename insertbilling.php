@@ -23,7 +23,7 @@
                     
                     <div class="form-group">
                         <label for="bill-amount">Amount:</label>
-                        <input type="number" name= "bill-amount" required>
+                        <input type="number" step="0.01" name= "bill-amount" required>
                     </div>
                     
                     <div class="form-groupbilledit">

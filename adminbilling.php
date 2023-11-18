@@ -5,6 +5,11 @@ require_once('connect.php');
         header("Location: insertbilling.php");
         exit;
     }
+    if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+    {
+        header("Location: login.php");
+        exit();
+    }
     elseif(isset($_POST['adminbillexit'])){
         if(isset($_SESSION['adminID']))
         {
@@ -31,7 +36,7 @@ require_once('connect.php');
     
     </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Patient <?php echo $_SESSION['patientID'];?>Billing History </h2>
+            <h2 class="signup-heading"> Patient Billing History </h2>
             <div class="app-form">
             <table> 
                 <col width="20%">

@@ -45,7 +45,7 @@
         $doctor = $_POST['doctor'];
 
         $q = $mysqli->prepare("UPDATE records SET staffID = ?, remarks = AES_ENCRYPT(?,?), treatment = ?, diagnosis = ?, recordTime = ? WHERE recordID = ?");
-        $q->bind_param("isssssi", $doctor,$note,$key, $treat, $diag, $_POST['dental-time'], $ID);
+        $q->bind_param("isssssi", $doctor,$note,$key, $treat, $diag, $_POST['dental_time'], $ID);
 
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);

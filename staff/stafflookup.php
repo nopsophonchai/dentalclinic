@@ -1,3 +1,9 @@
+<?php
+if(!isset($_SESSION['staffID']))
+{
+    header('Location: ../login.php');
+} 
+?>
 <!DOCTYPE html>
 <html>
 <head>
