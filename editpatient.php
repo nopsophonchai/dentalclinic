@@ -82,7 +82,7 @@
 ?>                    </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <?php                        echo "<input type='text' name='telephone' value=" .$userDetails['telephone'] . ">";
+                        <?php                        echo "<input type='text' name='telephone'  maxlength = '10' minlength = '10' value=" .$userDetails['telephone'] . ">";
 ?>                    </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
