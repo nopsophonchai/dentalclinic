@@ -25,7 +25,7 @@
         <div class="logo-containersignup">
         </div>
         <div class="create_staff-form1">
-
+            <h1><?php echo $_SESSION['adminID']; ?></h1>
             <div class="form-groupAdminmana">
             <form action="admincreate.php" method="post">
                    <input type="submit"style="color: var(--button-text-color);" value="Create Patient">
@@ -53,7 +53,8 @@
                 </form>
                    </div>
                    <form action="Adminmanager.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" name="log" value="Logout"></form>
+                   <input type="submit"style="color: var(--button-text-color);" name="log" value="Logout">
+                </form>
                     
                     
                    

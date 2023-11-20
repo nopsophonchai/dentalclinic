@@ -86,7 +86,7 @@
 ?>                    </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <?php                        echo "<input type='text' name='address' value=" .$userDetails['houseAddress'] . ">";
+                        <?php                        echo "<input type='text' name='address' value='" .$userDetails['houseAddress'] . "'>";
 ?>                    </div>
                     
                     <div class="form-groupmy">

@@ -162,6 +162,10 @@
                                             
                                             </div>
                                             <div class="form-group">
+                        <label for="last-name">Address:</label>
+                        <?php echo '<label>'.$userDetails['houseAddress'].'</label>'; ?>
+                    </div>
+                                            <div class="form-group">
                                                 <label for="date-of-birth">Date of Birth:</label>
                                                 <?php echo '<label>'.$userDetails['dateOfBirth'].'</label>'; ?>
                                             </div>
@@ -317,7 +321,7 @@
                                                 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
                                             }
                                         } 
-            if($type === 'staff'){echo "gothirdif";
+            if($type === 'staff'){
                 $row_id = $_SESSION['staffID'];
                 $table = $_POST['type'];
                 
@@ -325,12 +329,12 @@
                 $query = "SELECT staffID,AES_DECRYPT(staff.firstName, ?) as firstName,AES_DECRYPT(staff.lastName, ?) as lastName,gender,
                 AES_DECRYPT(staff.nationalID, ?) as nationalID,telephone,AES_DECRYPT(staff.houseAddress, ?) as houseAddress,dateOfBirth,
                 avaStat,type.typeName,AES_DECRYPT(staff.specialty, ?) as specialty,AES_DECRYPT(staff.salary, ?) as salary
-                FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
+                 FROM staff JOIN type ON staff.typeID = type.typeID WHERE staff.staffID = ?";
                 
                 $stmt = $mysqli->prepare($query);
 
                 if ($stmt) {
-                    $stmt->bind_param("sssssss", $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key, $row_id);
+                    $stmt->bind_param("sssssss", $encryption_key,  $encryption_key, $encryption_key, $encryption_key, $encryption_key, $encryption_key,$row_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
 
@@ -377,7 +381,10 @@
                         <label for="date-of-birth">Date of Birth:</label>
                         <?php echo '<label>'.$userDetails['dateOfBirth'].'</label>'; ?>
                     </div>
-                    
+                    <div class="form-group">
+                        <label for="last-name">Address:</label>
+                        <?php echo '<label>'.$userDetails['houseAddress'].'</label>'; ?>
+                    </div>
                     <div class="form-group">
                         <label for="address">Salary:</label>
                         <?php echo '<label>'.$userDetails['salary'].'</label>'; ?>

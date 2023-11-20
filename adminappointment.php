@@ -175,7 +175,7 @@ if(isset($_POST['myappexit']))
                             $idresults = $combid->get_result();
                             if($idresults -> num_rows === 0)
                             {
-                                echo '<span style = "color: red; font-size: 12px;">NATIONAL ID DOES NOT EXIST IN DATABASE!</span>';
+                                echo '<h1 style = "color: red; font-size: 12px;">NATIONAL ID DOES NOT EXIST IN DATABASE!</h1>';
                             }
                             else
                             {

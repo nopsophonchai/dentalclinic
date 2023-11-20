@@ -1,4 +1,6 @@
-<?php if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+<?php 
+    session_start();
+    if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
     {
         header("Location: login.php");
         exit();
