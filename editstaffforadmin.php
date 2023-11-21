@@ -3,7 +3,7 @@
     require_once('connect.php');
     require_once('adminconfig.php');
     $encryption_key = $key; 
-    if(!isset($_SESSION['staffID']))
+    if(!isset($_SESSION['staffID']) && !isset($_SESSION['adminID']))
     {
         header("Location: login.php");
     }
@@ -43,8 +43,8 @@
         
 
     
-        $q = $mysqli -> prepare("UPDATE staff SET firstName=AES_ENCRYPT(?, ?),lastName=AES_ENCRYPT(?, ?),gender=?,dateOfBirth=?,avaStat=?,typeID=?,salary=AES_ENCRYPT(?, ?) WHERE staffID = ?");
-        $q -> bind_param("ssssssiiisi", $firstname, $encryption_key,$lastname, $encryption_key,$gender ,$dob,$stat,$type,$salary, $encryption_key,$id2);
+        $q = $mysqli -> prepare("UPDATE staff SET firstName=AES_ENCRYPT(?, ?),lastName=AES_ENCRYPT(?, ?),gender=?,dateOfBirth=?,avaStat=?,typeID=?,salary=AES_ENCRYPT(?, ?), houseAddress=AES_ENCRYPT(?,?) WHERE staffID = ?");
+        $q -> bind_param("ssssssiiisssi", $firstname, $encryption_key,$lastname, $encryption_key,$gender ,$dob,$stat,$type,$salary, $encryption_key,$_POST['add'],$encryption_key,$id2);
         ini_set('display_errors', 1);
                 error_reporting(E_ALL);
         if($q->execute()) {
@@ -90,6 +90,10 @@
                         <label for="male">Male</label>
                         <input type="radio" id="female" name="gender" value="female">
                         <label for="female">Female</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Address:</label>
+                        <?php echo '<input type = "text" name = "add" value = "'.$userDetails['houseAddress'].'";>' ?>
                     </div>
                     <div class="form-group">
                         <label>Type:</label>

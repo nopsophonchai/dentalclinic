@@ -2,7 +2,7 @@
 session_start();
 require_once('../connect.php');
 require_once('adminconfig.php');
-    $encryption_key = $key; 
+$encryption_key = $key; 
 if(!isset($_SESSION['staffID']))
 {
     header('Location: ../login.php');

@@ -6,4 +6,4 @@ $mysqli = new mysqli('localhost','root','root','dentalclinic');
    }
    $key = "dental";
 
-?>  ان شاء الله سنجد هذا الخلل
+?>

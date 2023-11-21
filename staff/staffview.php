@@ -28,7 +28,7 @@
             
             
             if (isset($_POST['view_profile'])) { 
-                echo "gofirstif";
+
                 $row_id = $_POST['row_id'];
                 $table = $_POST['type'];
                 $query = "";
@@ -149,7 +149,7 @@
 </div>
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile <?php echo $_SESSION['staffID']." ".$_SESSION['thisStaff'];?></h2>
+            <h2 class="signup-heading"> My profile </h2>
 
             <form action="../dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="staffview"/>
@@ -247,7 +247,7 @@
                 }
             }elseif (isset($_GET['type'])) { $type = $_GET['type'];
                 if($type === 'patient'){
-                echo "gosecondif";
+                
                 $row_id = $_SESSION['patientID'];
     $table = $_POST['type'];
     $query = "";
@@ -353,7 +353,7 @@
                     echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
                 }
             } 
-            if($type === 'staff'){echo "gothirdif";
+            if($type === 'staff'){
                 $row_id = $_SESSION['thisStaff'];
     $table = $_POST['type'];
                 

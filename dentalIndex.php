@@ -47,8 +47,9 @@
                 if($result->num_rows === 0 )
                 {
                     $stmt = $mysqli->prepare("INSERT INTO patient (firstName, lastName, gender, nationalID, telephone, houseAddress, dateOfBirth) VALUES (AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?, AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), AES_ENCRYPT(?, ?), ?)");
-                    if ($stmt === false) {
-                        die("Prepare failed: " . $mysqli->error);
+                    if ($stmt == false) {
+                        header("Location: signup.php?error=ID already exists!");
+                        exit();
                     }
                     $stmt -> bind_param("ssssssssssss", $fname, $encryption_key, $lname, $encryption_key, $gender, $nationalID, $encryption_key, $telephone, $encryption_key, $address, $encryption_key, $dob);
           
@@ -60,7 +61,8 @@
                     else
                     {
                         
-                        echo "Select failed. Error: ".$mysqli->error ;
+                        header("Location: signup.php?error=ID already exists!");
+                        exit();
                         
                     }
                     

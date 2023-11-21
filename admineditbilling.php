@@ -16,8 +16,8 @@
     else
     {
         $id = $_SESSION['patientID'];
-        $info = $mysqli -> prepare("SELECT * FROM billing WHERE patientID = ?");
-        $info -> bind_param("i", $id);
+        $info = $mysqli -> prepare("SELECT * FROM billing WHERE patientID = ? AND billingID = ?");
+        $info -> bind_param("ii", $id,$_SESSION['ID']);
         if($info->execute()) {
             $result = $info->get_result();
             if($result->num_rows > 0) {

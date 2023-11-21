@@ -4,7 +4,8 @@ require_once("connect.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once('adminconfig.php');
-$key = $key; 
+$key = $key;
+$exist = 0;
 if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
     {
         header("Location: login.php");
@@ -63,11 +64,13 @@ if(isset($_POST['signupbutton']))
                 echo "Data inserted successfully";
                 if(isset($_SESSION['adminID']))
                 {
+                    $exist = 0;
                     header("Location: Adminmanager.php");
                     exit();
                 }
                 elseif(isset($_SESSION['staffID']))
                 {
+                    $exist = 0;
                     header("Location: staff/staffmain.php");
                     exit();
                 }
@@ -80,9 +83,8 @@ if(isset($_POST['signupbutton']))
         }
         else
         {
-            echo 'Username already exists!';
-            header("Location: admincreate.php");
-            exit();
+            $exist = 1;
+            
         }
     }
     else
@@ -95,11 +97,13 @@ elseif(isset($_POST['backbutton']))
 {
     if(isset($_SESSION['adminID']))
     {
+        $exist = 0;
         header("Location: Adminmanager.php");
         exit();
     }
     elseif(isset($_SESSION['staffID']))
     {
+        $exist = 0;
         header("Location: staff/staffmain.php");
         exit();
     }
@@ -130,7 +134,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="number" id="natid" name= "natid" minlength = "13" maxlength = "13" required>
+                        <input type="number" id="natid" name= "natid" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -145,7 +149,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <input type="number" id="telephone" name="telephone" maxlength = "10" required>
+                        <input type="number" id="telephone" name="telephone" required>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
@@ -163,16 +167,25 @@ elseif(isset($_POST['backbutton']))
                         <label for="conpasswd">Confirm Password:</label>
                         <input type="text" id="conpasswd" name="conpasswd" required>
                     </div>
+                    <div>
                     <?php 
                     if(isset($_POST['signupbutton']))
                     {
                         if($_POST['password'] != $_POST['conpasswd'])
                         {
+                            echo '<div>';
                             echo "<span style='color:red'>Passwords do not match!</span>";
+                            echo '</div>';
                         }
                     }
-                        
-            ?>
+                    ?>
+                    <?php
+                        if($exist == 1)
+                        {
+                            echo '<span>Username already exists!</span>';
+                        }
+                    ?>
+                    </div>
                     <input type="submit" name="signupbutton" value="Create"> 
                     
                    

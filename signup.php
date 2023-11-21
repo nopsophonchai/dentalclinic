@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <input type="text" id="telephone" name="telephone" required>
+                        <input type="text" id="telephone" name="telephone"  maxlength = "10" minlength = "10" required>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>

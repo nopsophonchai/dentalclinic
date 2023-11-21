@@ -17,7 +17,7 @@ CREATE TABLE type(
     typeName VARCHAR(255) NOT NULL
 );
 
-INSERT INTO type (typeName) VALUES ('Dentist'),('Nurse'),('Receptionist'),('Janitor'),('Security Guard'); 
+INSERT INTO type (typeName) VALUES ('Dentist'),('Nurse'),('Janitor'),('Security Guard'); 
 
 
 CREATE TABLE staff(
