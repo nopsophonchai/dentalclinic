@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once('connect.php');
-$encryption_key = $key;
+require_once('connect.php'); require_once('adminconfig.php');
+    $encryption_key = $key; 
 $err = "";
 if (isset($_POST['Submit'])) { // Updated the condition here
 
@@ -133,7 +133,7 @@ if (isset($_POST['Submit'])) { // Updated the condition here
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary:</label>
-                        <input type="text" id="salary" name="salary" minlength = "10" maxlength = "10" required>
+                        <input type="text" id="salary" name="salary" maxlength = "10" required>
                     </div>
                     <div class="form-group">
                         <label for="username">Username:</label>

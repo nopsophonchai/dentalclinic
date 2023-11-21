@@ -1,3 +1,8 @@
+<?php if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+    {
+        header("Location: login.php");
+        exit();
+    }?>
 <!DOCTYPE html>
 <html>
 <head>

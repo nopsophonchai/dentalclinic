@@ -58,21 +58,23 @@
                     <th>Diagnosis</th>
                     <th>Treatment</th>
                     <th>Remarks</th>
+                    <th>Dentist</th>
                 </tr>
             <?php 
                 $pat_id = $_SESSION['patientID'];
-                $dent = $mysqli->prepare("SELECT records.recordTime as recordtime, records.diagnosis , records.treatment, AES_DECRYPT(records.remarks,?) as recordremark FROM records JOIN patient ON patient.patientID = records.patientID WHERE patient.patientID = ?");
-                $dent -> bind_param("si",$key,$pat_id);
+                $dent = $mysqli->prepare("SELECT records.recordTime as recordtime, records.diagnosis , records.treatment, AES_DECRYPT(records.remarks,?) as recordremark, AES_DECRYPT(staff.firstName,?) as firstName FROM records JOIN patient ON patient.patientID = records.patientID JOIN staff ON staff.staffID = records.staffID WHERE patient.patientID = ?");
+                $dent -> bind_param("ssi",$key,$key,$pat_id);
 
                 if ($dent -> execute()){
                     $result=$dent->get_result();
                     while($row=$result->fetch_assoc()){
                         ?>
                     <tr>
-                    <td><?=$row['recordTime']?></td>
+                    <td><?=$row['recordtime']?></td>
                     <td><?=$row['diagnosis']?></td>
                     <td><?=$row['treatment']?></td>
-                    <td><?=$row['remarks']?></td>
+                    <td><?=$row['recordremark']?></td>
+                    <td><?=$row['firstName']?></td>
                     </tr>
                     <?php
                     }

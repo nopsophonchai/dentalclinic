@@ -86,7 +86,7 @@
 ?>                    </div>
                     <div class="form-group">
                         <label for="bill-amount">Amount:</label>
-                        <?php        echo "<input type='text' name='bill-amount' value=" .$userDetails['amount'] . ">";
+                        <?php        echo "<input type='number' step='0.01' name='bill-amount' value=" .$userDetails['amount'] . ">";
 ?>                    </div>
 
                     <div class="form-groupbilledit">

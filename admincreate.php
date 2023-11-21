@@ -5,6 +5,11 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once('adminconfig.php');
 $key = $key; 
+if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+    {
+        header("Location: login.php");
+        exit();
+    }
 if(isset($_POST['signupbutton']))
 {
 
@@ -125,7 +130,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="natid">National ID:</label>
-                        <input type="text" id="natid" name= "natid" minlength = "13" maxlength = "13" required>
+                        <input type="number" id="natid" name= "natid" minlength = "13" maxlength = "13" required>
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
@@ -140,7 +145,7 @@ elseif(isset($_POST['backbutton']))
                     </div>
                     <div class="form-group">
                         <label for="telephone">Telephone:</label>
-                        <input type="text" id="telephone" name="telephone" minlength = "13" maxlength = "13" required>
+                        <input type="number" id="telephone" name="telephone" maxlength = "10" required>
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>

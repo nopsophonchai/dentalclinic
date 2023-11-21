@@ -264,7 +264,7 @@ if(isset($_POST['myappexit']))
                             $query .= "WHERE ";
 
                             if ($namesearch != "") {
-                                $query .= "AES_DECRYPT(s.firstName, 'dental') LIKE ?";
+                                $query .= "LOWER(CONVERT(AES_DECRYPT(s.firstName, 'dental') USING utf8) ) LIKE LOWER(?)";
                                 $parameters[] = "%" . $namesearch . "%";
                                 $types .= 's';
                             }
@@ -282,7 +282,7 @@ if(isset($_POST['myappexit']))
                                 if ($namesearch != "" || $datesearch != "") {
                                     $query .= " AND ";
                                 }
-                                $query .= "AES_DECRYPT(p.nationalID, 'dental') LIKE ?";
+                                $query .= "LOWER(AES_DECRYPT(p.nationalID, 'dental')) LIKE LOWER(?)";
                                 $parameters[] = "%" . $patsearch . "%";
                                 $types .= 's';
                             }

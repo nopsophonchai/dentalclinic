@@ -90,5 +90,7 @@ CREATE TABLE records(
     treatment TEXT,
     diagnosis TEXT,
     patientID INT NOT NULL,
-    FOREIGN KEY (patientID) REFERENCES patient(patientID)
+    staffID INT NOT NULL,
+    FOREIGN KEY (patientID) REFERENCES patient(patientID),
+    FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );

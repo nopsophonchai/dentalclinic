@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require_once('../connect.php');
     if(isset($_POST['log'])) {
         session_unset();
         session_destroy();
@@ -9,6 +10,16 @@
     if(!isset($_SESSION['staffID']))
     {
         header('Location: ../login.php');
+    }
+    else
+    {
+        $q = $mysqli->prepare("SELECT AES_DECRYPT(firstName,?) as firstName FROM staff WHERE staffID = ?");
+        $q -> bind_param("si",$key,$_SESSION['staffID']);
+        if($q->execute())
+        {
+            $result = $q->get_result();
+            $results = $result -> fetch_assoc();
+        }
     }
 ?>
 
@@ -24,7 +35,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <h1 class = "form-groupAdminmana1">Welcome <?php echo $_SESSION['staffID'];?></h1> 
+        <h1 class = "form-groupAdminmana1">Welcome, <?php echo $results['firstName'];?>.</h1> 
         <div class="create_staff-form1">
 
             

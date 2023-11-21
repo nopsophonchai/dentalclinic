@@ -67,7 +67,7 @@ require_once('connect.php');
                 </tr>
         <?php
             $pat_id = $_SESSION['patientID'];
-            $app = $mysqli->prepare("SELECT appointment.appointmentDate,appointment.appointmentTime,AES_DECRYPT(staff.firstName,?) AS staffFirstName,AES_DECRYPT(appointment.reason,?) as appreason FROM appointment JOIN staff on staff.staffID = appointment.staffID JOIN patient ON patient.patientID = appointment.patientID  WHERE  patient.patientID = ?");
+            $app = $mysqli->prepare("SELECT appointment.appointmentDate,appointment.appointmentTime,AES_DECRYPT(staff.firstName,?) AS staffFirstName, AES_DECRYPT(appointment.reason,?) as appreason FROM appointment JOIN staff on staff.staffID = appointment.staffID JOIN patient ON patient.patientID = appointment.patientID  WHERE  patient.patientID = ? AND appointment.completion = 0");
             $app -> bind_param("ssi",$key,$key,$pat_id);
 
             if ($app -> execute()){
@@ -78,7 +78,7 @@ require_once('connect.php');
                  <td><?=$row['appointmentDate']?></td>
                     <td><?=$row['appointmentTime']?></td>
                     <td><?=$row['staffFirstName']?></td>
-                    <td><?=$row['reason']?></td>
+                    <td><?=$row['appreason']?></td>
                 </tr>
                 <?php
             }
