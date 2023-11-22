@@ -78,17 +78,17 @@
                                         <div class="logo-containersignup">
                                         <div class="form-groupmyprof1">
 
-                                        <div class="form-groupmyprof">
-                                                <button type="submit" name="dentalrecords" >Dental Records</button>
+                                        <div class="form-groupmain">
+                                                <button class ="hover-button" type="submit" name="dentalrecords" >Dental Records</button>
                                                 </div>
                                                 
-                                                <div class="form-groupmyprof">
-                                                <button type="submit" name="adminbilling" >Billing History</button>
+                                                <div class="form-groupmain">
+                                                <button class ="hover-button" type="submit" name="adminbilling" >Billing History</button>
                                 </div>
                                 </div>
                                         </div>
                                         <div class="signup-form">
-                                            <h2 class="signup-heading"> My profile</h2>
+                                            <h2 class="signup-heading"><?php echo $userDetails['firstName'];?> Profile</h2>
 
                                             <form action="../dentalIndex.php" method="post">
                                             <input type="hidden" name="formType" value="staffview" />
@@ -125,9 +125,9 @@
                                                     <div class="form-groupmy">
                                                     <form action="../editpatientforadmin.php" method="post">
                                                     <input type="hidden" name="patientID" value="<?php echo $_SESSION['patientID']; ?>"/>
-                                                        <button type="submit" name="editpatient" >Edit</button>
+                                                        <button class ="hover-button" type="submit" name="editpatient" >Edit</button>
                                                         </form>
-                                                        <button type="submit" name="myprofexittolookup" >Return</button>
+                                                        <button class ="hover-button"type="submit" name="myprofexittolookup" >Return</button>
                                                     </div>
                                                 </div>
                                             
@@ -141,15 +141,11 @@
                                  <div class="container">
         
         <div class="logo-containersignup">
-        <div class="form-groupmyprof1">
-
-        
-                
-           
-</div>
+        <div class="form-groupmyprof1">          
+        </div>
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile </h2>
+            <h2 class="signup-heading">  <?php echo $userDetails['firstName'];?> Profile </h2>
 
             <form action="../dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="staffview"/>
@@ -193,9 +189,9 @@
                         }
                         ?>
                     </div>
-                    <div class="form-groupmy">
+                    <div class="form-groupmyy">
                         
-                        <button type="submit" name="myprofexittolookup" >Return</button>
+                        <button class ="hover-button"type="submit" name="myprofexittolookup" >Return</button>
                     </div>
                     
                 </div>
@@ -204,8 +200,9 @@
             <form action = "staffview.php?type=staff" method = "post">
                 <?php if($_SESSION['staffID'] == $_SESSION['thisStaff'])
                     { ?>
-                <input type = "submit" name="statusset" value= "Set Status">
-                    </form>
+                <div class = "status" >
+                <input class ="hover-button"type = "submit" name="statusset" value= "Set Status">
+                    </div></form>
                     <?php 
                     
                         if(isset($_POST['statusset']))
@@ -281,17 +278,17 @@
         <div class="logo-containersignup">
         <div class="form-groupmyprof1">
 
-        <div class="form-groupmyprof">
-                <button type="submit" name="dentalrecords" >Dental Records</button>
+        <div class="form-groupmain">
+                <button  class ="hover-button"type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
                 
-                <div class="form-groupmyprof">
-                <button type="submit" name="adminbilling" >Billing History</button>
+                <div class="form-groupmain">
+                <button  class ="hover-button"type="submit" name="adminbilling" >Billing History</button>
 </div>
 </div>
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile</h2>
+            <h2 class="signup-heading"> <?php echo $userDetails['firstName'];?> Profile</h2>
 
             <form action="../dentalIndex.php" method="post">
             <input type="hidden" name="formType" value="staffview" />
@@ -328,9 +325,9 @@
                     <div class="form-groupmy">
                     <form action="../editpatientforadmin.php" method="post">
                     <input type="hidden" name="patientID" value="<?php echo $_SESSION['patientID']; ?>"/>
-                        <button type="submit" name="editpatient" >Edit</button>
+                        <button class ="hover-button" type="submit" name="editpatient" >Edit</button>
                         </form>
-                        <button type="submit" name="myprofexittolookup" >Return</button>
+                        <button class ="hover-button" type="submit" name="myprofexittolookup" >Return</button>
                     </div>
                 </div>
                
@@ -389,7 +386,7 @@
         
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile</h2>
+            <h2 class="signup-heading"> <?php echo $userDetails['firstName'];?> Profile</h2>
 
             <form action="../dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="staffview"/>
@@ -431,9 +428,8 @@
                         }
                         ?>
                     </div>
-                    <div class="form-groupmy">
-    
-                        <button type="submit" name="myprofexittolookup" >Return</button>
+                    <div class="form-groupmyy">
+                        <button class ="hover-button" type="submit" name="myprofexittolookup" >Return</button>
                     </div>
                 </div>
                
@@ -443,8 +439,9 @@
                 <input type = "hidden" name = "formType" value = "status">
                 <input type = "hidden" name = "avaStat" value = <?php echo $userDetails['avaStat']?>>
                 <input type = "hidden" name = "staffID" value = <?php echo $_SESSION['thisStaff']?>>
-                <input type = "submit" name="statusset" value= "Set Status">
-                    </form>
+                <div class = "status" >
+                <input class = "hover-button"type = "submit" name="statusset" value= "Set Status">
+            </div></form>
                     <?php 
                        } 
                     ?>

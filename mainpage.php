@@ -18,25 +18,25 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="signup-formapp">
         <h2 class="signup-heading"> Main Page </h2>
             <form action="dentalIndex.php" method="post">
                 <input type = "hidden" name="formType" value="mainpage"/>
             
-                <div class="form-groupapp">
-                        <button type="submit" name="myprofile" >My Profile</button>
+                <div class="form-groupmain">
+                        <button class ="hover-button"type="submit" name="myprofile" >My Profile</button>
                 </div>
-                <div class="form-groupapp">
-                    <button type="submit" name="myapp" >My Appointments</button>
+                <div class="form-groupmain">
+                    <button class ="hover-button"type="submit" name="myapp" >My Appointments</button>
                 </div>
-                <div class="form-groupapp">
-                    <button type="submit" name="dentalrecords" >Dental Records</button>
+                <div class="form-groupmain">
+                    <button class ="hover-button"type="submit" name="dentalrecords" >Dental Records</button>
                 </div>
-                <div class="form-groupapp">
-                    <button type="submit" name="BillingHistory" >Billing History</button>
+                <div class="form-groupmain">
+                    <button class ="hover-button"type="submit" name="BillingHistory" >Billing History</button>
                 </div>
-                    <div class="form-groupapp">
-                    <button type="submit" name="123" >Log Out</button>
+                    <div class="form-groupmain">
+                    <button class ="hover-button" type="submit" name="123" >Log Out</button>
                 </div>
             </form>
         </div>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="dateapp">Select Date:</label>
                     <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>
-                    <input type="submit" name = "subdate" value = "Confirm Date">
+                    <input class ="hover-button" type="submit" name = "subdate" value = "Confirm Date">
                 </div>
      </form>
     <form action = "mainpage.php" method ="post">

@@ -28,22 +28,22 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo-containermyapp">
+        <div class="logo-containersignup">
         <div class="form-groupmyprof1">
         <form action="myprofile.php" method="post">
-            <div class="form-groupmyprof">
-                <button type="submit" name="myprof" >My Profile</button>
+            <div class="form-groupmain">
+                <button class ="hover-button" type="submit" name="myprof" >My Profile</button>
             </div></form>
             <form action="myapp.php" method="post">
-        <div class="form-groupmyprof">
-                <button type="submit" name="myappointments" >My Appointments</button>
+        <div class="form-groupmain">
+                <button class ="hover-button"type="submit" name="myappointments" >My Appointments</button>
                 </div></form>
                 <form action="billinghis.php" method="post">
-                <div class="form-groupmyprof">
-                <button type="submit" name="billinghistory" >Billing History</button>
+                <div class="form-groupmain">
+                <button class ="hover-button"type="submit" name="billinghistory" >Billing History</button>
                 </div></form>
 </div></div>
-        <div class="signup-form">
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Dental Records </h2>
             <div class="app-form">
             <table> 
@@ -85,8 +85,8 @@
             ?>
             </table>
             <form action = "mainpage.php" method="post">
-            <div class="form-groupmyapp">
-                <button type="submit" name="dentexit" >Return</button>
+            <div class="form-groupappointment">
+                <button class ="hover-button" type="submit" name="dentexit" >Return</button>
             </div>
             </form>
             </div>

@@ -52,12 +52,12 @@
                     </div>
 
                 <div class="form-groupdentaledit">
-                <button type="submit" name="subdental">Submit</button> 
+                <button class ="hover-button" type="submit" name="subdental">Submit</button> 
                 </div>
             </form>
-            <div class ="form-groupdentaledit">
+            <div class ="form-groupdentaleditt">
             <form action = "admindental.php" method = "post">
-                <button type="submit" name="back" >Back</button>
+                <button class ="hover-button"type="submit" name="back" >Return</button>
 </div></form>
         </div>
     </div>

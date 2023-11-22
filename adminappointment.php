@@ -30,38 +30,36 @@ if(isset($_POST['myappexit']))
 </head>
 <body>
     <div class="container">
-        <div class="logo-containermyapp">
-            
+        <div class="logo-containermyapp">    
         </div>     
-    </div>
-            <div class="signup-form">
-                <h2 class="signup-heading"> My Appointments </h2>
+            <div class="signup-formapp">
+                <h2 class="signup-headingappointment"> My Appointments </h2>
                 <div class ="checkapp">
                     <div class ="sepapp">
-                    <div class = "form-group">
-                        <form action = "adminappointment.php" method = "post">
+                        <div class = "form-group">
+                    <form action = "adminappointment.php" method = "post">
                         <label>Search By Dentist:</label>
                         <input type="text" name="searchName">
-                    </div>
-                    <div class = "form-group">
+                        </div>
+                        <div class = "form-group">
                         <label>Search By Patient National ID:</label>
                         <input type="text" name="searchPatient">
-                    </div>
-                    <div class = "form-group">
+                        </div>
+                        <div class = "form-group">
                         <label>Search By Date:</label>
                         <input type="date" name="searchDate">
-                    </div>
-                    <div class="form-group">
+                        </div>
+                        <div class="form-group">
                         <label>Show Active Appointments Only:</label>
                         <input type="checkbox" name="complete" value = 1>
+                        </div>
+                        <div class="form-group1">
+                        <button class ="hover-button"type = "submit" name = "subsearch">Search</button>   
+                  <form action="adminappointment.php" method="post">
+                        <button class ="hover-button" type="submit" name="myappexit" >Return</button>
+                    </form>      </form>
+                        
                     </div>
-                    <div class="form-group1">
-                        <button type = "submit" name = "subsearch">Search</button>   
-                    </form>
-                    <form action="adminappointment.php" method="post">
-                    <button type="submit" name="myappexit" >Return</button>
-                </form>
-            </div>
                 </div>
         
         <div class="appformcontainer1">
@@ -73,12 +71,10 @@ if(isset($_POST['myappexit']))
                         <input type="date" id="dateapp" name="dateapp" min="<?php echo $today; ?>" required>   
                          </div>
                         <div class = "form-groupapp1">
-                        <input type="submit" name = "subdate" value = "Confirm Date"></div>
+                        <input class ="hover-button" type="submit" name = "subdate" value = "Confirm Date"></div>
          </form>
             <form action = "adminappointment.php" method ="post">
                 <?php
-    
-                
                 if(isset($_POST['dateapp']) && !empty($_POST['dateapp']))
                 {
                     
@@ -160,8 +156,7 @@ if(isset($_POST['myappexit']))
                     <textarea id="reason" name="reason" ></textarea>
                 </div>
                 <div class="form-groupapp1">
-                    <input type="submit" name ="submitapp" value="Submit">
-                    <input type="submit"  name="cancelapp" value="Cancel">
+                    <input class ="hover-button"type="submit" name ="submitapp" value="Submit">
                 </div>
                 <?php } ?>
             </div>
@@ -228,7 +223,7 @@ if(isset($_POST['myappexit']))
                 <br>
                 </br>
                 <div class="admintable">
-                <table style="table-layout: fixed; width: 80%;"> 
+                <table style="table-layout: fixed; width: 100%;"> 
                     <colgroup>
                         <col style="width: 13%;">
                         <col style="width: 13%;">
@@ -333,7 +328,7 @@ if(isset($_POST['myappexit']))
                             echo '<td>';
                             echo '<form action = "updateapp.php" method = "post">';
                             echo '<input type="hidden" name="id" value="' . $row['aid'] . '">';
-                            echo '<input type = "submit" value = "Edit">';
+                            echo '<input class ="hover-button" type = "submit" value = "Edit">';
                             echo '</form>';
                             echo '</td>';
                             echo '</tr>';
@@ -344,6 +339,7 @@ if(isset($_POST['myappexit']))
                 ?>
                 </table>
                 </div>
+                <div>
 </div>
 </body>
 </html> 

@@ -62,7 +62,7 @@
         <div class="logo-containersignup">
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> Patient Profile </h2>
+            <h2 class="signup-heading"> Edit <?php echo $userDetails['firstName'];?> Profile </h2>
 
             <form action="editpatient.php" method="post">
                     <input type = "hidden" name="formType" value="editpatient"/>
@@ -91,7 +91,6 @@
                     
                     <div class="form-groupmy">
                         <button type="submit" name="editsubmit" >Submit</button>
-                        <button type="submit" name="editCancel" >Cancel</button>
                     </div>
                 </div>
                

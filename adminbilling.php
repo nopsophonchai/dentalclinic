@@ -67,7 +67,7 @@ require_once('connect.php');
                             <td><?=$row['description']?></td>
                             <td><?=$row['amount']?></td>
                             <td><a href='admineditbilling.php?patientid=<?=$row['patientID']?>&billingid=<?=$row['billingID']?>'><img src="Modify.png" width="24" height="24"></a></td>
-                            <td><a href='admindelbilling.php?patuentid=<?=$row['patientID']?>&billingid=<?=$row['billingID']?>'> <img src="Delete.png" width="24" height="24"></a></td>
+                            <td><a href='admindelbilling.php?patientid=<?=$row['patientID']?>&billingid=<?=$row['billingID']?>'> <img src="Delete.png" width="24" height="24"></a></td>
                             </tr>
                             <?php
                         }
@@ -78,11 +78,11 @@ require_once('connect.php');
             </table>
             <form action = "insertbilling.php" method ="post">
             <div class="form-groupbill">
-                        <button type="submit" name="adminbillinsert" >Insert</button>
+                        <button class ="hover-button" type="submit" name="adminbillinsert" >Insert</button>
                 </form>
                 <form action ="adminbilling.php" method ="post">
                         <input type ="hidden" name="patientIDb" value=<?php echo $_SESSION['patientID'];?>>
-                        <button type="submit" name="adminbillexit" >Return</button>
+                        <button class ="hover-button" type="submit" name="adminbillexit" >Return</button>
                     </div>
             </form>
             </div>

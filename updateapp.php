@@ -51,19 +51,19 @@ elseif (isset($_POST['delete']))
         <h1> Set Status </h1>
         
         </div>
-        <div>
+        <div class = "update">
             <form action = 'updateapp.php' method = 'post'>
-                <input type = "submit" value = "Set as complete" name = "complete">
-                <input type = "submit" value = "Set as active" name = "active">
-                <input type = "submit" value = "Set as cancelled" name = "cancelled">
-                <input type = "submit" value = "Delete" name = "delete">
+                <input class ="hover-button"type = "submit" value = "Set as complete" name = "complete">
+                <input class ="hover-button"type = "submit" value = "Set as active" name = "active">
+                <input class ="hover-button"type = "submit" value = "Set as cancelled" name = "cancelled">
+                <input class ="hover-button"type = "submit" value = "Delete" name = "delete">
             </form>
             
         </div>
         <br></br>
         <div>
             <form action = "adminappointment.php" method = "post">
-                <input type = "submit" value = "Return">
+                <input class ="hover-button"type = "submit" value = "Return">
         </form>
         </div>
     </div>

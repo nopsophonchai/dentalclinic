@@ -91,12 +91,11 @@
 
                     <div class="form-groupbilledit">
                         <button type="submit" name="billeditsubmit" >Submit</button>
-                        <button type="submit" name="billeditcancel" >Cancel</button>
                     </div>               
             </form>
             <div class ="form-groupbilledit">
             <form action = "adminbilling.php" method = "post">
-                <button type="submit" name="back" >Back</button>
+                <button type="submit" name="back" >Return</button>
 </div></form>
         </div>
     </div>

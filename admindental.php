@@ -82,10 +82,10 @@ require_once('connect.php');
             </table>
             <form action = "insertdental.php" method ="post">
             <div class="form-groupdental">
-                        <button type="submit" name="admindentalinsert" >Insert</button>
+                        <button class ="hover-button" type="submit" name="admindentalinsert" >Insert</button>
                 </form>
                 <form action ="admindental.php" method ="post">
-                        <button type="submit" name="admindentalexit" >Return</button>
+                        <button class ="hover-button" type="submit" name="admindentalexit" >Return</button>
                     </div>
             </form>
             </div>

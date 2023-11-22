@@ -56,19 +56,7 @@ if (isset($_POST['editsubmit'])) {
     }
     $q->close();
 }
-if (isset($_POST['editCancel']))
-{
-    if(isset($_SESSION['adminID']))
-        {
-            header('Location: view_profile.php?type=patient');
-            exit;
-        }
-        elseif(isset($_SESSION['staffID']))
-        {
-            header('Location: staff/staffview.php?type=patient');
-            exit;
-        }
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +102,6 @@ if (isset($_POST['editCancel']))
 
                 <div class="form-groupmy">
                     <button type="submit" name="editsubmit">Submit</button>
-                    <button type="submit" name="editCancel">Cancel</button>
                 </div>
             </form>
         </div>

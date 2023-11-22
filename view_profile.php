@@ -17,14 +17,8 @@
     <title> Dentiste </title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
-
-
             <?php
-            
-            
             if (isset($_POST['view_profile'])) { 
-                echo "gofirstif";
                 $row_id = $_POST['row_id'];
                 $table = $_POST['type'];
                 $query = "";
@@ -74,17 +68,17 @@
                             <div class="logo-containersignup">
                             <div class="form-groupmyprof1">
 
-                            <div class="form-groupmyprof">
+                            <div class="form-groupmain">
                                     <button type="submit" name="dentalrecords" >Dental Records</button>
                                     </div>
                                     
-                                    <div class="form-groupmyprof">
+                                    <div class="form-groupmain">
                                     <button type="submit" name="adminbilling" >Billing History</button>
                             </div>
                             </div>
                                     </div>
                                     <div class="signup-form">
-                                        <h2 class="signup-heading"> My profile</h2>
+                                        <h2 class="signup-heading"> Patient Profile</h2>
 
                                         <form action="dentalIndex.php" method="post">
                                         <input type="hidden" name="formType" value="viewprofile" />
@@ -103,7 +97,6 @@
                                                 <div class="form-group">
                                                     <label>Gender:</label>
                                                     <?php echo '<label>'.$userDetails['gender'].'</label>'; ?>
-
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="date-of-birth">Date of Birth:</label>
@@ -140,7 +133,7 @@
                                 </div>
                                 </div>
                                 <div class="signup-form">
-                                    <h2 class="signup-heading"> My profile</h2>
+                                    <h2 class="signup-heading"> Staff Profile</h2>
 
                                     <form action="dentalIndex.php" method="post">
                                             <input type = "hidden" name="formType" value="viewprofile"/>
@@ -216,7 +209,6 @@
                                         }
             }elseif (isset($_GET['type'])) { $type = $_GET['type'];
                 if($type === 'patient'){
-                echo "gosecondif";
                 $row_id = $_SESSION['patientID'];
                 $table = $_POST['type'];
                 $query = "";
@@ -250,17 +242,17 @@
                                     <div class="logo-containersignup">
                                     <div class="form-groupmyprof1">
 
-                                    <div class="form-groupmyprof">
+                                    <div class="form-groupmain">
                                             <button type="submit" name="dentalrecords" >Dental Records</button>
                                             </div>
                                             
-                                            <div class="form-groupmyprof">
+                                            <div class="form-groupmain">
                                             <button type="submit" name="adminbilling" >Billing History</button>
                             </div>
                             </div>
                                     </div>
                                     <div class="signup-form">
-                                        <h2 class="signup-heading"> My profile</h2>
+                                        <h2 class="signup-heading"> Patient Profile</h2>
 
                                         <form action="dentalIndex.php" method="post">
                                         <input type="hidden" name="formType" value="viewprofile" />
@@ -356,7 +348,7 @@
         
         </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile</h2>
+            <h2 class="signup-heading"> Staff Profile</h2>
 
             <form action="dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="viewprofile"/>

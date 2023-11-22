@@ -31,7 +31,6 @@
     }
     if (isset($_POST['editsubmit'])) {
         
-        echo "<span>frdgdg</span>";
         $id2 = $_SESSION['staffID'];
         $firstname = $_POST['first-name'];
         $lastname = $_POST['last-name'];
@@ -136,7 +135,6 @@
                     
                     <div class="form-groupmy">
                         <button type="submit" name="editsubmit" >Submit</button>
-                        <button type="submit" name="editCancel" >Cancel</button>
                     </div>
                 </div>
                

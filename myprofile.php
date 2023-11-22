@@ -46,21 +46,21 @@
         <div class="logo-containersignup">
             <div class="form-groupmyprof1">
                 <form action ="myapp.php" method="post">
-                <div class="form-groupmyprof">
-                    <button type="submit" name="myappointments" >My Appointments</button>
+                <div class="form-groupmain">
+                    <button class ="hover-button"type="submit" name="myappointments" >My Appointments</button>
                 </div> </form>
                 <form action="dentalrecords.php" method="post">
-                <div class="form-groupmyprof">
-                    <button type="submit" name="dentalrecords" >Dental Records</button>
+                <div  class="form-groupmain">
+                    <button  class ="hover-button"type="submit" name="dentalrecords" >Dental Records</button>
                 </div></form>
                 <form action="billinghis.php" method="post">
-                <div class="form-groupmyprof">
-                    <button type="submit" name="billinghistory" >Billing History</button>
+                <div class="form-groupmain">
+                    <button class ="hover-button"type="submit" name="billinghistory" >Billing History</button>
             </div></form>
         </div>
     </div>
         <div class="signup-form">
-            <h2 class="signup-heading"> My profile</h2>
+            <h2 class="signup-heading"><?php echo $userDetails['firstName'];?> Profile</h2>
 
             <form action="dentalIndex.php" method="post">
                     <input type = "hidden" name="formType" value="myprofile"/>
@@ -95,8 +95,8 @@
                     </div>
                     
                     <div class="form-groupmy">
-                        <button type="submit" name="edit" >Edit</button>
-                        <button type="submit" name="myprofexit" >Return</button>
+                        <button class ="hover-button"type="submit" name="edit" >Edit</button>
+                        <button class ="hover-button"type="submit" name="myprofexit" >Return</button>
                     </div>
                 </div>
                

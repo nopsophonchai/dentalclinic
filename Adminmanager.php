@@ -28,32 +28,29 @@
             <h1><?php echo $_SESSION['adminID']; ?></h1>
             <div class="form-groupAdminmana">
             <form action="admincreate.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Create Patient">
+                   <input class ="hover-button"type="submit"style="color: var(--button-text-color);" value="Create Patient">
             </form>
                    </div>
 
                    <div class="form-groupAdminmana">
                    <form action="createstaff.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Create Staff">
+                   <input class ="hover-button"type="submit"style="color: var(--button-text-color);" value="Create Staff">
                 </form>
                    </div>
                     <div></div>
                    <div class="form-groupAdminmana1">
                 <form action="Adminlookup.php" method="post">
-                   <button type="submit"style="color: var(--button-text-color);">
-                    <span style="white-space: nowrap;">Patient And Staff</span>
-                    <br>
-                    <span style="white-space: nowrap;">Lookup</span>
-                    </button>
+                   <input class ="hover-button"class ="multiline-button"type="submit"style="color: var(--button-text-color);"
+               value="Patient and Staff lookup">
                 </form>
                    </div>
                    <div class="form-groupAdminmana1">
                 <form action="adminappointment.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Appointment">
+                   <input class ="hover-button"type="submit"style="color: var(--button-text-color);" value="Appointment">
                 </form>
                    </div>
                    <form action="Adminmanager.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" name="log" value="Logout">
+                   <input class ="hover-button"type="submit"style="color: var(--button-text-color);" name="log" value="Logout">
                 </form>
                     
                     

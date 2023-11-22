@@ -35,7 +35,7 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <h1 class = "form-groupAdminmana1">Welcome, <?php echo $results['firstName'];?>.</h1> 
+        <h1 class = "form-groupAdminmana1"> Welcome <?php echo $results['firstName'];?>.</h1> 
         <div class="create_staff-form1">
 
             
@@ -43,26 +43,23 @@
                     <div></div>
                    <div class="form-groupAdminmana1">
                 <form action="stafflookup.php" method="post">
-                   <button type="submit"style="color: var(--button-text-color);">
-                    <span style="white-space: nowrap;">Patient And Staff</span>
-                    <br>
-                    <span style="white-space: nowrap;">Lookup</span>
-                    </button>
+                <input class ="multiline-button"type="submit"style="color: var(--button-text-color);"
+               value="Patient and Staff lookup">
                 </form>
                    </div>
                    <div class="form-groupAdminmana1">
                 <form action="../adminappointment.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" value="Appointment">
+                   <input  type="submit"style="color: var(--button-text-color);" value="Appointment">
                 </form>
                 
                    </div>
                    <div class="form-groupAdminmana1">
-            <form action="../admincreate.php" method="post">
+            <form action="staffcreatepatient.php" method="post">
                    <input type="submit"style="color: var(--button-text-color);" value="Create Patient">
             </form>
                    </div>
                    <form action="../login.php" method="post">
-                   <input type="submit"style="color: var(--button-text-color);" name = "log" value="Logout"></form>
+                   <input class = "hover-button" type="submit"style="color: var(--button-text-color);" name = "log" value="Logout"></form>
                     
                     
                    

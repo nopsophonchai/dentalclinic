@@ -119,13 +119,12 @@
 
                 </div><div class="form-groupdentaledit">
                         <button type="submit" name="dentaleditsubmit" >Submit</button>
-                        <button type="submit" name="dentaleditCancel" >Cancel</button>
                     </div>
                
             </form>
-            <div class ="form-groupdentaledit">
+            <div class ="form-groupdentaleditt">
             <form action = "admindental.php" method = "post">
-                <button type="submit" name="back" >Back</button>
+                <button type="submit" name="back" >Return</button>
 </div></form>
 </div>   
 

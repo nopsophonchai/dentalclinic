@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once("connect.php");
+require_once("../connect.php");
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once('adminconfig.php');
 $key = $key;
 $exist = 0;
-if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
+if(!isset($_SESSION['staffID']))
     {
-        header("Location: login.php");
+        header("Location: ../login.php");
         exit();
     }
 if(isset($_POST['signupbutton']))
@@ -113,7 +113,7 @@ elseif(isset($_POST['backbutton']))
 <html>
 <head>
     <title> Dentiste </title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 <body>
     <div class="container">
@@ -186,9 +186,9 @@ elseif(isset($_POST['backbutton']))
                         }
                     ?>
                     </div>
-                    <div class = "form-groupcreate">
-                    <input class ="hover-button" type="submit" name="signupbutton" value="Create"> 
-                    <input class ="hover-button" type="submit" name="backbutton" value="Return"onClick="window.location='Adminmanager.php';">
+                    <div class = "form-groupcreatesub">
+                    <input class ="hover-button"type="submit" name="signupbutton" value="Create"> 
+                    <input class ="hover-button"type="submit" name="backbutton" value="Return" onClick="window.location='staffmain.php';">
 
                 
                 </div>  

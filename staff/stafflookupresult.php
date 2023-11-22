@@ -63,17 +63,17 @@ function getTableName($data)
     <div class="container">
         <div class="logo-containermyapp">
         </div>
-        <div class="signup-form">
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Lookup Result </h2>
             <div class="app-form">
                 <table>
                     <thead>
-                        <tr>
-                        <th>Name</th>
+                    <tr>
+                    <th>Name</th>
                     <th>Type</th>
                     <th>profile</th>
-                        </tr>
-                    </thead>
+                    </tr>
+                </thead>
                     <tbody>
                         <?php
                         if ($result) {
@@ -87,7 +87,7 @@ function getTableName($data)
                                     <form action="staffview.php" method="post">
             <input type="hidden" name="row_id" value="<?php echo $row['patientID']; ?>">
             <input type="hidden" name="type" value="<?php echo $table; ?>">
-            <input type="submit" name="view_profile" value="view profile"></input>
+            <input class = "hover-button" type="submit" name="view_profile" value="view profile"></input>
                                         </form></td>
                                 </tr>
                                 <?php
@@ -96,11 +96,12 @@ function getTableName($data)
                         ?>
                     </tbody>
                 </table>
-                <form action="stafflookup.php" method="post">
-                    <div class="form-groupmyapp">
-                        <button type="submit" name="Adminlookupexit">Return</button>
                     </div>
+                <div class = "form-grouplookback">
+                <form action="stafflookup.php" method="post">
+                        <button class = "hover-button" type="submit" name="Adminlookupexit">Return</button>
                 </form>
+                    </div>
             </div>
         </div>
     </div>

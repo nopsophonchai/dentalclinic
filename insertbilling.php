@@ -27,13 +27,12 @@
                     </div>
                     
                     <div class="form-groupbilledit">
-                    <button type="submit" name="subbill">Submit</button> 
-                    <button type="submit" name="cancelbill">Cancel</button>
+                    <button class ="hover-button"type="submit" name="subbill">Submit</button> 
                 </div>
             </form>
             <div class ="form-groupbilledit">
             <form action = "adminbilling.php" method = "post">
-                <button type="submit" name="back" >Back</button>
+                <button class ="hover-button"type="submit" name="back" >Return</button>
 </div></form>
         </div>
     </div>

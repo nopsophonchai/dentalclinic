@@ -93,7 +93,6 @@
                     
                     <div class="form-groupmy">
                         <button type="submit" name="editsubmit" >Submit</button>
-                        <button type="submit" name="editCancel" >Cancel</button>
                     </div>
                 </div>
                

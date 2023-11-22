@@ -15,22 +15,16 @@
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Account Lookup </h2>
-
             <form action="Adminlookupresult.php" method="post">
-                    <div class="form-group">
-                        
+                    <div class="form-grouplooksearch">
                         <input type="text" id="SearchText" name="SearchText" >
-                  
                     </div>
-                    <div class="form-group">
-                    <input type="submit" name="searchbutton" value="Search">
+                    <div class="form-grouplook">
+                    <button class = "buttonlook"type="submit" name="searchbutton">Search</button>
                     </form>
-                    <form action="Adminmanager.php" method="post">
-                <input type="submit" name="backbutton" value="Back">
-</form>
-                </div>
+                    <button class="buttonlook" type="button" onClick="window.location='Adminmanager.php';">Return</button>
             
         </div>
     </div>

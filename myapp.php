@@ -27,32 +27,26 @@ require_once('connect.php');
 </head>
 <body>
     <div class="container">
-        <div class="logo-containermyapp">
+    <div class="logo-containersignup">
             <div class="form-groupmyprof1">
             <form action="myprofile.php" method="post">
-            <div class="form-groupmyprof">
-                <button type="submit" name="myprof" >My Profile</button>
+            <div class="form-groupmain">
+                <button class ="hover-button"type="submit" name="myprof" >My Profile</button>
             </div></form>
             <form action="dentalrecords.php" method="post">
-            <div class="form-groupmyprof">
-                <button type="submit" name="dentalrecords" >Dental Records</button>
+            <div class="form-groupmain">
+                <button class ="hover-button"type="submit" name="dentalrecords" >Dental Records</button>
             </div></form>
             <form action="billinghis.php" method="post">
-            <div class="form-groupmyprof">
-            <button type="submit" name="billinghistory" >Billing History</button>
-            </form>
-            
-            
-</div>
-<form action="mainpage.php" method="post">
-            <div class="form-groupmyprof">
-                        <button type="submit" name="myappexit" >Return</button>
+            <div class="form-groupmain">
+            <button class ="hover-button"type="submit" name="billinghistory" >Billing History</button>
             </div>
-            </form>
-</div>     
-        </div>
-        <div class="signup-form">
-            <h2 class="signup-heading"> My Appointments </h2>
+            </form>                 
+        </div>     
+    </div>
+        <div class="signup-formlook">  
+                      <h2 class="signup-heading"> My Appointments </h2>
+            <div class = "app-form">
             <table> 
                 <col width="25%" >
                 <col width="25%">
@@ -87,10 +81,15 @@ require_once('connect.php');
             }
 
 ?>
-            </table>
+            </table></div>    
+                         <div class="form-groupappointment">
+
+            <form action="mainpage.php" method="post">
+                <button class ="hover-button"type="submit" name="myappexit" >Return</button>
             
-            </div>
+            </form></div></div>
         </div>
     </div>
+        </div>
 </body>
 </html>

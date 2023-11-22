@@ -3,7 +3,6 @@ session_start();
 require_once('connect.php');
 require_once('adminconfig.php');
 $encryption_key = $key; 
-// Assuming you have a function getTableName defined
 function getTableName($data)
 {
     if (isset($data['name']) && isset($data['table_name'])) {
@@ -41,11 +40,9 @@ if (isset($_POST['searchbutton'])) {
             return false;
         }
 
-        // Store the search results in a session variable
         $_SESSION['search_results'] = $result->fetch_all(MYSQLI_ASSOC);
     }
 } else {
-    // If no search is performed, set the session variable to an empty array
     $_SESSION['search_results'] = [];
 }
 if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
@@ -63,11 +60,10 @@ if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
 </head>
 <body>
     <div class="container">
-        <div class="logo-containermyapp">
-        </div>
-        <div class="signup-form">
+        <div class="logo-containermyapp"></div>
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Admin Lookup Result </h2>
-            <div class="app-form">
+                <div class="app-form">
                 <table>
                     <thead>
                         <tr>
@@ -89,7 +85,7 @@ if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
                                         <form action="view_profile.php" method="post">
                                             <input type="hidden" name="row_id" value="<?php echo $row['patientID']; ?>">
                                             <input type="hidden" name="type" value="<?php echo $table; ?>">
-                                            <input type="submit" name="view_profile" value="View Profile">
+                                            <input class ="hover-button"type="submit" name="view_profile" value="View Profile">
                                         </form>
                                     </td>
                                 </tr>
@@ -99,11 +95,14 @@ if(!isset($_SESSION['adminID']) && !isset($_SESSION['staffID']))
                         ?>
                     </tbody>
                 </table>
-                <form action="Adminlookup.php" method="post">
-                    <div class="form-groupmyapp">
-                        <button type="submit" name="Adminlookupexit">Return</button>
+            
                     </div>
+                <div class="form-grouplookback">
+                <form action="Adminlookup.php" method="post">
+                        <button class ="hover-button" type="submit" name="Adminlookupresultexit">Return</button>
                 </form>
+            </div>
+                 </div>
             </div>
         </div>
     </div>

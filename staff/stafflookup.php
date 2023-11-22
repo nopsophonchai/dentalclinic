@@ -15,19 +15,20 @@ if(!isset($_SESSION['staffID']))
     <div class="container">
         <div class="logo-containersignup">
         </div>
-        <div class="signup-form">
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Account Lookup </h2>
 
             <form action="stafflookupresult.php" method="post">
-                    <div class="form-group">
+                    <div class="form-grouplooksearch">
                         
                         <input type="text" id="SearchText" name="SearchText" >
                   
                     </div>
-                    <input type="submit" name="searchbutton" value="Search">
+                    <div class="form-grouplook">
+                    <button class = "buttonlook"type="submit" name="searchbutton">Search</button>
                     </form>
                     <form action="staffmain.php" method="post">
-                <input type="submit" name="backbutton" value="Back"  >
+                    <button class="buttonlook" type="button" onClick="window.location='staffmain.php';">Return</button>
 </form>
                 
             

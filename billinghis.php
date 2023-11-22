@@ -26,23 +26,23 @@ require_once('connect.php');
 </head>
 <body>
     <div class="container">
-        <div class="logo-containermyapp">
+        <div class="logo-containersignup">
         <div class="form-groupmyprof1">
         <form action="myprofile.php" method="post">
-            <div class="form-groupmyprof">
-                <button type="submit" name="myprof" >My Profile</button>
+            <div class="form-groupmain">
+                <button class ="hover-button"type="submit" name="myprof" >My Profile</button>
             </div></form>
             <form action="myapp.php" method="post">
-            <div class="form-groupmyprof">
-            <button type="submit" name="myappointments" >My Appointments</button>
+            <div class="form-groupmain">
+            <button class ="hover-button"type="submit" name="myappointments" >My Appointments</button>
             </div></form>
         <form action="dentalrecords.php" method="post">
-        <div class="form-groupmyprof">
-        <button type="submit" name="dentalrecord" >Dental Records</button>
+        <div class="form-groupmain">
+        <button class ="hover-button"type="submit" name="dentalrecord" >Dental Records</button>
         </div></form>
 </div>    
     </div>
-        <div class="signup-form">
+        <div class="signup-formlook">
             <h2 class="signup-heading"> Billing History </h2>
             <div class="app-form">
             <table> 
@@ -77,8 +77,8 @@ require_once('connect.php');
                ?>
             </table>
             <form action = "mainpage.php" method ="post">
-            <div class="form-groupmyapp">
-                        <button type="submit" name="billexit" >Return</button>
+            <div class="form-groupappointment">
+                        <button class ="hover-button" type="submit" name="billexit" >Return</button>
                     </div>
             </form>
             </div>
